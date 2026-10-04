@@ -1,0 +1,2838 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ular Tangga Detektif Kode V2.0</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:"Trebuchet MS",Arial,sans-serif;
+    background:
+        radial-gradient(circle at top left,#dff6ff,transparent 35%),
+        radial-gradient(circle at bottom right,#fff0c7,transparent 35%),
+        #edf2f7;
+    color:#17202a;
+}
+
+.app{
+    max-width:1400px;
+    margin:auto;
+    padding:14px;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    background:linear-gradient(135deg,#182848,#4b6cb7);
+    color:white;
+    border-radius:22px;
+    padding:18px 22px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.18);
+    margin-bottom:14px;
+}
+
+.header h1{
+    margin:0;
+    font-size:clamp(25px,3vw,42px);
+    letter-spacing:1px;
+    text-shadow:2px 3px 0 rgba(0,0,0,.2);
+}
+
+.header p{
+    margin:6px 0 0;
+    font-size:16px;
+}
+
+/* ================= SCORE ================= */
+
+.teams{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.team{
+    background:white;
+    border-radius:16px;
+    padding:11px;
+    text-align:center;
+    border:4px solid transparent;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    transition:.25s;
+}
+
+.team.active{
+    transform:translateY(-4px) scale(1.02);
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+
+.team.red{border-color:#ef476f;}
+.team.blue{border-color:#118ab2;}
+.team.green{border-color:#06d6a0;}
+.team.yellow{border-color:#ffd166;}
+
+.team-icon{
+    font-size:27px;
+}
+
+.team-name{
+    font-weight:bold;
+    font-size:16px;
+}
+
+.team-pos{
+    font-size:14px;
+    margin-top:3px;
+    color:#555;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    display:grid;
+    grid-template-columns:minmax(550px,1.7fr) minmax(350px,.8fr);
+    gap:14px;
+}
+
+.panel{
+    background:rgba(255,255,255,.94);
+    border-radius:22px;
+    box-shadow:0 8px 25px rgba(0,0,0,.10);
+}
+
+/* ================= BOARD ================= */
+
+.board-panel{
+    padding:14px;
+}
+
+.board-title{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin:0 0 10px;
+}
+
+.board-wrap{
+    position:relative;
+    width:100%;
+    max-width:800px;
+    margin:auto;
+}
+
+.board{
+    display:grid;
+    grid-template-columns:repeat(10,1fr);
+    gap:3px;
+    background:#273746;
+    padding:5px;
+    border-radius:15px;
+    position:relative;
+    z-index:1;
+}
+
+.cell{
+    aspect-ratio:1/1;
+    position:relative;
+    border-radius:7px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.8);
+    background:#fff;
+}
+
+.cell:nth-child(odd){
+    background:#fff7d6;
+}
+
+.cell:nth-child(4n){
+    background:#dff6ff;
+}
+
+.cell:nth-child(5n){
+    background:#e6f8ec;
+}
+
+.cell.snake-start{
+    background:#ffd9df !important;
+}
+
+.cell.ladder-start{
+    background:#d9f9ed !important;
+}
+
+.number{
+    position:absolute;
+    top:3px;
+    left:5px;
+    font-size:clamp(8px,1.1vw,13px);
+    font-weight:bold;
+    z-index:3;
+}
+
+.cell-label{
+    position:absolute;
+    right:3px;
+    bottom:3px;
+    font-size:clamp(8px,1vw,12px);
+    z-index:3;
+}
+
+/* SVG */
+
+.board-svg{
+    position:absolute;
+    inset:5px;
+    width:calc(100% - 10px);
+    height:calc(100% - 10px);
+    z-index:4;
+    pointer-events:none;
+    overflow:visible;
+}
+
+.snake-line{
+    fill:none;
+    stroke:#e63946;
+    stroke-width:10;
+    stroke-linecap:round;
+    filter:drop-shadow(2px 3px 2px rgba(0,0,0,.25));
+}
+
+.snake-line2{
+    fill:none;
+    stroke:#8d1e2d;
+    stroke-width:4;
+    stroke-linecap:round;
+}
+
+.snake-head{
+    fill:#e63946;
+    stroke:#8d1e2d;
+    stroke-width:3;
+}
+
+.snake-eye{
+    fill:white;
+}
+
+.snake-pupil{
+    fill:#111;
+}
+
+.ladder-line{
+    stroke:#8d5a2b;
+    stroke-width:8;
+    stroke-linecap:round;
+    filter:drop-shadow(2px 3px 2px rgba(0,0,0,.2));
+}
+
+.ladder-step{
+    stroke:#d99a4e;
+    stroke-width:5;
+    stroke-linecap:round;
+}
+
+/* ================= TOKENS ================= */
+
+.tokens{
+    position:absolute;
+    left:4px;
+    right:4px;
+    bottom:4px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:2px;
+    z-index:10;
+}
+
+.token{
+    width:clamp(17px,2.3vw,30px);
+    height:clamp(17px,2.3vw,30px);
+    border-radius:50% 50% 45% 45%;
+    border:3px solid white;
+    box-shadow:0 3px 6px rgba(0,0,0,.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:clamp(8px,1vw,12px);
+    position:relative;
+    animation:tokenPop .25s ease;
+}
+
+.token::after{
+    content:"";
+    position:absolute;
+    width:65%;
+    height:22%;
+    bottom:-4px;
+    background:rgba(0,0,0,.15);
+    border-radius:50%;
+}
+
+.token.red{background:#ef476f;color:white;}
+.token.blue{background:#118ab2;color:white;}
+.token.green{background:#06d6a0;color:#063d30;}
+.token.yellow{background:#ffd166;color:#5d4500;}
+
+@keyframes tokenPop{
+    from{transform:scale(.3);}
+    to{transform:scale(1);}
+}
+
+/* ================= CONTROL ================= */
+
+.control-panel{
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+}
+
+.turn-box{
+    text-align:center;
+    background:linear-gradient(135deg,#f7f9fc,#e9eef5);
+    border-radius:17px;
+    padding:13px;
+}
+
+.turn-small{
+    font-size:13px;
+    color:#666;
+}
+
+.turn-name{
+    font-size:25px;
+    font-weight:bold;
+    margin-top:3px;
+}
+
+.dice{
+    width:105px;
+    height:105px;
+    margin:17px auto 13px;
+    border-radius:22px;
+    background:linear-gradient(145deg,#ffffff,#dfe5ec);
+    border:5px solid #273746;
+    box-shadow:0 8px 15px rgba(0,0,0,.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:55px;
+    font-weight:bold;
+}
+
+.dice.rolling{
+    animation:roll .65s linear infinite;
+}
+
+@keyframes roll{
+    0%{transform:rotate(0deg) scale(1);}
+    25%{transform:rotate(90deg) scale(1.08);}
+    50%{transform:rotate(180deg) scale(1);}
+    75%{transform:rotate(270deg) scale(1.08);}
+    100%{transform:rotate(360deg) scale(1);}
+}
+
+.roll-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff7b00,#ffb000);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    box-shadow:0 5px 0 #c76100;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.roll-btn:hover{
+    transform:translateY(-2px);
+}
+
+.roll-btn:active{
+    transform:translateY(3px);
+    box-shadow:0 2px 0 #c76100;
+}
+
+.roll-btn:disabled{
+    background:#aaa;
+    box-shadow:0 4px 0 #777;
+    cursor:not-allowed;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    text-align:center;
+    margin-top:13px;
+    background:#f0f4f8;
+    border-radius:12px;
+    padding:10px;
+    min-height:42px;
+    font-weight:bold;
+}
+
+/* ================= QUESTION ================= */
+
+.question{
+    display:none;
+    margin-top:14px;
+    border-radius:18px;
+    padding:15px;
+    background:linear-gradient(135deg,#fff,#f2f7ff);
+    border:3px solid #d9e2ec;
+}
+
+.question.show{
+    display:block;
+    animation:questionIn .3s ease;
+}
+
+@keyframes questionIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.question-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.badge{
+    background:#273746;
+    color:white;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+}
+
+.question-number{
+    font-size:12px;
+    color:#777;
+}
+
+.question-text{
+    background:white;
+    border-radius:12px;
+    padding:12px;
+    font-size:17px;
+    line-height:1.45;
+    border:1px solid #dce3ea;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.answer{
+    width:100%;
+    border:2px solid #dbe3eb;
+    background:white;
+    border-radius:11px;
+    padding:10px;
+    margin:4px 0;
+    text-align:left;
+    font-size:14px;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.answer:hover{
+    background:#edf5ff;
+    border-color:#7ba7d9;
+    transform:translateX(3px);
+}
+
+.answer.correct{
+    background:#d9f9e8;
+    border-color:#06a66b;
+}
+
+.answer.wrong{
+    background:#ffe0e5;
+    border-color:#ef476f;
+}
+
+.answer:disabled{
+    cursor:not-allowed;
+}
+
+.feedback{
+    display:none;
+    margin-top:10px;
+    border-radius:12px;
+    padding:11px;
+    line-height:1.45;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.good{
+    background:#dff8e9;
+    border:2px solid #43aa70;
+}
+
+.feedback.bad{
+    background:#ffe4e8;
+    border:2px solid #ef476f;
+}
+
+.next-btn{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    background:#273746;
+    color:white;
+    border:none;
+    border-radius:11px;
+    font-weight:bold;
+    cursor:pointer;
+    display:none;
+}
+
+/* ================= RULES ================= */
+
+.rules{
+    margin-top:14px;
+    padding:15px 18px;
+}
+
+.rules h3{
+    margin:0 0 8px;
+}
+
+.rules-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:5px 20px;
+    font-size:13px;
+}
+
+.rules-grid div{
+    padding:4px;
+}
+
+/* ================= RESET ================= */
+
+.reset{
+    margin-top:10px;
+    width:100%;
+    padding:10px;
+    background:#68737d;
+    color:white;
+    border:none;
+    border-radius:11px;
+    cursor:pointer;
+}
+
+/* ================= WINNER ================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(16,24,40,.78);
+    z-index:100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.winner{
+    background:white;
+    border-radius:28px;
+    padding:35px;
+    text-align:center;
+    max-width:500px;
+    width:100%;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+    animation:winnerIn .5s ease;
+}
+
+@keyframes winnerIn{
+    from{
+        transform:scale(.5) rotate(-5deg);
+        opacity:0;
+    }
+    to{
+        transform:scale(1) rotate(0);
+        opacity:1;
+    }
+}
+
+.winner-cup{
+    font-size:70px;
+}
+
+.winner h2{
+    font-size:34px;
+    margin:8px 0;
+}
+
+.winner p{
+    font-size:18px;
+}
+
+.winner button{
+    border:none;
+    padding:13px 25px;
+    border-radius:12px;
+    background:#273746;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ================= CONFETTI ================= */
+
+.confetti{
+    position:fixed;
+    width:10px;
+    height:18px;
+    top:-30px;
+    z-index:150;
+    animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    .main{
+        grid-template-columns:1fr;
+    }
+
+    .control-panel{
+        max-width:800px;
+        margin:auto;
+        width:100%;
+    }
+}
+
+@media(max-width:650px){
+
+    .teams{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .board{
+        gap:2px;
+        padding:3px;
+    }
+
+    .board-svg{
+        inset:3px;
+        width:calc(100% - 6px);
+        height:calc(100% - 6px);
+    }
+
+    .rules-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+    <h1>🐍 ULAR TANGGA DETEKTIF KODE 🪜</h1>
+    <p>🎯 Algoritma • Pseudocode • Bahasa Pemrograman</p>
+</header>
+
+
+<!-- ================= TIM KELOMPOK ================= -->
+
+<div class="teams">
+
+    <div class="team red" id="team0">
+        <div class="team-icon">🔴</div>
+        <div class="team-name">KELOMPOK 1</div>
+        <div class="team-pos">
+            Posisi: <b id="pos0">1</b>
+        </div>
+    </div>
+
+    <div class="team blue" id="team1">
+        <div class="team-icon">🔵</div>
+        <div class="team-name">KELOMPOK 2</div>
+        <div class="team-pos">
+            Posisi: <b id="pos1">1</b>
+        </div>
+    </div>
+
+    <div class="team green" id="team2">
+        <div class="team-icon">🟢</div>
+        <div class="team-name">KELOMPOK 3</div>
+        <div class="team-pos">
+            Posisi: <b id="pos2">1</b>
+        </div>
+    </div>
+
+    <div class="team yellow" id="team3">
+        <div class="team-icon">🟡</div>
+        <div class="team-name">KELOMPOK 4</div>
+        <div class="team-pos">
+            Posisi: <b id="pos3">1</b>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+
+<!-- ================= PAPAN ================= -->
+
+<div class="panel board-panel">
+
+    <div class="board-title">
+        🏁 PAPAN PERMAINAN
+    </div>
+
+    <div class="board-wrap">
+
+        <div class="board" id="board"></div>
+
+        <!-- ULAR DAN TANGGA DIGAMBAR DENGAN SVG -->
+        <svg class="board-svg"
+             id="boardSvg"
+             viewBox="0 0 1000 1000"
+             preserveAspectRatio="none">
+
+        </svg>
+
+    </div>
+
+</div>
+
+
+<!-- ================= KONTROL ================= -->
+
+<div class="panel control-panel">
+
+    <div class="turn-box">
+
+        <div class="turn-small">
+            🎯 GILIRAN SEKARANG
+        </div>
+
+        <div class="turn-name" id="turnName">
+            🔴 Kelompok 1
+        </div>
+
+    </div>
+
+
+    <div class="dice" id="dice">
+        ?
+    </div>
+
+
+    <button
+        class="roll-btn"
+        id="rollBtn"
+        onclick="rollDice()">
+
+        🎲 LEMPAR DADU
+
+    </button>
+
+
+    <div class="status" id="status">
+        Tekan tombol dadu untuk memulai permainan.
+    </div>
+
+
+    <!-- ================= PERTANYAAN ================= -->
+
+    <div class="question" id="question">
+
+        <div class="question-head">
+
+            <span class="badge">
+                🧠 TANTANGAN KODE
+            </span>
+
+            <span class="question-number" id="questionNumber">
+            </span>
+
+        </div>
+
+
+        <div class="question-text" id="questionText">
+        </div>
+
+
+        <div id="answers">
+        </div>
+
+
+        <div
+            class="feedback"
+            id="feedback">
+        </div>
+
+
+        <button
+            class="next-btn"
+            id="nextBtn"
+            onclick="nextTurn()">
+
+            ➡️ LANJUT KE KELOMPOK BERIKUTNYA
+
+        </button>
+
+    </div>
+
+
+    <button
+        class="reset"
+        onclick="resetGame()">
+
+        🔄 MULAI PERMAINAN BARU
+
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= ATURAN ================= -->
+
+<div class="panel rules">
+
+<h3>📖 ATURAN PERMAINAN</h3>
+
+<div class="rules-grid">
+
+<div>🎲 <b>1.</b> Lempar dadu secara bergantian.</div>
+
+<div>❓ <b>2.</b> Setelah dadu keluar, jawab pertanyaan.</div>
+
+<div>✅ <b>3.</b> Jawaban benar → maju sesuai angka dadu.</div>
+
+<div>❌ <b>4.</b> Jawaban salah → tetap di tempat.</div>
+
+<div>🪜 <b>5.</b> Kena tangga → naik.</div>
+
+<div>🐍 <b>6.</b> Kena ular → turun.</div>
+
+<div>👥 <b>7.</b> Juru bicara harus bergantian.</div>
+
+<div>🏆 <b>8.</b> Yang mencapai kotak 100 lebih dahulu menang.</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= PEMENANG ================= -->
+
+<div class="overlay" id="winnerOverlay">
+
+    <div class="winner">
+
+        <div class="winner-cup">
+            🏆
+        </div>
+
+        <h2 id="winnerTitle">
+            PEMENANG!
+        </h2>
+
+        <p id="winnerText">
+        </p>
+
+        <p>
+            🎉 Luar biasa! Tantangan Detektif Kode berhasil diselesaikan!
+        </p>
+
+        <button onclick="resetGame()">
+            🔄 MAIN LAGI
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DATA KELOMPOK
+========================================================= */
+
+const teams = [
+
+    {
+        name:"🔴 Kelompok 1",
+        color:"red",
+        position:1
+    },
+
+    {
+        name:"🔵 Kelompok 2",
+        color:"blue",
+        position:1
+    },
+
+    {
+        name:"🟢 Kelompok 3",
+        color:"green",
+        position:1
+    },
+
+    {
+        name:"🟡 Kelompok 4",
+        color:"yellow",
+        position:1
+    }
+
+];
+
+
+/* =========================================================
+   POSISI TANGGA
+========================================================= */
+
+const ladders = {
+
+    3:22,
+    8:30,
+    20:41,
+    28:55,
+    36:57,
+    51:72,
+    62:83,
+    71:92
+
+};
+
+
+/* =========================================================
+   POSISI ULAR
+========================================================= */
+
+const snakes = {
+
+    17:7,
+    32:15,
+    48:26,
+    54:34,
+    64:44,
+    79:59,
+    88:67,
+    97:78
+
+};
+
+
+/* =========================================================
+   BANK SOAL
+========================================================= */
+
+const questions = [
+
+{
+q:"Apa yang dimaksud dengan algoritma?",
+a:[
+"Langkah-langkah untuk menyelesaikan masalah",
+"Nama sebuah komputer",
+"Bahasa pemrograman",
+"Jenis permainan"
+],
+correct:0,
+explanation:"Algoritma adalah langkah-langkah yang disusun secara logis untuk menyelesaikan masalah."
+},
+
+{
+q:"Apa yang dimaksud dengan pseudocode?",
+a:[
+"Program yang langsung dijalankan komputer",
+"Cara menuliskan algoritma dengan bahasa sederhana dan terstruktur",
+"Nama sebuah komputer",
+"Jenis perangkat keras"
+],
+correct:1,
+explanation:"Pseudocode adalah cara sederhana untuk menuliskan logika atau langkah algoritma sebelum dibuat menjadi program."
+},
+
+{
+q:"Manakah yang merupakan contoh algoritma?",
+a:[
+"Langkah membuat mi instan",
+"Nama komputer",
+"Python",
+"Keyboard"
+],
+correct:0,
+explanation:"Langkah membuat sesuatu secara berurutan merupakan contoh algoritma dalam kehidupan sehari-hari."
+},
+
+{
+q:"Manakah yang merupakan pseudocode?",
+a:[
+"print('Halo')",
+"<h1>Halo</h1>",
+"MULAI → Masukkan nama → Tampilkan nama → SELESAI",
+"Python"
+],
+correct:2,
+explanation:"Pseudocode dapat menggunakan kalimat sederhana untuk menggambarkan langkah program."
+},
+
+{
+q:"Manakah yang merupakan bahasa pemrograman?",
+a:[
+"Algoritma",
+"Pseudocode",
+"Python",
+"Langkah"
+],
+correct:2,
+explanation:"Python adalah salah satu bahasa pemrograman."
+},
+
+{
+q:"Apakah pseudocode dapat langsung dijalankan komputer?",
+a:[
+"Ya",
+"Tidak",
+"Selalu",
+"Hanya malam hari"
+],
+correct:1,
+explanation:"Pseudocode merupakan rancangan logika dan tidak langsung dijalankan seperti kode program."
+},
+
+{
+q:"Mengapa algoritma harus memiliki urutan?",
+a:[
+"Agar penyelesaian masalah lebih teratur",
+"Agar tulisan panjang",
+"Agar komputer mahal",
+"Agar layar berwarna"
+],
+correct:0,
+explanation:"Urutan yang benar membuat proses penyelesaian masalah lebih jelas dan tepat."
+},
+
+{
+q:"Manakah contoh kode Python?",
+a:[
+"Tampilkan nama",
+"Masukkan nama",
+"print(nama)",
+"MULAI nama SELESAI"
+],
+correct:2,
+explanation:"print(nama) merupakan contoh sintaks Python."
+},
+
+{
+q:"Algoritma paling dekat dengan istilah...",
+a:[
+"Langkah-langkah",
+"Warna",
+"Gambar",
+"Suara"
+],
+correct:0,
+explanation:"Algoritma merupakan langkah-langkah yang digunakan untuk menyelesaikan masalah."
+},
+
+{
+q:"Pseudocode digunakan untuk...",
+a:[
+"Merancang logika program",
+"Mengganti keyboard",
+"Menghias komputer",
+"Menghapus file"
+],
+correct:0,
+explanation:"Pseudocode membantu programmer merancang logika sebelum menulis kode."
+},
+
+{
+q:"Urutan yang paling tepat adalah...",
+a:[
+"Program → masalah → algoritma",
+"Masalah → algoritma → pseudocode → program",
+"Pseudocode → masalah → program",
+"Program → pseudocode → masalah"
+],
+correct:1,
+explanation:"Kita memahami masalah terlebih dahulu, kemudian menyusun algoritma dan pseudocode sebelum membuat program."
+},
+
+{
+q:"Contoh algoritma dalam kehidupan sehari-hari adalah...",
+a:[
+"Resep memasak",
+"Nama laptop",
+"Jenis mouse",
+"Ukuran monitor"
+],
+correct:0,
+explanation:"Resep berisi langkah-langkah yang berurutan."
+},
+
+{
+q:"Jika ingin menampilkan nama siswa, langkah pertama yang tepat adalah...",
+a:[
+"Masukkan nama",
+"Tampilkan nama",
+"Hapus nama",
+"Matikan komputer"
+],
+correct:0,
+explanation:"Program perlu menerima data nama sebelum dapat menampilkannya."
+},
+
+{
+q:"Kata MULAI dan SELESAI pada pseudocode berguna untuk...",
+a:[
+"Menunjukkan awal dan akhir",
+"Membuat komputer hidup",
+"Menghapus data",
+"Mengubah warna"
+],
+correct:0,
+explanation:"MULAI dan SELESAI dapat digunakan untuk memperjelas awal dan akhir algoritma."
+},
+
+{
+q:"Apakah setiap pseudocode wajib menggunakan kata MULAI dan SELESAI?",
+a:[
+"Ya",
+"Tidak",
+"Selalu",
+"Hanya Python"
+],
+correct:1,
+explanation:"Tidak ada satu format pseudocode yang wajib. MULAI dan SELESAI hanya membantu memperjelas."
+},
+
+{
+q:"Manakah yang BUKAN bahasa pemrograman?",
+a:[
+"Python",
+"Java",
+"Algoritma",
+"JavaScript"
+],
+correct:2,
+explanation:"Algoritma bukan bahasa pemrograman."
+},
+
+{
+q:"Dalam program menghitung luas persegi, data yang dibutuhkan salah satunya adalah...",
+a:[
+"Panjang sisi",
+"Warna layar",
+"Jenis mouse",
+"Nama keyboard"
+],
+correct:0,
+explanation:"Panjang sisi dibutuhkan untuk menghitung luas persegi."
+},
+
+{
+q:"Pseudocode sebaiknya menggunakan bahasa yang...",
+a:[
+"Mudah dipahami",
+"Sangat rumit",
+"Hanya angka",
+"Hanya simbol"
+],
+correct:0,
+explanation:"Pseudocode dibuat agar manusia mudah memahami logika program."
+},
+
+{
+q:"Hubungan algoritma dan pseudocode yang tepat adalah...",
+a:[
+"Pseudocode merupakan salah satu cara menuliskan algoritma",
+"Algoritma adalah komputer",
+"Pseudocode adalah keyboard",
+"Keduanya tidak berhubungan"
+],
+correct:0,
+explanation:"Algoritma berisi langkah penyelesaian, sedangkan pseudocode merupakan salah satu cara menuliskannya."
+},
+
+{
+q:"Jika algoritma memiliki urutan yang salah, maka...",
+a:[
+"Hasil bisa salah",
+"Hasil pasti benar",
+"Komputer memperbaiki otomatis",
+"Tidak ada pengaruh"
+],
+correct:0,
+explanation:"Urutan merupakan bagian penting dari algoritma."
+},
+
+{
+q:"Perintah Python untuk menampilkan tulisan adalah...",
+a:[
+"print()",
+"Tampilkan",
+"MULAI",
+"SELESAI"
+],
+correct:0,
+explanation:"print() digunakan untuk menampilkan data di Python."
+},
+
+{
+q:"Manakah contoh pseudocode sederhana?",
+a:[
+"Masukkan nama → Tampilkan nama",
+"print(nama)",
+"<h1>Nama</h1>",
+"Python"
+],
+correct:0,
+explanation:"Kalimat tersebut menggambarkan langkah tanpa menggunakan sintaks bahasa pemrograman tertentu."
+},
+
+{
+q:"Python termasuk...",
+a:[
+"Bahasa pemrograman",
+"Algoritma",
+"Pseudocode",
+"Masalah"
+],
+correct:0,
+explanation:"Python merupakan bahasa pemrograman."
+},
+
+{
+q:"HTML digunakan terutama untuk...",
+a:[
+"Membuat struktur halaman web",
+"Menyusun algoritma saja",
+"Menghitung matematika saja",
+"Membuat keyboard"
+],
+correct:0,
+explanation:"HTML digunakan untuk menyusun struktur dan isi halaman web."
+},
+
+{
+q:"Tag HTML <h1> biasanya digunakan untuk...",
+a:[
+"Judul utama",
+"Input data Python",
+"Perulangan",
+"Menghitung angka"
+],
+correct:0,
+explanation:"<h1> merupakan heading atau judul utama dalam HTML."
+},
+
+{
+q:"Tag HTML <p> digunakan untuk...",
+a:[
+"Paragraf",
+"Algoritma",
+"Python",
+"Perulangan"
+],
+correct:0,
+explanation:"<p> digunakan untuk membuat paragraf HTML."
+},
+
+{
+q:"Manakah yang merupakan algoritma membuat teh?",
+a:[
+"Siapkan gelas → masukkan teh → tuangkan air → aduk",
+"print('Teh')",
+"<h1>Teh</h1>",
+"Python"
+],
+correct:0,
+explanation:"Urutan tersebut merupakan langkah-langkah membuat teh."
+},
+
+{
+q:"Pseudocode membantu kita...",
+a:[
+"Memahami logika program",
+"Membeli komputer",
+"Mengganti mouse",
+"Menghias monitor"
+],
+correct:0,
+explanation:"Pseudocode membantu manusia memahami rancangan logika program."
+},
+
+{
+q:"Bahasa pemrograman digunakan untuk...",
+a:[
+"Menulis instruksi program",
+"Membuat meja",
+"Mencuci tangan",
+"Menggambar papan tulis"
+],
+correct:0,
+explanation:"Bahasa pemrograman digunakan untuk membuat program."
+},
+
+{
+q:"Manakah yang BUKAN contoh pseudocode?",
+a:[
+"MULAI → Masukkan nama → SELESAI",
+"Masukkan umur → Tampilkan umur",
+"print('Halo')",
+"Mulai → Proses → Selesai"
+],
+correct:2,
+explanation:"print('Halo') merupakan kode Python."
+},
+
+{
+q:"Manakah yang BUKAN contoh algoritma?",
+a:[
+"Langkah mencuci tangan",
+"Langkah membuat nasi goreng",
+"print('Halo')",
+"Langkah menyalakan komputer"
+],
+correct:2,
+explanation:"print('Halo') adalah kode Python, bukan langkah algoritma."
+},
+
+{
+q:"Setelah pseudocode selesai dibuat, langkah berikutnya dapat berupa...",
+a:[
+"Membuat program",
+"Menghapus masalah",
+"Mematikan komputer",
+"Membuang algoritma"
+],
+correct:0,
+explanation:"Pseudocode dapat diterjemahkan menjadi kode menggunakan bahasa pemrograman."
+},
+
+{
+q:"Mengapa kita perlu memahami masalah sebelum membuat program?",
+a:[
+"Agar solusi sesuai dengan masalah",
+"Agar program lebih berwarna",
+"Agar komputer lebih besar",
+"Agar keyboard cepat"
+],
+correct:0,
+explanation:"Pemahaman masalah menentukan solusi yang akan dibuat."
+},
+
+{
+q:"Manakah yang paling dekat dengan bahasa manusia?",
+a:[
+"Pseudocode",
+"Kode mesin",
+"Bilangan biner",
+"RAM"
+],
+correct:0,
+explanation:"Pseudocode menggunakan bentuk yang mudah dibaca manusia."
+},
+
+{
+q:"Algoritma dapat digunakan untuk...",
+a:[
+"Menyelesaikan berbagai masalah",
+"Hanya bermain game",
+"Hanya mengetik",
+"Hanya membuat gambar"
+],
+correct:0,
+explanation:"Algoritma dapat digunakan dalam banyak kegiatan dan bidang."
+},
+
+{
+q:"Dalam algoritma, 'Masukkan nama' berarti...",
+a:[
+"Memberikan data nama kepada program",
+"Menghapus nama",
+"Menampilkan nama",
+"Menutup komputer"
+],
+correct:0,
+explanation:"Masukkan berarti memberikan input kepada program."
+},
+
+{
+q:"Dalam algoritma, 'Tampilkan nama' berarti...",
+a:[
+"Menampilkan hasil kepada pengguna",
+"Menghapus nama",
+"Memasukkan nama",
+"Mematikan komputer"
+],
+correct:0,
+explanation:"Tampilkan berarti menghasilkan atau memperlihatkan informasi."
+},
+
+{
+q:"Urutan umum sebuah program adalah...",
+a:[
+"Input → proses → output",
+"Output → input → proses",
+"Proses → output → input",
+"Output → proses → input"
+],
+correct:0,
+explanation:"Secara umum data dimasukkan, diproses, kemudian hasil ditampilkan."
+},
+
+{
+q:"Pseudocode dibuat sebelum...",
+a:[
+"Kode program",
+"Masalah",
+"Belajar",
+"Menyalakan lampu"
+],
+correct:0,
+explanation:"Pseudocode digunakan sebagai rancangan sebelum kode program."
+},
+
+{
+q:"Algoritma menghitung 5 + 3 dapat berupa...",
+a:[
+"Masukkan angka → jumlahkan → tampilkan hasil",
+"Hapus angka → tampilkan",
+"Matikan komputer",
+"Buka internet"
+],
+correct:0,
+explanation:"Langkah tersebut menggambarkan proses penyelesaian."
+},
+
+{
+q:"Manakah yang merupakan kode Python?",
+a:[
+"umur = 15",
+"Masukkan umur",
+"MULAI umur SELESAI",
+"Tampilkan umur"
+],
+correct:0,
+explanation:"umur = 15 merupakan bentuk penulisan kode Python."
+},
+
+{
+q:"Dalam pseudocode, kata 'Tampilkan' berarti...",
+a:[
+"Memberikan output",
+"Menghapus input",
+"Mematikan komputer",
+"Mengganti keyboard"
+],
+correct:0,
+explanation:"Tampilkan berarti memberikan hasil kepada pengguna."
+},
+
+{
+q:"Dalam pseudocode, kata 'Masukkan' biasanya berarti...",
+a:[
+"Input",
+"Output",
+"Printer",
+"Monitor"
+],
+correct:0,
+explanation:"Masukkan menunjukkan data yang diberikan kepada program."
+},
+
+{
+q:"Satu masalah dapat memiliki...",
+a:[
+"Algoritma penyelesaian",
+"Hanya satu komputer",
+"Hanya satu keyboard",
+"Tidak ada solusi"
+],
+correct:0,
+explanation:"Masalah dapat diselesaikan dengan algoritma yang sesuai."
+},
+
+{
+q:"Apakah pseudocode harus menggunakan bahasa Inggris?",
+a:[
+"Ya",
+"Tidak",
+"Selalu",
+"Hanya di sekolah"
+],
+correct:1,
+explanation:"Pseudocode dapat ditulis dengan bahasa yang mudah dipahami, termasuk bahasa Indonesia."
+},
+
+{
+q:"Hal pertama yang perlu dilakukan saat akan membuat program adalah...",
+a:[
+"Memahami masalah",
+"Menulis kode sebanyak mungkin",
+"Mengganti keyboard",
+"Membuka game"
+],
+correct:0,
+explanation:"Memahami masalah adalah dasar untuk menentukan solusi."
+},
+
+{
+q:"Urutan algoritma yang salah dapat menyebabkan...",
+a:[
+"Solusi tidak berjalan dengan benar",
+"Program pasti sempurna",
+"Komputer otomatis memperbaiki",
+"Tidak ada pengaruh"
+],
+correct:0,
+explanation:"Langkah yang salah urutan dapat menghasilkan proses atau output yang salah."
+},
+
+{
+q:"Pseudocode dapat membantu programmer untuk...",
+a:[
+"Memeriksa logika sebelum membuat program",
+"Membeli laptop",
+"Mengubah ukuran monitor",
+"Mengganti mouse"
+],
+correct:0,
+explanation:"Pseudocode membantu melihat logika sebelum diterjemahkan menjadi kode."
+},
+
+{
+q:"Dalam Python, input() digunakan untuk...",
+a:[
+"Menerima masukan",
+"Menampilkan hasil",
+"Membuat judul HTML",
+"Menghapus file"
+],
+correct:0,
+explanation:"input() digunakan untuk menerima data dari pengguna."
+},
+
+{
+q:"Dalam Python, print() digunakan untuk...",
+a:[
+"Menampilkan informasi",
+"Menerima input",
+"Membuat keyboard",
+"Menghapus komputer"
+],
+correct:0,
+explanation:"print() digunakan untuk menampilkan informasi."
+},
+
+{
+q:"Manakah urutan yang benar?",
+a:[
+"Masalah → Algoritma → Pseudocode → Program",
+"Program → Masalah → Algoritma",
+"Pseudocode → Program → Masalah",
+"Python → Masalah → Algoritma"
+],
+correct:0,
+explanation:"Ini adalah alur sederhana dalam merancang program."
+},
+
+{
+q:"Belajar algoritma membantu kita berpikir...",
+a:[
+"Runtut dan logis",
+"Acak",
+"Tanpa aturan",
+"Tanpa tujuan"
+],
+correct:0,
+explanation:"Algoritma melatih cara berpikir sistematis, runtut, dan logis."
+},
+
+{
+q:"Jika pseudocode berisi 'Masukkan nama → Tampilkan nama', maka...",
+a:[
+"Program menerima nama kemudian menampilkannya",
+"Program menghapus nama",
+"Program membuka internet",
+"Program mematikan komputer"
+],
+correct:0,
+explanation:"Langkah pertama menerima data, langkah berikutnya menampilkan data."
+},
+
+{
+q:"Manakah pernyataan yang benar?",
+a:[
+"Algoritma adalah langkah penyelesaian masalah",
+"Pseudocode adalah komputer",
+"Python adalah algoritma",
+"HTML adalah pseudocode"
+],
+correct:0,
+explanation:"Algoritma merupakan langkah-langkah untuk menyelesaikan masalah."
+},
+
+{
+q:"'Masukkan nama → Tampilkan nama' merupakan contoh...",
+a:[
+"Algoritma sederhana",
+"Kode Python",
+"HTML",
+"Bahasa mesin"
+],
+correct:0,
+explanation:"Kalimat tersebut merupakan langkah penyelesaian yang sederhana."
+},
+
+{
+q:"'MULAI → Masukkan nama → Tampilkan nama → SELESAI' merupakan...",
+a:[
+"Pseudocode",
+"HTML",
+"Python",
+"Java"
+],
+correct:0,
+explanation:"Ini merupakan contoh pseudocode sederhana."
+},
+
+{
+q:"print('Halo') merupakan...",
+a:[
+"Kode Python",
+"Algoritma saja",
+"Pseudocode saja",
+"HTML"
+],
+correct:0,
+explanation:"print('Halo') adalah kode Python untuk menampilkan tulisan."
+},
+
+{
+q:"Jika kita ingin meminta umur siswa dalam Python, perintah yang sesuai adalah...",
+a:[
+"input()",
+"<h1>",
+"MULAI",
+"SELESAI"
+],
+correct:0,
+explanation:"input() digunakan untuk menerima data dari pengguna."
+},
+
+{
+q:"Jika kita ingin menampilkan hasil dalam Python, perintah yang sesuai adalah...",
+a:[
+"print()",
+"input()",
+"<p>",
+"MULAI"
+],
+correct:0,
+explanation:"print() digunakan untuk menampilkan hasil."
+},
+
+{
+q:"Manakah yang merupakan contoh masalah?",
+a:[
+"Ingin mengetahui luas sebuah persegi",
+"print()",
+"Python",
+"Keyboard"
+],
+correct:0,
+explanation:"'Ingin mengetahui luas persegi' merupakan sebuah masalah yang perlu diselesaikan."
+},
+
+{
+q:"Setelah mengetahui masalah, kita perlu menentukan...",
+a:[
+"Solusi atau langkah penyelesaian",
+"Warna keyboard",
+"Ukuran monitor",
+"Jenis speaker"
+],
+correct:0,
+explanation:"Setelah masalah dipahami, kita mencari solusi melalui algoritma."
+},
+
+{
+q:"Algoritma yang baik seharusnya...",
+a:[
+"Jelas dan terurut",
+"Acak",
+"Sulit dipahami",
+"Tidak memiliki tujuan"
+],
+correct:0,
+explanation:"Algoritma sebaiknya jelas, terurut, dan memiliki tujuan."
+},
+
+{
+q:"Pseudocode bukanlah...",
+a:[
+"Bahasa pemrograman yang langsung dijalankan",
+"Cara merancang algoritma",
+"Rancangan logika",
+"Penulisan langkah program"
+],
+correct:0,
+explanation:"Pseudocode bukan bahasa pemrograman yang langsung dijalankan komputer."
+},
+
+{
+q:"Python, Java, dan JavaScript termasuk...",
+a:[
+"Bahasa pemrograman",
+"Algoritma",
+"Pseudocode",
+"Hardware"
+],
+correct:0,
+explanation:"Ketiganya merupakan bahasa pemrograman."
+},
+
+{
+q:"Jika ingin membuat program salam sederhana, algoritma yang tepat adalah...",
+a:[
+"Masukkan nama → Tampilkan salam",
+"Tampilkan salam → Masukkan nama",
+"Hapus nama → Tampilkan",
+"Matikan komputer"
+],
+correct:0,
+explanation:"Nama perlu dimasukkan terlebih dahulu kemudian digunakan untuk membuat salam."
+},
+
+{
+q:"Manakah yang merupakan contoh output?",
+a:[
+"Tulisan 'Halo Siti' muncul di layar",
+"Mengetik nama",
+"Memasukkan umur",
+"Mengklik tombol input"
+],
+correct:0,
+explanation:"Informasi yang muncul di layar merupakan output."
+},
+
+{
+q:"Manakah yang merupakan contoh input?",
+a:[
+"Mengetik nama pada keyboard",
+"Tulisan muncul di layar",
+"Hasil perhitungan muncul",
+"Pesan selesai muncul"
+],
+correct:0,
+explanation:"Data yang diberikan pengguna merupakan input."
+},
+
+{
+q:"Mengapa pseudocode menggunakan bahasa sederhana?",
+a:[
+"Agar manusia mudah memahami logikanya",
+"Agar komputer menjadi lebih mahal",
+"Agar layar menjadi besar",
+"Agar internet lebih cepat"
+],
+correct:0,
+explanation:"Pseudocode ditujukan untuk mempermudah manusia memahami rancangan program."
+}
+
+];
+
+
+/* =========================================================
+   VARIABEL PERMAINAN
+========================================================= */
+
+let currentTeam = 0;
+
+let diceNumber = 0;
+
+let currentQuestion = null;
+
+let usedQuestions = [];
+
+let gameOver = false;
+
+
+/* =========================================================
+   MEMBUAT PAPAN
+========================================================= */
+
+function createBoard(){
+
+    const board =
+        document.getElementById("board");
+
+    board.innerHTML="";
+
+    /*
+       Membuat kotak 1 sampai 100.
+       Tampilan dibuat zig-zag seperti papan ular tangga.
+    */
+
+    for(let row=9; row>=0; row--){
+
+        let start=row*10+1;
+
+        let nums=[];
+
+        for(let n=start;n<start+10;n++){
+            nums.push(n);
+        }
+
+        if((9-row)%2===1){
+            nums.reverse();
+        }
+
+        nums.forEach(num=>{
+
+            const cell=
+                document.createElement("div");
+
+            cell.className="cell";
+
+            cell.id="cell-"+num;
+
+            let label="";
+
+            if(ladders[num]){
+                cell.classList.add("ladder-start");
+                label="🪜";
+            }
+
+            if(snakes[num]){
+                cell.classList.add("snake-start");
+                label="🐍";
+            }
+
+            cell.innerHTML=`
+                <span class="number">${num}</span>
+                <span class="cell-label">${label}</span>
+                <div class="tokens" id="tokens-${num}"></div>
+            `;
+
+            board.appendChild(cell);
+
+        });
+
+    }
+
+    drawSnakesAndLadders();
+
+    updateBoard();
+
+}
+
+
+/* =========================================================
+   POSISI TENGAH KOTAK
+========================================================= */
+
+function getCellCenter(num){
+
+    /*
+       Nomor 1 berada di kiri bawah.
+       Nomor 100 berada di kiri atas.
+    */
+
+    let row=Math.floor((num-1)/10);
+
+    let col=(num-1)%10;
+
+    if(row%2===1){
+        col=9-col;
+    }
+
+    /*
+       SVG menggunakan koordinat 0-1000.
+       Setiap kotak 100x100.
+    */
+
+    let x=col*100+50;
+
+    let y=(9-row)*100+50;
+
+    return {x,y};
+
+}
+
+
+/* =========================================================
+   GAMBAR ULAR & TANGGA
+========================================================= */
+
+function drawSnakesAndLadders(){
+
+    const svg=
+        document.getElementById("boardSvg");
+
+    svg.innerHTML="";
+
+    /*
+       TANGGA
+    */
+
+    Object.entries(ladders).forEach(([from,to],index)=>{
+
+        const a=getCellCenter(Number(from));
+
+        const b=getCellCenter(Number(to));
+
+        let dx=b.x-a.x;
+        let dy=b.y-a.y;
+
+        let length=Math.sqrt(dx*dx+dy*dy);
+
+        let nx=-dy/length;
+        let ny=dx/length;
+
+        let offset=11;
+
+        let x1=a.x+nx*offset;
+        let y1=a.y+ny*offset;
+
+        let x2=b.x+nx*offset;
+        let y2=b.y+ny*offset;
+
+        let x3=a.x-nx*offset;
+        let y3=a.y-ny*offset;
+
+        let y4=a.y-ny*offset;
+
+        let x4=b.x-nx*offset;
+        let y4b=b.y-ny*offset;
+
+        const line1=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "line"
+            );
+
+        line1.setAttribute("x1",x1);
+        line1.setAttribute("y1",y1);
+        line1.setAttribute("x2",x2);
+        line1.setAttribute("y2",y2);
+        line1.setAttribute("class","ladder-line");
+
+        svg.appendChild(line1);
+
+
+        const line2=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "line"
+            );
+
+        line2.setAttribute("x1",x3);
+        line2.setAttribute("y1",y3);
+        line2.setAttribute("x2",x4);
+        line2.setAttribute("y2",y4b);
+        line2.setAttribute("class","ladder-line");
+
+        svg.appendChild(line2);
+
+
+        /*
+           Anak tangga
+        */
+
+        for(let t=.12;t<.9;t+=.12){
+
+            let cx=a.x+dx*t;
+            let cy=a.y+dy*t;
+
+            let rx1=cx+nx*offset;
+            let ry1=cy+ny*offset;
+
+            let rx2=cx-nx*offset;
+            let ry2=cy-ny*offset;
+
+            const step=
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "line"
+                );
+
+            step.setAttribute("x1",rx1);
+            step.setAttribute("y1",ry1);
+            step.setAttribute("x2",rx2);
+            step.setAttribute("y2",ry2);
+
+            step.setAttribute(
+                "class",
+                "ladder-step"
+            );
+
+            svg.appendChild(step);
+        }
+
+    });
+
+
+    /*
+       ULAR
+    */
+
+    Object.entries(snakes).forEach(([from,to],index)=>{
+
+        const a=getCellCenter(Number(from));
+
+        const b=getCellCenter(Number(to));
+
+        const midX=(a.x+b.x)/2;
+
+        const midY=(a.y+b.y)/2;
+
+        const curve=index%2===0 ? 65 : -65;
+
+        const c1x=midX+curve;
+        const c1y=midY-curve/2;
+
+        const c2x=midX-curve;
+        const c2y=midY+curve/2;
+
+        const path=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "path"
+            );
+
+        const d=`
+            M ${a.x} ${a.y}
+            C ${c1x} ${c1y},
+              ${c2x} ${c2y},
+              ${b.x} ${b.y}
+        `;
+
+        path.setAttribute("d",d);
+        path.setAttribute("class","snake-line");
+
+        svg.appendChild(path);
+
+
+        /*
+           Garis kecil sebagai motif ular
+        */
+
+        const detail=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "path"
+            );
+
+        detail.setAttribute("d",d);
+        detail.setAttribute(
+            "class",
+            "snake-line2"
+        );
+
+        svg.appendChild(detail);
+
+
+        /*
+           Kepala ular
+        */
+
+        const head=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "circle"
+            );
+
+        head.setAttribute("cx",a.x);
+        head.setAttribute("cy",a.y);
+        head.setAttribute("r","19");
+        head.setAttribute(
+            "class",
+            "snake-head"
+        );
+
+        svg.appendChild(head);
+
+
+        /*
+           Mata
+        */
+
+        [-6,6].forEach(offset=>{
+
+            const eye=
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+            eye.setAttribute(
+                "cx",
+                a.x+offset
+            );
+
+            eye.setAttribute(
+                "cy",
+                a.y-5
+            );
+
+            eye.setAttribute(
+                "r",
+                "5"
+            );
+
+            eye.setAttribute(
+                "class",
+                "snake-eye"
+            );
+
+            svg.appendChild(eye);
+
+            const pupil=
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+            pupil.setAttribute(
+                "cx",
+                a.x+offset
+            );
+
+            pupil.setAttribute(
+                "cy",
+                a.y-5
+            );
+
+            pupil.setAttribute(
+                "r",
+                "2"
+            );
+
+            pupil.setAttribute(
+                "class",
+                "snake-pupil"
+            );
+
+            svg.appendChild(pupil);
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   UPDATE PAPAN
+========================================================= */
+
+function updateBoard(){
+
+    for(let i=1;i<=100;i++){
+
+        const box=
+            document.getElementById(
+                "tokens-"+i
+            );
+
+        if(box){
+            box.innerHTML="";
+        }
+
+    }
+
+
+    teams.forEach((team,index)=>{
+
+        const box=
+            document.getElementById(
+                "tokens-"+team.position
+            );
+
+        if(box){
+
+            const token=
+                document.createElement("div");
+
+            token.className=
+                "token "+team.color;
+
+            token.innerText=index+1;
+
+            box.appendChild(token);
+
+        }
+
+        document.getElementById(
+            "pos"+index
+        ).innerText=team.position;
+
+    });
+
+}
+
+
+/* =========================================================
+   UPDATE GILIRAN
+========================================================= */
+
+function updateTurn(){
+
+    document.getElementById(
+        "turnName"
+    ).innerText=
+        teams[currentTeam].name;
+
+    for(let i=0;i<4;i++){
+
+        document.getElementById(
+            "team"+i
+        ).classList.remove("active");
+
+    }
+
+    document.getElementById(
+        "team"+currentTeam
+    ).classList.add("active");
+
+}
+
+
+/* =========================================================
+   RANDOM SOAL
+========================================================= */
+
+function randomQuestion(){
+
+    if(usedQuestions.length>=questions.length){
+
+        usedQuestions=[];
+
+    }
+
+    let index;
+
+    do{
+
+        index=
+            Math.floor(
+                Math.random()*questions.length
+            );
+
+    }while(
+        usedQuestions.includes(index)
+    );
+
+    usedQuestions.push(index);
+
+    return questions[index];
+
+}
+
+
+/* =========================================================
+   LEMPAR DADU
+========================================================= */
+
+function rollDice(){
+
+    if(gameOver)return;
+
+    const btn=
+        document.getElementById(
+            "rollBtn"
+        );
+
+    const dice=
+        document.getElementById(
+            "dice"
+        );
+
+    btn.disabled=true;
+
+    dice.classList.add("rolling");
+
+    document.getElementById(
+        "status"
+    ).innerText=
+        "🎲 Dadu sedang dilempar...";
+
+    let count=0;
+
+    const interval=
+        setInterval(()=>{
+
+            dice.innerText=
+                Math.floor(
+                    Math.random()*6
+                )+1;
+
+            count++;
+
+            if(count>=9){
+
+                clearInterval(interval);
+
+                diceNumber=
+                    Math.floor(
+                        Math.random()*6
+                    )+1;
+
+                dice.innerText=
+                    diceNumber;
+
+                dice.classList.remove(
+                    "rolling"
+                );
+
+                showQuestion();
+
+            }
+
+        },80);
+
+}
+
+
+/* =========================================================
+   TAMPILKAN PERTANYAAN
+========================================================= */
+
+function showQuestion(){
+
+    currentQuestion=
+        randomQuestion();
+
+    const question=
+        document.getElementById(
+            "question"
+        );
+
+    question.classList.add("show");
+
+    document.getElementById(
+        "questionNumber"
+    ).innerText=
+        "Dadu: "+diceNumber;
+
+    document.getElementById(
+        "questionText"
+    ).innerText=
+        currentQuestion.q;
+
+    const answers=
+        document.getElementById(
+            "answers"
+        );
+
+    answers.innerHTML="";
+
+    currentQuestion.a.forEach(
+        (answer,index)=>{
+
+            const button=
+                document.createElement(
+                    "button"
+                );
+
+            button.className="answer";
+
+            button.innerHTML=
+                "<b>"+
+                String.fromCharCode(
+                    65+index
+                )+
+                ".</b> "+
+                answer;
+
+            button.onclick=()=>{
+                checkAnswer(index);
+            };
+
+            answers.appendChild(button);
+
+        }
+    );
+
+    const feedback=
+        document.getElementById(
+            "feedback"
+        );
+
+    feedback.className="feedback";
+
+    feedback.innerHTML="";
+
+    document.getElementById(
+        "nextBtn"
+    ).style.display="none";
+
+    document.getElementById(
+        "status"
+    ).innerText=
+        teams[currentTeam].name+
+        " sedang menjawab.";
+
+}
+
+
+/* =========================================================
+   CEK JAWABAN
+========================================================= */
+
+function checkAnswer(selected){
+
+    const buttons=
+        document.querySelectorAll(
+            ".answer"
+        );
+
+    buttons.forEach(
+        button=>{
+            button.disabled=true;
+        }
+    );
+
+
+    const feedback=
+        document.getElementById(
+            "feedback"
+        );
+
+
+    if(
+        selected===
+        currentQuestion.correct
+    ){
+
+        buttons[selected]
+            .classList.add(
+                "correct"
+            );
+
+        feedback.className=
+            "feedback show good";
+
+        feedback.innerHTML=
+            "🎉 <b>BENAR!</b><br>"+
+            currentQuestion.explanation+
+            "<br><br>"+
+            "🚀 Bidak maju "+
+            diceNumber+
+            " langkah!";
+
+        document.getElementById(
+            "status"
+        ).innerText=
+            "✅ Jawaban benar!";
+
+        movePlayer(diceNumber);
+
+    }
+
+    else{
+
+        buttons[selected]
+            .classList.add(
+                "wrong"
+            );
+
+        buttons[
+            currentQuestion.correct
+        ].classList.add(
+            "correct"
+        );
+
+        feedback.className=
+            "feedback show bad";
+
+        feedback.innerHTML=
+            "❌ <b>JAWABAN SALAH.</b><br>"+
+            currentQuestion.explanation+
+            "<br><br>"+
+            "⛔ Bidak tidak bergerak.";
+
+        document.getElementById(
+            "status"
+        ).innerText=
+            "❌ Jawaban salah. Tetap di posisi.";
+
+    }
+
+
+    if(!gameOver){
+
+        document.getElementById(
+            "nextBtn"
+        ).style.display="block";
+
+    }
+
+}
+
+
+/* =========================================================
+   GERAK BIDAK
+========================================================= */
+
+function movePlayer(steps){
+
+    const team=
+        teams[currentTeam];
+
+    let target=
+        team.position+steps;
+
+    if(target>100){
+        target=100;
+    }
+
+    /*
+       Gerakkan satu per satu
+       agar terasa seperti permainan.
+    */
+
+    let current=
+        team.position;
+
+    const moveInterval=
+        setInterval(()=>{
+
+            if(current<target){
+
+                current++;
+
+                team.position=current;
+
+                updateBoard();
+
+            }
+            else{
+
+                clearInterval(moveInterval);
+
+                checkSnakeOrLadder();
+
+            }
+
+        },180);
+
+}
+
+
+/* =========================================================
+   CEK ULAR / TANGGA
+========================================================= */
+
+function checkSnakeOrLadder(){
+
+    const team=
+        teams[currentTeam];
+
+    /*
+       TANGGA
+    */
+
+    if(ladders[team.position]){
+
+        const from=
+            team.position;
+
+        const to=
+            ladders[team.position];
+
+        document.getElementById(
+            "status"
+        ).innerText=
+            "🪜 WOOOOW! "+
+            team.name+
+            " mendapat TANGGA! "+
+            from+" → "+to;
+
+        setTimeout(()=>{
+
+            team.position=to;
+
+            updateBoard();
+
+            checkWinner();
+
+        },700);
+
+        return;
+    }
+
+
+    /*
+       ULAR
+    */
+
+    if(snakes[team.position]){
+
+        const from=
+            team.position;
+
+        const to=
+            snakes[team.position];
+
+        document.getElementById(
+            "status"
+        ).innerText=
+            "🐍 AWWW! "+
+            team.name+
+            " terkena ULAR! "+
+            from+" → "+to;
+
+        setTimeout(()=>{
+
+            team.position=to;
+
+            updateBoard();
+
+            checkWinner();
+
+        },700);
+
+        return;
+    }
+
+
+    checkWinner();
+
+}
+
+
+/* =========================================================
+   CEK PEMENANG
+========================================================= */
+
+function checkWinner(){
+
+    const team=
+        teams[currentTeam];
+
+    if(team.position>=100){
+
+        gameOver=true;
+
+        document.getElementById(
+            "winnerTitle"
+        ).innerText=
+            "🏆 PEMENANG!";
+
+        document.getElementById(
+            "winnerText"
+        ).innerText=
+            team.name+
+            " berhasil mencapai kotak 100!";
+
+        document.getElementById(
+            "winnerOverlay"
+        ).classList.add("show");
+
+        createConfetti();
+
+    }
+
+}
+
+
+/* =========================================================
+   GILIRAN BERIKUTNYA
+========================================================= */
+
+function nextTurn(){
+
+    if(gameOver)return;
+
+    currentTeam++;
+
+    if(currentTeam>=4){
+        currentTeam=0;
+    }
+
+    document.getElementById(
+        "question"
+    ).classList.remove("show");
+
+    document.getElementById(
+        "dice"
+    ).innerText="?";
+
+    document.getElementById(
+        "rollBtn"
+    ).disabled=false;
+
+    document.getElementById(
+        "status"
+    ).innerText=
+        "Sekarang giliran "+
+        teams[currentTeam].name+
+        ". Tekan tombol dadu.";
+
+    updateTurn();
+
+}
+
+
+/* =========================================================
+   CONFETTI PEMENANG
+========================================================= */
+
+function createConfetti(){
+
+    for(let i=0;i<90;i++){
+
+        const confetti=
+            document.createElement(
+                "div"
+            );
+
+        confetti.className="confetti";
+
+        confetti.style.left=
+            Math.random()*100+"vw";
+
+        confetti.style.animationDelay=
+            Math.random()*1.5+"s";
+
+        confetti.style.background=
+            [
+                "#ef476f",
+                "#118ab2",
+                "#06d6a0",
+                "#ffd166",
+                "#9b5de5",
+                "#ff7b00"
+            ][
+                Math.floor(
+                    Math.random()*6
+                )
+            ];
+
+        confetti.style.transform=
+            "rotate("+
+            Math.random()*360+
+            "deg)";
+
+        document.body.appendChild(
+            confetti
+        );
+
+        setTimeout(()=>{
+            confetti.remove();
+        },4500);
+
+    }
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetGame(){
+
+    teams.forEach(team=>{
+        team.position=1;
+    });
+
+    currentTeam=0;
+
+    diceNumber=0;
+
+    currentQuestion=null;
+
+    usedQuestions=[];
+
+    gameOver=false;
+
+    document.getElementById(
+        "winnerOverlay"
+    ).classList.remove("show");
+
+    document.getElementById(
+        "question"
+    ).classList.remove("show");
+
+    document.getElementById(
+        "dice"
+    ).innerText="?";
+
+    document.getElementById(
+        "rollBtn"
+    ).disabled=false;
+
+    document.getElementById(
+        "status"
+    ).innerText=
+        "Tekan tombol dadu untuk memulai permainan.";
+
+    updateBoard();
+
+    updateTurn();
+
+}
+
+
+/* =========================================================
+   MULAI GAME
+========================================================= */
+
+createBoard();
+
+updateTurn();
+
+</script>
+
+</body>
+</html>

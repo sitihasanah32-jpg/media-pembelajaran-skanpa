@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Laboratorium Alat Ukur IPAS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc,#ecfeff);
+    color:#1f2937;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    background:linear-gradient(135deg,#4338ca,#7c3aed);
+    color:white;
+    text-align:center;
+    padding:35px 20px;
+    border-radius:0 0 30px 30px;
+    box-shadow:0 5px 18px rgba(0,0,0,.15);
+}
+
+header h1{
+    margin:0;
+    font-size:34px;
+}
+
+header p{
+    margin:10px 0 0;
+    font-size:17px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px;
+}
+
+/* =========================
+   PETUNJUK
+========================= */
+
+.petunjuk{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    margin-bottom:25px;
+    text-align:center;
+}
+
+.petunjuk h2{
+    margin-top:0;
+    color:#4338ca;
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.filter{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:30px;
+}
+
+.filter button{
+    border:none;
+    padding:12px 18px;
+    border-radius:30px;
+    background:#e5e7eb;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.filter button:hover{
+    transform:translateY(-2px);
+}
+
+.filter button.active{
+    background:#4338ca;
+    color:white;
+}
+
+/* =========================
+   GRID KARTU
+========================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+/* =========================
+   KARTU ALAT
+========================= */
+
+.card{
+    background:white;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,.10);
+    transition:.3s;
+    border:2px solid #e5e7eb;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+.card-image{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+    background:#f8fafc;
+    padding:15px;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card h2{
+    margin:0 0 15px;
+    color:#3730a3;
+    font-size:23px;
+}
+
+.info{
+    margin:9px 0;
+    padding:10px 12px;
+    background:#f8fafc;
+    border-radius:10px;
+}
+
+.label{
+    font-weight:bold;
+    color:#4b5563;
+}
+
+.fungsi{
+    background:#eef2ff;
+    border-left:5px solid #4338ca;
+    padding:13px;
+    border-radius:10px;
+    margin-top:14px;
+}
+
+.fungsi strong{
+    color:#3730a3;
+}
+
+/* =========================
+   TOMBOL CARA MENGGUNAKAN
+========================= */
+
+.detail-btn{
+    width:100%;
+    margin-top:15px;
+    padding:13px;
+    border:none;
+    border-radius:12px;
+    background:#4338ca;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.detail-btn:hover{
+    background:#312e81;
+}
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail{
+    display:none;
+    margin-top:15px;
+    background:#f5f3ff;
+    padding:15px;
+    border-radius:12px;
+}
+
+.detail ol{
+    padding-left:22px;
+}
+
+.detail li{
+    margin-bottom:8px;
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz{
+    background:white;
+    margin-top:35px;
+    padding:28px;
+    border-radius:22px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+    text-align:center;
+}
+
+.quiz h2{
+    color:#4338ca;
+}
+
+.quiz button{
+    margin:6px;
+    padding:12px 18px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    background:#e0e7ff;
+    font-weight:bold;
+}
+
+.quiz button:hover{
+    background:#c7d2fe;
+}
+
+#hasil{
+    margin-top:18px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* =========================
+   TABEL RINGKAS
+========================= */
+
+.tabel-ringkas{
+    margin-top:35px;
+    background:white;
+    padding:25px;
+    border-radius:22px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+.tabel-ringkas h2{
+    text-align:center;
+    color:#4338ca;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #d1d5db;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#4338ca;
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f9fafb;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:600px){
+
+    header h1{
+        font-size:26px;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    .card-image{
+        height:190px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <h1>🔬 LABORATORIUM ALAT UKUR</h1>
+
+    <p>
+        IPAS Kelas X • Besaran • Satuan • Pengukuran
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- =========================
+     PETUNJUK
+========================= -->
+
+<div class="petunjuk">
+
+    <h2>🎯 Misi Belajar Hari Ini</h2>
+
+    <p>
+        Kenali <b>besaran</b>, <b>satuan SI</b>,
+        <b>alat ukur</b>, dan <b>cara menggunakannya</b>.
+    </p>
+
+    <p>
+        Pilih kategori besaran di bawah,
+        lalu buka kartu alat ukurnya.
+    </p>
+
+</div>
+
+
+<!-- =========================
+     FILTER
+========================= -->
+
+<div class="filter">
+
+    <button class="active"
+    onclick="filterAlat('semua',this)">
+        🔎 Semua
+    </button>
+
+    <button
+    onclick="filterAlat('panjang',this)">
+        📏 Panjang
+    </button>
+
+    <button
+    onclick="filterAlat('massa',this)">
+        ⚖️ Massa
+    </button>
+
+    <button
+    onclick="filterAlat('waktu',this)">
+        ⏱️ Waktu
+    </button>
+
+    <button
+    onclick="filterAlat('suhu',this)">
+        🌡️ Suhu
+    </button>
+
+    <button
+    onclick="filterAlat('arus',this)">
+        ⚡ Kuat Arus
+    </button>
+
+    <button
+    onclick="filterAlat('volume',this)">
+        🧪 Volume
+    </button>
+
+</div>
+
+
+<!-- =========================
+     KARTU ALAT UKUR
+========================= -->
+
+<div class="grid">
+
+
+<!-- =========================
+     MISTAR
+========================= -->
+
+<div class="card" data-kategori="panjang">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ruler.jpg/640px-Ruler.jpg"
+alt="Mistar atau penggaris">
+
+<div class="card-content">
+
+<h2>📏 Mistar / Penggaris</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Panjang
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+meter (m)
+</div>
+
+<div class="info">
+<span class="label">Ketelitian umum:</span>
+1 mm
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur panjang atau jarak benda
+dengan ketelitian sederhana.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Letakkan mistar sejajar dengan benda.
+</li>
+
+<li>
+Pastikan angka nol berada tepat di ujung benda.
+</li>
+
+<li>
+Lihat posisi ujung benda lainnya.
+</li>
+
+<li>
+Baca skala dengan posisi mata tegak lurus.
+</li>
+
+</ol>
+
+<b>💡 Tips:</b>
+Hindari melihat skala dari posisi miring.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     JANGKA SORONG
+========================= -->
+
+<div class="card" data-kategori="panjang">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Vernier_caliper.jpg/640px-Vernier_caliper.jpg"
+alt="Jangka sorong">
+
+<div class="card-content">
+
+<h2>📐 Jangka Sorong</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Panjang
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+meter (m)
+</div>
+
+<div class="info">
+<span class="label">Kegunaan:</span>
+Diameter luar, diameter dalam, kedalaman
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur panjang atau diameter benda
+dengan ketelitian lebih tinggi daripada mistar.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Periksa posisi nol sebelum mengukur.
+</li>
+
+<li>
+Gunakan rahang luar untuk mengukur diameter luar.
+</li>
+
+<li>
+Jepit benda dengan lembut.
+</li>
+
+<li>
+Baca skala utama.
+</li>
+
+<li>
+Baca skala nonius.
+</li>
+
+<li>
+Jumlahkan hasil pembacaan.
+</li>
+
+</ol>
+
+<b>💡 Tips:</b>
+Pastikan benda tidak miring ketika dijepit.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     MIKROMETER SEKRUP
+========================= -->
+
+<div class="card" data-kategori="panjang">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Micrometer_screw_gauge.jpg/640px-Micrometer_screw_gauge.jpg"
+alt="Mikrometer sekrup">
+
+<div class="card-content">
+
+<h2>🔩 Mikrometer Sekrup</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Panjang
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+meter (m)
+</div>
+
+<div class="info">
+<span class="label">Ketelitian umum:</span>
+0,01 mm
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur ketebalan atau diameter benda
+yang sangat kecil dengan ketelitian tinggi.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Pastikan anvil dan spindle bersih.
+</li>
+
+<li>
+Putar thimble untuk membuka celah.
+</li>
+
+<li>
+Letakkan benda di antara anvil dan spindle.
+</li>
+
+<li>
+Putar ratchet secara perlahan.
+</li>
+
+<li>
+Hentikan ketika benda sudah terjepit dengan tepat.
+</li>
+
+<li>
+Baca skala utama dan skala putar.
+</li>
+
+<li>
+Tentukan hasil pengukuran.
+</li>
+
+</ol>
+
+<b>💡 Tips:</b>
+Jangan menjepit benda terlalu kuat.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     NERACA
+========================= -->
+
+<div class="card" data-kategori="massa">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Triple_beam_balance.jpg/640px-Triple_beam_balance.jpg"
+alt="Neraca">
+
+<div class="card-content">
+
+<h2>⚖️ Neraca</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Massa
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+kilogram (kg)
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur massa suatu benda.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Pastikan neraca berada pada posisi nol.
+</li>
+
+<li>
+Letakkan benda pada tempat yang tersedia.
+</li>
+
+<li>
+Atur pemberat atau skala sesuai jenis neraca.
+</li>
+
+<li>
+Tunggu sampai posisi seimbang.
+</li>
+
+<li>
+Baca hasil pengukuran.
+</li>
+
+</ol>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     STOPWATCH
+========================= -->
+
+<div class="card" data-kategori="waktu">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Stopwatch.jpg/640px-Stopwatch.jpg"
+alt="Stopwatch">
+
+<div class="card-content">
+
+<h2>⏱️ Stopwatch</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Waktu
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+sekon (s)
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur lama berlangsungnya suatu kegiatan
+atau peristiwa.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Tekan tombol reset.
+</li>
+
+<li>
+Tekan tombol start ketika kegiatan dimulai.
+</li>
+
+<li>
+Tekan tombol stop ketika kegiatan selesai.
+</li>
+
+<li>
+Baca waktu yang ditampilkan.
+</li>
+
+</ol>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     TERMOMETER
+========================= -->
+
+<div class="card" data-kategori="suhu">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Thermometer.jpg/640px-Thermometer.jpg"
+alt="Termometer">
+
+<div class="card-content">
+
+<h2>🌡️ Termometer</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Suhu
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+kelvin (K)
+</div>
+
+<div class="info">
+<span class="label">Satuan yang sering digunakan:</span>
+°C
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur suhu suatu benda atau lingkungan.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Letakkan sensor termometer pada objek yang diukur.
+</li>
+
+<li>
+Tunggu sampai angka stabil.
+</li>
+
+<li>
+Pastikan mata sejajar dengan skala jika menggunakan termometer berskala.
+</li>
+
+<li>
+Catat hasil pengukuran.
+</li>
+
+</ol>
+
+<b>💡 Ingat:</b>
+Satuan SI untuk suhu adalah kelvin (K).
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     AMPEREMETER
+========================= -->
+
+<div class="card" data-kategori="arus">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Ammeter.jpg/640px-Ammeter.jpg"
+alt="Amperemeter">
+
+<div class="card-content">
+
+<h2>⚡ Amperemeter</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Kuat arus listrik
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+ampere (A)
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur kuat arus listrik
+yang mengalir dalam rangkaian.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Matikan sumber listrik terlebih dahulu.
+</li>
+
+<li>
+Hubungkan amperemeter secara seri dalam rangkaian.
+</li>
+
+<li>
+Pilih batas ukur yang sesuai.
+</li>
+
+<li>
+Nyalakan rangkaian.
+</li>
+
+<li>
+Baca nilai arus yang ditunjukkan alat.
+</li>
+
+</ol>
+
+<b>⚠️ Perhatian:</b>
+Jangan memasang amperemeter secara paralel langsung pada sumber tegangan.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================
+     GELAS UKUR
+========================= -->
+
+<div class="card" data-kategori="volume">
+
+<img
+class="card-image"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Graduated_cylinder.jpg/640px-Graduated_cylinder.jpg"
+alt="Gelas ukur">
+
+<div class="card-content">
+
+<h2>🧪 Gelas Ukur</h2>
+
+<div class="info">
+<span class="label">Besaran:</span>
+Volume
+</div>
+
+<div class="info">
+<span class="label">Satuan SI:</span>
+meter kubik (m³)
+</div>
+
+<div class="info">
+<span class="label">Satuan yang sering digunakan:</span>
+mL atau L
+</div>
+
+<div class="fungsi">
+
+<strong>Fungsi:</strong><br>
+
+Mengukur volume cairan.
+
+</div>
+
+<button
+class="detail-btn"
+onclick="toggleDetail(this)">
+📖 Cara Menggunakan
+</button>
+
+<div class="detail">
+
+<b>Langkah penggunaan:</b>
+
+<ol>
+
+<li>
+Letakkan gelas ukur pada permukaan datar.
+</li>
+
+<li>
+Masukkan cairan secara perlahan.
+</li>
+
+<li>
+Pastikan mata sejajar dengan skala.
+</li>
+
+<li>
+Untuk cairan dengan meniskus cekung,
+baca bagian bawah meniskus.
+</li>
+
+<li>
+Catat volume yang terbaca.
+</li>
+
+</ol>
+
+</div>
+
+</div>
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     TABEL RINGKAS
+========================= -->
+
+<div class="tabel-ringkas">
+
+<h2>📋 Peta Besaran → Satuan → Alat Ukur</h2>
+
+<table>
+
+<tr>
+
+<th>Besaran</th>
+<th>Satuan SI</th>
+<th>Alat Ukur</th>
+
+</tr>
+
+<tr>
+
+<td>Panjang</td>
+<td>meter (m)</td>
+<td>Mistar, Jangka Sorong, Mikrometer Sekrup</td>
+
+</tr>
+
+<tr>
+
+<td>Massa</td>
+<td>kilogram (kg)</td>
+<td>Neraca</td>
+
+</tr>
+
+<tr>
+
+<td>Waktu</td>
+<td>sekon (s)</td>
+<td>Stopwatch</td>
+
+</tr>
+
+<tr>
+
+<td>Suhu</td>
+<td>kelvin (K)</td>
+<td>Termometer</td>
+
+</tr>
+
+<tr>
+
+<td>Kuat Arus Listrik</td>
+<td>ampere (A)</td>
+<td>Amperemeter</td>
+
+</tr>
+
+<tr>
+
+<td>Volume</td>
+<td>meter kubik (m³)</td>
+<td>Gelas Ukur*</td>
+
+</tr>
+
+</table>
+
+<p style="font-size:13px;color:#666;margin-top:12px;">
+* Dalam praktik laboratorium, volume cairan sering dinyatakan dalam mL atau L.
+</p>
+
+</div>
+
+
+<!-- =========================
+     QUIZ
+========================= -->
+
+<div class="quiz">
+
+<h2>🎯 TANTANGAN CEPAT</h2>
+
+<p>
+Kamu ingin mengukur <b>diameter kawat yang sangat kecil</b>
+dengan ketelitian tinggi.
+</p>
+
+<p><b>Alat apa yang paling sesuai?</b></p>
+
+<button onclick="jawab(false)">
+📏 Mistar
+</button>
+
+<button onclick="jawab(true)">
+🔩 Mikrometer Sekrup
+</button>
+
+<button onclick="jawab(false)">
+⏱️ Stopwatch
+</button>
+
+<button onclick="jawab(false)">
+⚖️ Neraca
+</button>
+
+<div id="hasil"></div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+🔬 IPAS Kelas X  
+<br>
+<b>Besaran • Satuan • Alat Ukur • Pengukuran</b>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   FILTER ALAT
+========================= */
+
+function filterAlat(kategori,tombol){
+
+    const cards =
+    document.querySelectorAll(".card");
+
+    const buttons =
+    document.querySelectorAll(".filter button");
+
+    buttons.forEach(function(btn){
+
+        btn.classList.remove("active");
+
+    });
+
+    tombol.classList.add("active");
+
+    cards.forEach(function(card){
+
+        if(
+            kategori === "semua" ||
+            card.dataset.kategori === kategori
+        ){
+
+            card.style.display="block";
+
+        }else{
+
+            card.style.display="none";
+
+        }
+
+    });
+
+}
+
+
+/* =========================
+   BUKA / TUTUP DETAIL
+========================= */
+
+function toggleDetail(button){
+
+    const detail =
+    button.nextElementSibling;
+
+    if(detail.style.display === "block"){
+
+        detail.style.display="none";
+
+        button.innerHTML =
+        "📖 Cara Menggunakan";
+
+    }else{
+
+        detail.style.display="block";
+
+        button.innerHTML =
+        "🔽 Tutup Cara Menggunakan";
+
+    }
+
+}
+
+
+/* =========================
+   QUIZ
+========================= */
+
+function jawab(benar){
+
+    const hasil =
+    document.getElementById("hasil");
+
+    if(benar){
+
+        hasil.innerHTML =
+        "🎉 BENAR! Mikrometer sekrup digunakan untuk mengukur benda kecil dengan ketelitian tinggi.";
+
+        hasil.style.color="#15803d";
+
+    }else{
+
+        hasil.innerHTML =
+        "❌ Belum tepat. Cari alat ukur panjang yang memiliki ketelitian lebih tinggi.";
+
+        hasil.style.color="#dc2626";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAHJONG INFORMATIKA</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at top,#1e3a8a,#020617 70%);
+    color:white;
+    text-align:center;
+    min-height:100vh;
+}
+
+/* =========================
+HEADER
+========================= */
+
+header{
+    padding:18px 10px 10px;
+}
+
+header h1{
+    margin:0;
+    font-size:34px;
+    color:#67e8f9;
+    text-shadow:0 0 15px #0891b2;
+}
+
+header p{
+    margin:6px;
+    color:#cbd5e1;
+}
+
+/* =========================
+INFO
+========================= */
+
+.info{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:10px;
+}
+
+.infoBox{
+    background:#1e293b;
+    border:1px solid #334155;
+    border-radius:10px;
+    padding:9px 18px;
+    min-width:110px;
+}
+
+.infoBox small{
+    display:block;
+    color:#94a3b8;
+}
+
+.infoBox strong{
+    font-size:20px;
+    color:#67e8f9;
+}
+
+/* =========================
+GAME
+========================= */
+
+.gameContainer{
+    width:950px;
+    max-width:96%;
+    margin:15px auto;
+    background:#0f172a;
+    border:3px solid #334155;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:
+        0 0 30px rgba(0,0,0,.5);
+}
+
+/* =========================
+BOARD
+========================= */
+
+#board{
+    display:grid;
+    grid-template-columns:
+        repeat(8,1fr);
+
+    gap:8px;
+
+    max-width:820px;
+    margin:auto;
+
+    padding:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #14532d,
+            #166534
+        );
+
+    border:5px solid #713f12;
+    border-radius:12px;
+
+    min-height:390px;
+}
+
+/* =========================
+TILES
+========================= */
+
+.tile{
+
+    position:relative;
+
+    height:78px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #dbeafe
+        );
+
+    color:#111827;
+
+    border-radius:8px;
+
+    border:3px solid #94a3b8;
+
+    box-shadow:
+        3px 4px 0 #64748b,
+        0 4px 8px rgba(0,0,0,.35);
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    user-select:none;
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
+}
+
+.tile:hover{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        3px 7px 0 #64748b,
+        0 8px 12px rgba(0,0,0,.4);
+
+}
+
+.tile.selected{
+
+    transform:
+        translateY(-6px);
+
+    border-color:#facc15;
+
+    box-shadow:
+        0 0 15px #facc15,
+        3px 7px 0 #ca8a04;
+
+}
+
+.tile.removing{
+
+    animation:
+        removeTile .3s forwards;
+
+}
+
+@keyframes removeTile{
+
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    100%{
+        transform:scale(0);
+        opacity:0;
+    }
+
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.controls{
+
+    margin-top:15px;
+
+}
+
+button{
+
+    border:0;
+
+    border-radius:9px;
+
+    padding:11px 18px;
+
+    margin:5px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:#2563eb;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+.hint{
+    background:#ca8a04;
+}
+
+.shuffle{
+    background:#7c3aed;
+}
+
+.restart{
+    background:#dc2626;
+}
+
+/* =========================
+MESSAGE
+========================= */
+
+#message{
+
+    min-height:28px;
+
+    margin-top:8px;
+
+    font-weight:bold;
+
+    color:#facc15;
+
+}
+
+/* =========================
+START SCREEN
+========================= */
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(2,6,23,.94);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:100;
+
+    padding:20px;
+
+}
+
+.modal{
+
+    width:600px;
+
+    max-width:95%;
+
+    background:#0f172a;
+
+    border:2px solid #38bdf8;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:
+        0 0 40px rgba(14,165,233,.3);
+
+}
+
+.modal .mahjong{
+
+    font-size:80px;
+
+}
+
+.modal h1{
+
+    color:#67e8f9;
+
+    font-size:40px;
+
+}
+
+.modal p{
+
+    line-height:1.6;
+
+    color:#cbd5e1;
+
+}
+
+.startButton{
+
+    background:#16a34a;
+
+    font-size:20px;
+
+    padding:14px 30px;
+
+}
+
+/* =========================
+WIN SCREEN
+========================= */
+
+#winScreen,
+#loseScreen{
+
+    display:none;
+
+}
+
+.win{
+
+    color:#4ade80;
+
+}
+
+.lose{
+
+    color:#f87171;
+
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    header h1{
+        font-size:26px;
+    }
+
+    #board{
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+        gap:6px;
+
+        padding:8px;
+
+    }
+
+    .tile{
+
+        height:70px;
+
+        font-size:28px;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+START SCREEN
+========================= -->
+
+<div id="startScreen"
+     class="overlay">
+
+    <div class="modal">
+
+        <div class="mahjong">
+            🀄
+        </div>
+
+        <h1>
+            MAHJONG INFORMATIKA
+        </h1>
+
+        <p>
+            Selamat datang di permainan
+            <b>Mahjong Informatika!</b>
+        </p>
+
+        <p>
+
+            🎯 Temukan dua keping dengan
+            simbol yang sama.
+
+            <br>
+
+            🖱️ Klik keping pertama,
+            kemudian keping kedua.
+
+            <br>
+
+            ⭐ Dapatkan skor sebanyak mungkin!
+
+        </p>
+
+        <p>
+
+            ⏱️ Kamu memiliki waktu
+            <b>3 menit</b>.
+
+        </p>
+
+        <button
+            class="startButton"
+            onclick="startGame()">
+
+            🚀 MULAI PERMAINAN
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+HEADER
+========================= -->
+
+<header>
+
+    <h1>
+        🀄 MAHJONG INFORMATIKA
+    </h1>
+
+    <p>
+        Cocokkan simbol dan taklukkan semua keping!
+    </p>
+
+</header>
+
+
+<!-- =========================
+INFO
+========================= -->
+
+<div class="info">
+
+    <div class="infoBox">
+
+        <small>
+            ⭐ SKOR
+        </small>
+
+        <strong id="score">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="infoBox">
+
+        <small>
+            ⏱️ WAKTU
+        </small>
+
+        <strong id="time">
+            180
+        </strong>
+
+    </div>
+
+
+    <div class="infoBox">
+
+        <small>
+            ❤️ NYAWA
+        </small>
+
+        <strong id="lives">
+            3
+        </strong>
+
+    </div>
+
+
+    <div class="infoBox">
+
+        <small>
+            🀄 SISA
+        </small>
+
+        <strong id="remaining">
+            32
+        </strong>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+GAME
+========================= -->
+
+<div class="gameContainer">
+
+    <div id="board">
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            class="hint"
+            onclick="giveHint()">
+
+            💡 PETUNJUK
+
+        </button>
+
+
+        <button
+            class="shuffle"
+            onclick="shuffleBoard()">
+
+            🔀 ACAK
+
+        </button>
+
+
+        <button
+            class="restart"
+            onclick="restartGame()">
+
+            🔄 ULANG
+
+        </button>
+
+    </div>
+
+
+    <div id="message">
+
+        Cari dua keping yang sama!
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+WIN SCREEN
+========================= -->
+
+<div id="winScreen"
+     class="overlay">
+
+    <div class="modal">
+
+        <div class="mahjong">
+            🏆
+        </div>
+
+        <h1 class="win">
+            SELAMAT!
+        </h1>
+
+        <h2>
+            SEMUA KEPING BERHASIL DICOCOKKAN!
+        </h2>
+
+        <p>
+            Skor akhir kamu:
+        </p>
+
+        <h1 id="finalScore">
+            0
+        </h1>
+
+        <p>
+            Kamu berhasil menyelesaikan
+            tantangan Mahjong Informatika.
+        </p>
+
+        <button
+            class="startButton"
+            onclick="restartGame()">
+
+            🔄 MAIN LAGI
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+LOSE SCREEN
+========================= -->
+
+<div id="loseScreen"
+     class="overlay">
+
+    <div class="modal">
+
+        <div class="mahjong">
+            😵
+        </div>
+
+        <h1 class="lose">
+            GAME OVER
+        </h1>
+
+        <p>
+            Waktu habis atau kesempatanmu
+            sudah tidak tersisa.
+        </p>
+
+        <h2>
+            Skor:
+        </h2>
+
+        <h1 id="loseScore">
+            0
+        </h1>
+
+        <button
+            class="startButton"
+            onclick="restartGame()">
+
+            🔄 COBA LAGI
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================
+DATA PERMAINAN
+================================== */
+
+const symbols = [
+
+    "💻",
+    "⌨️",
+    "🖱️",
+    "📱",
+    "🌐",
+    "🔐",
+    "📊",
+    "🤖",
+    "💾",
+    "⚙️",
+    "🧠",
+    "🔢",
+    "📁",
+    "🗂️",
+    "🔍",
+    "🐞"
+
+];
+
+
+/* ==================================
+VARIABEL
+================================== */
+
+let tiles = [];
+
+let selectedTile = null;
+
+let score = 0;
+
+let lives = 3;
+
+let time = 180;
+
+let timer = null;
+
+let playing = false;
+
+
+/* ==================================
+MULAI
+================================== */
+
+function startGame(){
+
+    document
+        .getElementById("startScreen")
+        .style.display="none";
+
+    restartGame();
+
+}
+
+
+/* ==================================
+MEMBUAT PAPAN
+================================== */
+
+function createBoard(){
+
+    const board =
+        document.getElementById("board");
+
+    board.innerHTML="";
+
+    tiles=[];
+
+
+    let pairs = [];
+
+    symbols.forEach(symbol=>{
+
+        pairs.push(symbol);
+        pairs.push(symbol);
+
+    });
+
+
+    shuffle(pairs);
+
+
+    pairs.forEach(
+        (symbol,index)=>{
+
+            let tile =
+                document.createElement("div");
+
+            tile.className="tile";
+
+            tile.dataset.symbol=symbol;
+
+            tile.dataset.index=index;
+
+            tile.innerText=symbol;
+
+            tile.onclick=function(){
+
+                selectTile(tile);
+
+            };
+
+
+            board.appendChild(tile);
+
+            tiles.push(tile);
+
+        }
+    );
+
+}
+
+
+/* ==================================
+PILIH KEPING
+================================== */
+
+function selectTile(tile){
+
+    if(!playing)return;
+
+    if(tile.classList.contains("removing"))
+        return;
+
+    if(tile===selectedTile)
+        return;
+
+
+    tile.classList.add("selected");
+
+
+    if(selectedTile===null){
+
+        selectedTile=tile;
+
+        message(
+            "Sekarang pilih keping yang sama."
+        );
+
+        return;
+
+    }
+
+
+    /* CEK PASANGAN */
+
+    if(
+        tile.dataset.symbol ===
+        selectedTile.dataset.symbol
+    ){
+
+        matchTiles(
+            tile,
+            selectedTile
+        );
+
+    }
+
+    else{
+
+        wrongMatch(
+            tile,
+            selectedTile
+        );
+
+    }
+
+}
+
+
+/* ==================================
+COCOK
+================================== */
+
+function matchTiles(tile1,tile2){
+
+    score+=100;
+
+    document
+        .getElementById("score")
+        .innerText=score;
+
+
+    message(
+        "🎉 BENAR! +100 SKOR"
+    );
+
+
+    tile1.classList.add(
+        "removing"
+    );
+
+    tile2.classList.add(
+        "removing"
+    );
+
+
+    setTimeout(()=>{
+
+        tile1.style.visibility="hidden";
+
+        tile2.style.visibility="hidden";
+
+        selectedTile=null;
+
+        updateRemaining();
+
+        checkWin();
+
+    },300);
+
+}
+
+
+/* ==================================
+SALAH
+================================== */
+
+function wrongMatch(tile1,tile2){
+
+    lives--;
+
+    document
+        .getElementById("lives")
+        .innerText=lives;
+
+
+    message(
+        "❌ Bukan pasangan yang sama!"
+    );
+
+
+    setTimeout(()=>{
+
+        tile1.classList.remove(
+            "selected"
+        );
+
+        tile2.classList.remove(
+            "selected"
+        );
+
+        selectedTile=null;
+
+    },500);
+
+
+    if(lives<=0){
+
+        gameOver();
+
+    }
+
+}
+
+
+/* ==================================
+UPDATE SISA
+================================== */
+
+function updateRemaining(){
+
+    let remaining =
+        tiles.filter(
+            tile =>
+            tile.style.visibility!=="hidden"
+        ).length;
+
+
+    document
+        .getElementById("remaining")
+        .innerText=remaining;
+
+}
+
+
+/* ==================================
+MENANG
+================================== */
+
+function checkWin(){
+
+    let remaining =
+        tiles.filter(
+            tile =>
+            tile.style.visibility!=="hidden"
+        ).length;
+
+
+    if(remaining===0){
+
+        playing=false;
+
+        clearInterval(timer);
+
+
+        document
+            .getElementById("finalScore")
+            .innerText=score;
+
+
+        document
+            .getElementById("winScreen")
+            .style.display="flex";
+
+    }
+
+}
+
+
+/* ==================================
+TIMER
+================================== */
+
+function startTimer(){
+
+    clearInterval(timer);
+
+
+    timer=setInterval(()=>{
+
+        if(!playing)return;
+
+
+        time--;
+
+
+        document
+            .getElementById("time")
+            .innerText=time;
+
+
+        if(time<=0){
+
+            gameOver();
+
+        }
+
+
+    },1000);
+
+}
+
+
+/* ==================================
+GAME OVER
+================================== */
+
+function gameOver(){
+
+    playing=false;
+
+    clearInterval(timer);
+
+
+    document
+        .getElementById("loseScore")
+        .innerText=score;
+
+
+    document
+        .getElementById("loseScreen")
+        .style.display="flex";
+
+}
+
+
+/* ==================================
+PETUNJUK
+================================== */
+
+function giveHint(){
+
+    if(!playing)return;
+
+
+    let visible =
+        tiles.filter(
+            tile =>
+            tile.style.visibility!=="hidden"
+        );
+
+
+    for(let i=0;i<visible.length;i++){
+
+        for(let j=i+1;j<visible.length;j++){
+
+            if(
+                visible[i].dataset.symbol===
+                visible[j].dataset.symbol
+            ){
+
+                visible[i]
+                    .classList.add("selected");
+
+                visible[j]
+                    .classList.add("selected");
+
+
+                setTimeout(()=>{
+
+                    visible[i]
+                        .classList.remove(
+                            "selected"
+                        );
+
+                    visible[j]
+                        .classList.remove(
+                            "selected"
+                        );
+
+                },1200);
+
+
+                score-=25;
+
+                if(score<0)
+                    score=0;
+
+
+                document
+                    .getElementById("score")
+                    .innerText=score;
+
+
+                message(
+                    "💡 Petunjuk menemukan pasangan!"
+                );
+
+
+                return;
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* ==================================
+ACAK
+================================== */
+
+function shuffleBoard(){
+
+    if(!playing)return;
+
+
+    let visible =
+        tiles.filter(
+            tile =>
+            tile.style.visibility!=="hidden"
+        );
+
+
+    let values =
+        visible.map(
+            tile =>
+            tile.dataset.symbol
+        );
+
+
+    shuffle(values);
+
+
+    visible.forEach(
+        (tile,index)=>{
+
+            tile.dataset.symbol=
+                values[index];
+
+            tile.innerText=
+                values[index];
+
+        }
+    );
+
+
+    selectedTile=null;
+
+
+    message(
+        "🔀 Keping berhasil diacak!"
+    );
+
+}
+
+
+/* ==================================
+RESTART
+================================== */
+
+function restartGame(){
+
+    clearInterval(timer);
+
+    score=0;
+
+    lives=3;
+
+    time=180;
+
+    selectedTile=null;
+
+    playing=true;
+
+
+    document
+        .getElementById("score")
+        .innerText=score;
+
+    document
+        .getElementById("lives")
+        .innerText=lives;
+
+    document
+        .getElementById("time")
+        .innerText=time;
+
+    document
+        .getElementById("remaining")
+        .innerText=32;
+
+
+    document
+        .getElementById("winScreen")
+        .style.display="none";
+
+
+    document
+        .getElementById("loseScreen")
+        .style.display="none";
+
+
+    createBoard();
+
+    startTimer();
+
+}
+
+
+/* ==================================
+SHUFFLE ARRAY
+================================== */
+
+function shuffle(array){
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+        let j=
+            Math.floor(
+                Math.random()*(i+1)
+            );
+
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+    return array;
+
+}
+
+
+/* ==================================
+PESAN
+================================== */
+
+function message(text){
+
+    document
+        .getElementById("message")
+        .innerText=text;
+
+}
+
+
+/* ==================================
+JALANKAN
+================================== */
+
+</script>
+
+</body>
+</html>

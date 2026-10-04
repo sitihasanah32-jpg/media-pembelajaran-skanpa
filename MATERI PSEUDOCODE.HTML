@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Laboratorium Pseudocode - Informatika X SMK</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#eef6fb;
+    color:#17324d;
+    line-height:1.6;
+}
+
+/* HEADER */
+
+header{
+    background:linear-gradient(135deg,#073b5c,#087ea4,#12a6a6);
+    color:white;
+    padding:30px 6%;
+    text-align:center;
+}
+
+header h1{
+    font-size:38px;
+    margin-bottom:5px;
+}
+
+header p{
+    font-size:17px;
+}
+
+/* NAVIGATION */
+
+nav{
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+nav button{
+    border:none;
+    padding:12px 18px;
+    border-radius:10px;
+    background:white;
+    color:#075985;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+nav button:hover{
+    transform:translateY(-2px);
+    background:#dff6ff;
+}
+
+/* CONTAINER */
+
+.container{
+    width:92%;
+    max-width:1150px;
+    margin:auto;
+    padding:25px 0;
+}
+
+/* SECTION */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* CARD */
+
+.card{
+    background:white;
+    padding:25px;
+    margin-bottom:20px;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.card h2{
+    color:#087ea4;
+    margin-bottom:15px;
+}
+
+.card h3{
+    color:#075985;
+    margin:15px 0 8px;
+}
+
+/* BADGE */
+
+.badge{
+    display:inline-block;
+    background:#dff6ff;
+    color:#087ea4;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+/* IPO */
+
+.ipo{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.ipo-box{
+    padding:20px;
+    text-align:center;
+    border-radius:15px;
+    background:#eaf7fb;
+}
+
+.ipo-box h3{
+    font-size:24px;
+}
+
+/* CODE */
+
+pre{
+    background:#102a43;
+    color:#e8f7ff;
+    padding:20px;
+    border-radius:12px;
+    overflow:auto;
+    margin:15px 0;
+    font-size:15px;
+    line-height:1.7;
+}
+
+.code-highlight{
+    background:#f1f8fc;
+    padding:18px;
+    border-radius:12px;
+    border-left:5px solid #087ea4;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #d4e2eb;
+    padding:12px;
+    text-align:left;
+}
+
+th{
+    background:#e3f3f8;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+}
+
+/* BUTTON */
+
+.btn{
+    border:none;
+    background:#087ea4;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:5px 3px;
+}
+
+.btn:hover{
+    background:#075985;
+}
+
+.btn.green{
+    background:#159957;
+}
+
+.btn.orange{
+    background:#e67e22;
+}
+
+.btn.red{
+    background:#c0392b;
+}
+
+/* INPUT */
+
+input,textarea,select{
+    width:100%;
+    padding:11px;
+    border:1px solid #c7d7e1;
+    border-radius:9px;
+    margin:7px 0 12px;
+    font-size:15px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+/* FEEDBACK */
+
+.feedback{
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.correct{
+    background:#e8f8ef;
+    color:#177245;
+}
+
+.wrong{
+    background:#fdecea;
+    color:#a93226;
+}
+
+/* GAME OPTION */
+
+.option{
+    display:block;
+    padding:12px;
+    margin:8px 0;
+    border:1px solid #d7e2e9;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#edf8fc;
+}
+
+/* SCORE */
+
+.score{
+    font-size:22px;
+    font-weight:bold;
+    padding:18px;
+    background:#e5f6fa;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#62798b;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+    header h1{
+        font-size:28px;
+    }
+
+    .ipo{
+        grid-template-columns:1fr;
+    }
+
+    nav button{
+        width:45%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>💻 LABORATORIUM PSEUDOCODE</h1>
+
+<p>
+Informatika Kelas X SMK • Fase E • Berpikir Komputasional
+</p>
+
+<nav>
+
+<button onclick="showSection('materi')">
+📚 Materi
+</button>
+
+<button onclick="showSection('simulasi')">
+▶️ Simulasi
+</button>
+
+<button onclick="showSection('game')">
+🎮 Permainan
+</button>
+
+<button onclick="showSection('quiz')">
+📝 Quiz
+</button>
+
+<button onclick="showSection('latihan')">
+✏️ Latihan
+</button>
+
+<button onclick="showSection('tugas')">
+🚀 Tugas
+</button>
+
+</nav>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ================================================= -->
+<!-- MATERI -->
+<!-- ================================================= -->
+
+<div id="materi" class="section active">
+
+<div class="card">
+
+<span class="badge">
+MULAI DARI SINI
+</span>
+
+<h2>
+🧠 Apa Itu Pseudocode?
+</h2>
+
+<p>
+
+<b>Pseudocode</b> adalah cara menuliskan langkah-langkah
+penyelesaian masalah menggunakan bahasa sederhana yang
+menyerupai bahasa pemrograman.
+
+</p>
+
+<p>
+
+Pseudocode belum terikat pada bahasa pemrograman tertentu.
+
+</p>
+
+<div class="ipo">
+
+<div class="ipo-box">
+
+<h3>📥 INPUT</h3>
+
+<p>
+Data yang dimasukkan
+</p>
+
+</div>
+
+<div class="ipo-box">
+
+<h3>⚙️ PROCESS</h3>
+
+<p>
+Data yang diolah
+</p>
+
+</div>
+
+<div class="ipo-box">
+
+<h3>📤 OUTPUT</h3>
+
+<p>
+Hasil yang ditampilkan
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BAB 1 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 1 — Mengenal Pseudocode
+</h2>
+
+<p>
+Pseudocode digunakan untuk membantu kita merancang
+logika program sebelum menulis kode sebenarnya.
+</p>
+
+<h3>Contoh:</h3>
+
+<pre>
+BEGIN
+
+INPUT panjang
+INPUT lebar
+
+luas ← panjang × lebar
+
+OUTPUT luas
+
+END
+</pre>
+
+<div class="code-highlight">
+
+<b>Catatan penting:</b>
+
+<p>
+
+Simbol <b>←</b> dibaca
+<b>"diisi dengan"</b> atau
+<b>"mendapat nilai dari"</b>.
+
+</p>
+
+<p>
+
+Contoh:
+
+</p>
+
+<pre>
+luas ← panjang × lebar
+</pre>
+
+<p>
+Dibaca:
+<b>Luas diisi dengan panjang dikali lebar.</b>
+</p>
+
+</div>
+
+</div>
+
+
+<!-- BAB 2 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 2 — Pseudocode dan IPO
+</h2>
+
+<table>
+
+<tr>
+<th>Bagian</th>
+<th>Contoh</th>
+</tr>
+
+<tr>
+<td>INPUT</td>
+<td>harga, jumlah</td>
+</tr>
+
+<tr>
+<td>PROCESS</td>
+<td>harga × jumlah</td>
+</tr>
+
+<tr>
+<td>OUTPUT</td>
+<td>total harga</td>
+</tr>
+
+</table>
+
+<h3>Contoh:</h3>
+
+<pre>
+BEGIN
+
+INPUT harga
+INPUT jumlah
+
+total ← harga × jumlah
+
+OUTPUT total
+
+END
+</pre>
+
+</div>
+
+
+<!-- BAB 3 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 3 — Aturan Dasar Pseudocode
+</h2>
+
+<table>
+
+<tr>
+<th>Perintah</th>
+<th>Fungsi</th>
+</tr>
+
+<tr>
+<td>BEGIN</td>
+<td>Awal algoritma</td>
+</tr>
+
+<tr>
+<td>END</td>
+<td>Akhir algoritma</td>
+</tr>
+
+<tr>
+<td>INPUT</td>
+<td>Memasukkan data</td>
+</tr>
+
+<tr>
+<td>OUTPUT</td>
+<td>Menampilkan hasil</td>
+</tr>
+
+<tr>
+<td>IF / THEN</td>
+<td>Percabangan kondisi</td>
+</tr>
+
+<tr>
+<td>ELSE</td>
+<td>Jika kondisi tidak terpenuhi</td>
+</tr>
+
+<tr>
+<td>ENDIF</td>
+<td>Akhir percabangan</td>
+</tr>
+
+<tr>
+<td>FOR</td>
+<td>Perulangan dengan jumlah tertentu</td>
+</tr>
+
+<tr>
+<td>WHILE</td>
+<td>Perulangan berdasarkan kondisi</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<!-- BAB 4 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 4 — Variabel dan Tipe Data
+</h2>
+
+<p>
+Variabel adalah tempat untuk menyimpan data yang
+nilainya dapat berubah.
+</p>
+
+<pre>
+nama ← "Andi"
+
+umur ← 16
+
+tinggi ← 165.5
+
+lulus ← TRUE
+</pre>
+
+<table>
+
+<tr>
+<th>Tipe Data</th>
+<th>Contoh</th>
+</tr>
+
+<tr>
+<td>Integer</td>
+<td>16</td>
+</tr>
+
+<tr>
+<td>Real</td>
+<td>165.5</td>
+</tr>
+
+<tr>
+<td>String</td>
+<td>"Andi"</td>
+</tr>
+
+<tr>
+<td>Boolean</td>
+<td>TRUE / FALSE</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<!-- BAB 5 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 5 — Operator Aritmatika
+</h2>
+
+<table>
+
+<tr>
+<th>Operator</th>
+<th>Arti</th>
+</tr>
+
+<tr>
+<td>+</td>
+<td>Penjumlahan</td>
+</tr>
+
+<tr>
+<td>-</td>
+<td>Pengurangan</td>
+</tr>
+
+<tr>
+<td>*</td>
+<td>Perkalian</td>
+</tr>
+
+<tr>
+<td>/</td>
+<td>Pembagian</td>
+</tr>
+
+<tr>
+<td>MOD</td>
+<td>Sisa pembagian</td>
+</tr>
+
+</table>
+
+<h3>Contoh:</h3>
+
+<pre>
+a ← 10
+b ← 5
+
+jumlah ← a + b
+
+selisih ← a - b
+
+kali ← a * b
+
+bagi ← a / b
+</pre>
+
+</div>
+
+
+<!-- BAB 6 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 6 — Sekuensial
+</h2>
+
+<p>
+Sekuensial berarti instruksi dilakukan satu per satu
+dari atas ke bawah.
+</p>
+
+<pre>
+BEGIN
+
+INPUT panjang
+INPUT lebar
+
+luas ← panjang * lebar
+
+OUTPUT luas
+
+END
+</pre>
+
+<p>
+Urutannya:
+</p>
+
+<div class="score">
+
+INPUT → PROCESS → OUTPUT
+
+</div>
+
+</div>
+
+
+<!-- BAB 7 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 7 — Percabangan
+</h2>
+
+<p>
+Percabangan digunakan ketika program harus memilih
+tindakan berdasarkan kondisi.
+</p>
+
+<h3>IF – THEN</h3>
+
+<pre>
+IF nilai >= 75 THEN
+
+    OUTPUT "Lulus"
+
+ENDIF
+</pre>
+
+<h3>IF – THEN – ELSE</h3>
+
+<pre>
+IF nilai >= 75 THEN
+
+    OUTPUT "Lulus"
+
+ELSE
+
+    OUTPUT "Belum Lulus"
+
+ENDIF
+</pre>
+
+<h3>Percabangan Bertingkat</h3>
+
+<pre>
+IF nilai >= 90 THEN
+
+    OUTPUT "A"
+
+ELSE IF nilai >= 80 THEN
+
+    OUTPUT "B"
+
+ELSE IF nilai >= 75 THEN
+
+    OUTPUT "C"
+
+ELSE
+
+    OUTPUT "D"
+
+ENDIF
+</pre>
+
+</div>
+
+
+<!-- BAB 8 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 8 — Operator Perbandingan dan Logika
+</h2>
+
+<table>
+
+<tr>
+<th>Operator</th>
+<th>Arti</th>
+</tr>
+
+<tr>
+<td>=</td>
+<td>Sama dengan</td>
+</tr>
+
+<tr>
+<td>≠</td>
+<td>Tidak sama dengan</td>
+</tr>
+
+<tr>
+<td>></td>
+<td>Lebih besar</td>
+</tr>
+
+<tr>
+<td><</td>
+<td>Lebih kecil</td>
+</tr>
+
+<tr>
+<td>≥</td>
+<td>Lebih besar atau sama</td>
+</tr>
+
+<tr>
+<td>≤</td>
+<td>Lebih kecil atau sama</td>
+</tr>
+
+<tr>
+<td>AND</td>
+<td>Dan</td>
+</tr>
+
+<tr>
+<td>OR</td>
+<td>Atau</td>
+</tr>
+
+<tr>
+<td>NOT</td>
+<td>Tidak</td>
+</tr>
+
+</table>
+
+<h3>Contoh:</h3>
+
+<pre>
+IF nilai >= 75 AND kehadiran >= 80 THEN
+
+    OUTPUT "Lulus"
+
+ENDIF
+</pre>
+
+</div>
+
+
+<!-- BAB 9 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 9 — Perulangan
+</h2>
+
+<p>
+Perulangan digunakan ketika suatu perintah harus
+dilakukan berkali-kali.
+</p>
+
+<h3>FOR</h3>
+
+<pre>
+FOR i ← 1 TO 5
+
+    OUTPUT i
+
+END FOR
+</pre>
+
+<h3>WHILE</h3>
+
+<pre>
+i ← 1
+
+WHILE i <= 5
+
+    OUTPUT i
+
+    i ← i + 1
+
+END WHILE
+</pre>
+
+<div class="code-highlight">
+
+<b>FOR</b> cocok ketika jumlah pengulangan sudah diketahui.
+
+<br><br>
+
+<b>WHILE</b> cocok ketika pengulangan bergantung
+pada kondisi.
+
+</div>
+
+</div>
+
+
+<!-- BAB 10 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 10 — Contoh Pseudocode Lengkap
+</h2>
+
+<h3>Program Penilaian Siswa</h3>
+
+<pre>
+BEGIN
+
+INPUT nama
+INPUT nilai
+
+IF nilai >= 75 THEN
+
+    OUTPUT nama
+    OUTPUT "Lulus"
+
+ELSE
+
+    OUTPUT nama
+    OUTPUT "Belum Lulus"
+
+ENDIF
+
+END
+</pre>
+
+<h3>Program Harga Barang dan Diskon</h3>
+
+<pre>
+BEGIN
+
+INPUT nama_barang
+INPUT harga
+INPUT jumlah
+
+total ← harga * jumlah
+
+IF total >= 100000 THEN
+
+    diskon ← total * 10 / 100
+
+ELSE
+
+    diskon ← 0
+
+ENDIF
+
+bayar ← total - diskon
+
+OUTPUT total
+OUTPUT diskon
+OUTPUT bayar
+
+END
+</pre>
+
+</div>
+
+
+<!-- BAB 11 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 11 — Dari Pseudocode ke Program
+</h2>
+
+<p>
+Pseudocode menjadi jembatan menuju kode program.
+</p>
+
+<h3>Pseudocode:</h3>
+
+<pre>
+BEGIN
+
+INPUT nama
+
+OUTPUT "Halo"
+
+OUTPUT nama
+
+END
+</pre>
+
+<h3>Contoh JavaScript:</h3>
+
+<pre>
+let nama = prompt("Masukkan nama:");
+
+alert("Halo " + nama);
+</pre>
+
+</div>
+
+
+<!-- BAB 12 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 12 — Cara Membuat Pseudocode
+</h2>
+
+<ol>
+
+<li>Pahami masalah.</li>
+
+<li>Tentukan INPUT.</li>
+
+<li>Tentukan PROCESS.</li>
+
+<li>Tentukan OUTPUT.</li>
+
+<li>Susun langkah secara berurutan.</li>
+
+<li>Tentukan apakah membutuhkan percabangan atau perulangan.</li>
+
+<li>Uji pseudocode menggunakan contoh data.</li>
+
+</ol>
+
+<div class="score">
+
+MASALAH → INPUT → PROCESS → OUTPUT → PSEUDOCODE → PROGRAM
+
+</div>
+
+</div>
+
+
+<!-- BAB 13 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 13 — Kesalahan yang Sering Terjadi
+</h2>
+
+<ul>
+
+<li>Tidak menentukan input.</li>
+
+<li>Urutan langkah tidak logis.</li>
+
+<li>Kondisi percabangan tidak jelas.</li>
+
+<li>Lupa ENDIF.</li>
+
+<li>Lupa memperbarui variabel pada WHILE.</li>
+
+<li>Output tidak sesuai tujuan.</li>
+
+</ul>
+
+</div>
+
+
+<!-- BAB 14 -->
+
+<div class="card">
+
+<h2>
+📘 BAB 14 — Latihan Bertahap
+</h2>
+
+<ol>
+
+<li>Hitung luas persegi.</li>
+
+<li>Hitung luas persegi panjang.</li>
+
+<li>Hitung total harga barang.</li>
+
+<li>Tentukan lulus atau belum lulus berdasarkan nilai ≥ 75.</li>
+
+<li>Tentukan bilangan genap atau ganjil menggunakan MOD.</li>
+
+<li>Tentukan kategori nilai A, B, C atau D.</li>
+
+<li>Tampilkan angka 1 sampai 10 menggunakan FOR.</li>
+
+<li>Tampilkan nama siswa sebanyak 5 kali.</li>
+
+<li>Hitung total belanja dan diskon 10% jika total minimal Rp100.000.</li>
+
+<li>Buat pseudocode dari masalah nyata di lingkungan sekolah.</li>
+
+</ol>
+
+</div>
+
+
+<!-- BAB 15 -->
+
+<div class="card">
+
+<h2>
+🚀 BAB 15 — Mini Project
+</h2>
+
+<h3>
+PSEUDOCODE → MEDIA PEMBELAJARAN
+</h3>
+
+<ol>
+
+<li>Menentukan materi pelajaran yang dianggap sulit.</li>
+
+<li>Menentukan masalah.</li>
+
+<li>Menentukan INPUT, PROCESS, OUTPUT.</li>
+
+<li>Membuat algoritma.</li>
+
+<li>Membuat pseudocode.</li>
+
+<li>Mengubah pseudocode menjadi media sederhana.</li>
+
+<li>Membuat video yang menjelaskan cara menggunakan media dan manfaatnya.</li>
+
+</ol>
+
+<div class="score">
+
+MASALAH → IPO → ALGORITMA → PSEUDOCODE → MEDIA → VIDEO
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- SIMULASI -->
+<!-- ================================================= -->
+
+<div id="simulasi" class="section">
+
+<div class="card">
+
+<h2>
+▶️ Simulasi 1 — INPUT PROCESS OUTPUT
+</h2>
+
+<p>
+Masukkan harga dan jumlah barang.
+Kemudian jalankan pseudocode.
+</p>
+
+<label>Harga barang</label>
+
+<input type="number" id="harga" value="10000">
+
+<label>Jumlah barang</label>
+
+<input type="number" id="jumlah" value="3">
+
+<button class="btn" onclick="hitungTotal()">
+▶ Jalankan Pseudocode
+</button>
+
+<pre id="hasilTotal">
+Hasil akan muncul di sini...
+</pre>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🔀 Simulasi 2 — Percabangan
+</h2>
+
+<label>
+Masukkan nilai siswa
+</label>
+
+<input type="number" id="nilai" value="80">
+
+<button class="btn green" onclick="cekNilai()">
+Cek Kondisi
+</button>
+
+<pre id="hasilNilai">
+Hasil akan muncul di sini...
+</pre>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🔁 Simulasi 3 — FOR
+</h2>
+
+<p>
+Program akan menampilkan angka 1 sampai 10.
+</p>
+
+<button class="btn orange" onclick="jalankanFor()">
+Jalankan FOR
+</button>
+
+<pre id="hasilFor">
+Klik tombol.
+</pre>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🔁 Simulasi 4 — WHILE
+</h2>
+
+<button class="btn" onclick="jalankanWhile()">
+Jalankan WHILE
+</button>
+
+<pre id="hasilWhile">
+Klik tombol.
+</pre>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- GAME -->
+<!-- ================================================= -->
+
+<div id="game" class="section">
+
+<div class="card">
+
+<h2>
+🎮 GAME 1 — TEBAK OUTPUT
+</h2>
+
+<pre>
+BEGIN
+
+a ← 10
+b ← 3
+
+hasil ← a MOD b
+
+OUTPUT hasil
+
+END
+</pre>
+
+<p>
+Berapa hasil yang ditampilkan?
+</p>
+
+<label class="option">
+<input type="radio" name="mod" value="1">
+1
+</label>
+
+<label class="option">
+<input type="radio" name="mod" value="2">
+2
+</label>
+
+<label class="option">
+<input type="radio" name="mod" value="3">
+3
+</label>
+
+<label class="option">
+<input type="radio" name="mod" value="0">
+0
+</label>
+
+<button class="btn" onclick="cekMod()">
+Periksa
+</button>
+
+<div id="modFeedback"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🕵️ GAME 2 — DETEKTIF BUG
+</h2>
+
+<pre>
+i ← 1
+
+WHILE i <= 5
+
+    OUTPUT i
+
+END WHILE
+</pre>
+
+<p>
+Apa kesalahannya?
+</p>
+
+<button class="btn" onclick="bugAnswer(1)">
+Tidak ada masalah
+</button>
+
+<button class="btn" onclick="bugAnswer(2)">
+i tidak pernah berubah
+</button>
+
+<button class="btn" onclick="bugAnswer(3)">
+OUTPUT harus dihapus
+</button>
+
+<div id="bugFeedback"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🎯 GAME 3 — PILIH STRUKTUR
+</h2>
+
+<p>
+Kamu ingin menampilkan angka 1 sampai 20.
+Struktur apa yang paling sesuai?
+</p>
+
+<button class="btn" onclick="struktur(1)">
+IF
+</button>
+
+<button class="btn" onclick="struktur(2)">
+FOR
+</button>
+
+<button class="btn" onclick="struktur(3)">
+INPUT
+</button>
+
+<div id="strukturFeedback"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- QUIZ -->
+<!-- ================================================= -->
+
+<div id="quiz" class="section">
+
+<div class="card">
+
+<h2>
+📝 QUIZ PSEUDOCODE
+</h2>
+
+<p>
+Pilih jawaban yang menurutmu paling tepat.
+</p>
+
+<div id="quizContainer"></div>
+
+<button class="btn green" onclick="hitungQuiz()">
+🎯 Lihat Nilai
+</button>
+
+<div id="quizResult"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- LATIHAN -->
+<!-- ================================================= -->
+
+<div id="latihan" class="section">
+
+<div class="card">
+
+<h2>
+✏️ LATIHAN 1 — IPO
+</h2>
+
+<p>
+Sebuah kantin ingin menghitung total harga makanan.
+Tentukan INPUT, PROCESS dan OUTPUT.
+</p>
+
+<label>INPUT</label>
+
+<textarea rows="2"
+placeholder="Tuliskan data yang diperlukan..."></textarea>
+
+<label>PROCESS</label>
+
+<textarea rows="2"
+placeholder="Tuliskan proses perhitungannya..."></textarea>
+
+<label>OUTPUT</label>
+
+<textarea rows="2"
+placeholder="Tuliskan hasil yang ditampilkan..."></textarea>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+✏️ LATIHAN 2 — PSEUDOCODE
+</h2>
+
+<p>
+Buat pseudocode untuk menghitung luas persegi panjang.
+</p>
+
+<textarea rows="12"
+placeholder="BEGIN
+
+...
+
+END"></textarea>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+✏️ LATIHAN 3 — PERCABANGAN
+</h2>
+
+<p>
+Buat pseudocode untuk menentukan apakah siswa
+lulus jika nilai minimal 75.
+</p>
+
+<textarea rows="12"
+placeholder="BEGIN
+
+...
+
+END"></textarea>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+✏️ LATIHAN 4 — PERULANGAN
+</h2>
+
+<p>
+Buat pseudocode untuk menampilkan angka 1 sampai 10.
+Gunakan FOR.
+</p>
+
+<textarea rows="12"
+placeholder="BEGIN
+
+...
+
+END"></textarea>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- TUGAS -->
+<!-- ================================================= -->
+
+<div id="tugas" class="section">
+
+<div class="card">
+
+<h2>
+📋 TUGAS INDIVIDU
+</h2>
+
+<p>
+Buat pseudocode berdasarkan masalah sederhana
+di lingkungan sekolah.
+</p>
+
+<label>Nama</label>
+
+<input type="text"
+placeholder="Nama siswa">
+
+<label>Kelas</label>
+
+<input type="text"
+placeholder="X ...">
+
+<label>Masalah yang dipilih</label>
+
+<textarea rows="3"
+placeholder="Contoh: menghitung total belanja di kantin"></textarea>
+
+<label>INPUT</label>
+
+<textarea rows="3"
+placeholder="Data yang diperlukan"></textarea>
+
+<label>PROCESS</label>
+
+<textarea rows="3"
+placeholder="Pengolahan data"></textarea>
+
+<label>OUTPUT</label>
+
+<textarea rows="3"
+placeholder="Hasil yang diharapkan"></textarea>
+
+<label>PSEUDOCODE</label>
+
+<textarea rows="12"
+placeholder="BEGIN
+
+INPUT ...
+
+PROCESS ...
+
+OUTPUT ...
+
+END"></textarea>
+
+<button class="btn" onclick="window.print()">
+🖨️ Cetak / Simpan PDF
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🚀 MINI PROJECT
+</h2>
+
+<h3>
+PSEUDOCODE → MEDIA PEMBELAJARAN
+</h3>
+
+<table>
+
+<tr>
+<th>Tahap</th>
+<th>Produk</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Menentukan masalah</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Menentukan IPO</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Membuat algoritma</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Membuat pseudocode</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Membuat media sederhana</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Membuat video penjelasan</td>
+</tr>
+
+</table>
+
+<div class="score">
+
+🎯 PRODUK YANG DIKUMPULKAN:
+
+<br><br>
+
+1️⃣ MEDIA PEMBELAJARAN
+
+<br>
+
+2️⃣ VIDEO PENJELASAN MEDIA
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<p>
+💻 Laboratorium Pseudocode
+</p>
+
+<p>
+Informatika Kelas X SMK • Fase E
+</p>
+
+<p>
+Belajar logika sebelum belajar kode.
+</p>
+
+</footer>
+
+
+<script>
+
+/* ============================= */
+/* NAVIGASI */
+/* ============================= */
+
+function showSection(id){
+
+    let sections =
+    document.querySelectorAll(".section");
+
+    sections.forEach(function(section){
+
+        section.classList.remove("active");
+
+    });
+
+    document.getElementById(id)
+    .classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ============================= */
+/* SIMULASI TOTAL */
+/* ============================= */
+
+function hitungTotal(){
+
+    let harga =
+    Number(document.getElementById("harga").value);
+
+    let jumlah =
+    Number(document.getElementById("jumlah").value);
+
+    let total =
+    harga * jumlah;
+
+    document.getElementById("hasilTotal")
+    .textContent =
+
+`INPUT harga = ${harga}
+
+INPUT jumlah = ${jumlah}
+
+PROCESS:
+total ← harga × jumlah
+
+total = ${total}
+
+OUTPUT total = ${total}`;
+
+}
+
+
+/* ============================= */
+/* SIMULASI PERCABANGAN */
+/* ============================= */
+
+function cekNilai(){
+
+    let nilai =
+    Number(document.getElementById("nilai").value);
+
+    let hasil =
+    document.getElementById("hasilNilai");
+
+    if(nilai >= 75){
+
+        hasil.textContent =
+
+`INPUT nilai = ${nilai}
+
+Kondisi:
+nilai >= 75
+
+${nilai} >= 75 → TRUE
+
+OUTPUT "Lulus"`;
+
+    }
+
+    else{
+
+        hasil.textContent =
+
+`INPUT nilai = ${nilai}
+
+Kondisi:
+nilai >= 75
+
+${nilai} >= 75 → FALSE
+
+OUTPUT "Belum Lulus"`;
+
+    }
+
+}
+
+
+/* ============================= */
+/* FOR */
+/* ============================= */
+
+function jalankanFor(){
+
+    let hasil="";
+
+    for(let i=1;i<=10;i++){
+
+        hasil += i + " ";
+
+    }
+
+    document.getElementById("hasilFor")
+    .textContent =
+
+`FOR i ← 1 TO 10
+
+OUTPUT i
+
+Hasil:
+
+${hasil}`;
+
+}
+
+
+/* ============================= */
+/* WHILE */
+/* ============================= */
+
+function jalankanWhile(){
+
+    let i=1;
+
+    let hasil="";
+
+    while(i<=5){
+
+        hasil += i + " ";
+
+        i++;
+
+    }
+
+    document.getElementById("hasilWhile")
+    .textContent =
+
+`i ← 1
+
+WHILE i <= 5
+
+OUTPUT i
+
+i ← i + 1
+
+Hasil:
+
+${hasil}`;
+
+}
+
+
+/* ============================= */
+/* GAME MOD */
+/* ============================= */
+
+function cekMod(){
+
+    let pilihan =
+    document.querySelector(
+    'input[name="mod"]:checked'
+    );
+
+    let feedback =
+    document.getElementById("modFeedback");
+
+    if(pilihan &&
+       pilihan.value==="1"){
+
+        feedback.className =
+        "feedback correct";
+
+        feedback.innerHTML =
+        "✅ BENAR! 10 MOD 3 = 1.";
+
+    }
+
+    else{
+
+        feedback.className =
+        "feedback wrong";
+
+        feedback.innerHTML =
+        "❌ Belum tepat. MOD berarti sisa pembagian.";
+
+    }
+
+}
+
+
+/* ============================= */
+/* BUG GAME */
+/* ============================= */
+
+function bugAnswer(jawaban){
+
+    let feedback =
+    document.getElementById("bugFeedback");
+
+    if(jawaban===2){
+
+        feedback.className =
+        "feedback correct";
+
+        feedback.innerHTML =
+        "✅ BENAR! i tidak pernah berubah sehingga perulangan dapat berjalan tanpa akhir.";
+
+    }
+
+    else{
+
+        feedback.className =
+        "feedback wrong";
+
+        feedback.innerHTML =
+        "❌ Belum tepat. Perhatikan nilai i di dalam WHILE.";
+
+    }
+
+}
+
+
+/* ============================= */
+/* STRUKTUR GAME */
+/* ============================= */
+
+function struktur(jawaban){
+
+    let feedback =
+    document.getElementById("strukturFeedback");
+
+    if(jawaban===2){
+
+        feedback.className =
+        "feedback correct";
+
+        feedback.innerHTML =
+        "✅ BENAR! FOR cocok untuk mengulang angka 1 sampai 20.";
+
+    }
+
+    else{
+
+        feedback.className =
+        "feedback wrong";
+
+        feedback.innerHTML =
+        "❌ Coba lagi. Kita membutuhkan perulangan.";
+
+    }
+
+}
+
+
+/* ============================= */
+/* QUIZ */
+/* ============================= */
+
+const questions = [
+
+{
+
+question:
+"Pseudocode digunakan terutama untuk...",
+
+answers:[
+
+"Menentukan warna website",
+
+"Merancang logika sebelum coding",
+
+"Menghapus program",
+
+"Menggambar poster"
+
+],
+
+correct:1
+
+},
+
+{
+
+question:
+"Dalam IPO, data yang dimasukkan disebut...",
+
+answers:[
+
+"Input",
+
+"Process",
+
+"Output",
+
+"Loop"
+
+],
+
+correct:0
+
+},
+
+{
+
+question:
+"Simbol ← pada pseudocode dapat dibaca...",
+
+answers:[
+
+"Dibandingkan",
+
+"Diisi dengan",
+
+"Diulang",
+
+"Dihapus"
+
+],
+
+correct:1
+
+},
+
+{
+
+question:
+"Perintah untuk menampilkan hasil adalah...",
+
+answers:[
+
+"INPUT",
+
+"OUTPUT",
+
+"BEGIN",
+
+"ENDIF"
+
+],
+
+correct:1
+
+},
+
+{
+
+question:
+"Perulangan yang cocok jika jumlah pengulangan sudah diketahui adalah...",
+
+answers:[
+
+"IF",
+
+"WHILE",
+
+"FOR",
+
+"ELSE"
+
+],
+
+correct:2
+
+},
+
+{
+
+question:
+"10 MOD 4 menghasilkan...",
+
+answers:[
+
+"1",
+
+"2",
+
+"3",
+
+"4"
+
+],
+
+correct:1
+
+},
+
+{
+
+question:
+"Jika nilai >= 75 maka siswa dinyatakan...",
+
+answers:[
+
+"Lulus",
+
+"Belum lulus",
+
+"Error",
+
+"Diulang"
+
+],
+
+correct:0
+
+},
+
+{
+
+question:
+"Pada WHILE, variabel penghitung perlu diperbarui agar...",
+
+answers:[
+
+"Program semakin panjang",
+
+"Tidak terjadi perulangan tanpa akhir",
+
+"Input hilang",
+
+"Output berubah warna"
+
+],
+
+correct:1
+
+},
+
+{
+
+question:
+"Urutan dasar IPO yang benar adalah...",
+
+answers:[
+
+"Output → Input → Process",
+
+"Input → Process → Output",
+
+"Process → Output → Input",
+
+"Input → Output → Process"
+
+],
+
+correct:1
+
+},
+
+{
+
+question:
+"Struktur yang digunakan untuk percabangan adalah...",
+
+answers:[
+
+"IF",
+
+"FOR",
+
+"BEGIN",
+
+"INPUT"
+
+],
+
+correct:0
+
+}
+
+];
+
+
+function tampilkanQuiz(){
+
+    let container =
+    document.getElementById(
+    "quizContainer"
+    );
+
+    let html="";
+
+    questions.forEach(
+    function(q,index){
+
+        html +=
+
+        `<div class="card">
+
+        <b>
+        ${index+1}. ${q.question}
+        </b>`;
+
+        q.answers.forEach(
+        function(answer,i){
+
+            html +=
+
+            `<label class="option">
+
+            <input
+            type="radio"
+            name="q${index}"
+            value="${i}">
+
+            ${answer}
+
+            </label>`;
+
+        });
+
+        html += "</div>";
+
+    });
+
+    container.innerHTML=html;
+
+}
+
+tampilkanQuiz();
+
+
+/* ============================= */
+/* NILAI QUIZ */
+/* ============================= */
+
+function hitungQuiz(){
+
+    let score=0;
+
+    questions.forEach(
+    function(q,index){
+
+        let answer =
+        document.querySelector(
+        `input[name="q${index}"]:checked`
+        );
+
+        if(
+        answer &&
+        Number(answer.value)===q.correct
+        ){
+
+            score++;
+
+        }
+
+    });
+
+    let nilai =
+    Math.round(
+    score/questions.length*100
+    );
+
+    let result =
+    document.getElementById(
+    "quizResult"
+    );
+
+    result.innerHTML =
+
+    `<div class="score">
+
+    🎯 NILAI KAMU: ${nilai}
+
+    <br><br>
+
+    ${score} dari ${questions.length}
+    soal benar.
+
+    </div>`;
+
+    if(nilai>=75){
+
+        result.innerHTML +=
+
+        `<div class="feedback correct">
+
+        🎉 Bagus! Kamu sudah memahami
+        dasar pseudocode.
+
+        </div>`;
+
+    }
+
+    else{
+
+        result.innerHTML +=
+
+        `<div class="feedback wrong">
+
+        💡 Jangan menyerah.
+        Baca kembali materi lalu coba quiz lagi.
+
+        </div>`;
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

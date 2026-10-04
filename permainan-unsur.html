@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Permainan Unsur</title>
+</head>
+
+<body>
+
+    <h1>🔬 Permainan Unsur</h1>
+
+    <p>Klik tombol unsur di bawah ini!</p>
+
+    <button onclick="tampilkanHidrogen()">H</button>
+    <button onclick="tampilkanOksigen()">O</button>
+
+    <div id="informasi"></div>
+
+    <script>
+
+        function tampilkanHidrogen() {
+
+            document.getElementById("informasi").innerHTML = `
+                <h2>Hidrogen (H)</h2>
+                <p><b>Nama:</b> Hidrogen</p>
+                <p><b>Simbol:</b> H</p>
+                <p><b>Nomor Atom:</b> 1</p>
+                <p><b>Jenis:</b> Unsur</p>
+            `;
+
+        }
+
+
+        function tampilkanOksigen() {
+
+            document.getElementById("informasi").innerHTML = `
+                <h2>Oksigen (O)</h2>
+                <p><b>Nama:</b> Oksigen</p>
+                <p><b>Simbol:</b> O</p>
+                <p><b>Nomor Atom:</b> 8</p>
+                <p><b>Jenis:</b> Unsur</p>
+            `;
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2765 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portofolio Jejak Guru | Siti Nur Hasanah, S.Pd.</title>
+
+<style>
+
+:root{
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#253047;
+    --muted:#6b7280;
+    --primary:#5b67d8;
+    --primary-dark:#4652c4;
+    --soft:#eef0ff;
+    --border:#e5e7eb;
+    --success:#4f9d78;
+    --shadow:0 10px 30px rgba(40,50,90,.08);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    transition:.3s;
+}
+
+body.dark{
+    --bg:#111827;
+    --card:#1f2937;
+    --text:#f3f4f6;
+    --muted:#aeb6c5;
+    --primary:#8d96f5;
+    --primary-dark:#737ce5;
+    --soft:#30375c;
+    --border:#374151;
+    --shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+}
+
+body.dark .navbar{
+    background:rgba(17,24,39,.94);
+}
+
+.nav-container{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 22px;
+}
+
+.logo{
+    font-size:19px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+.logo span{
+    color:var(--text);
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:18px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:var(--text);
+    font-size:13px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:var(--primary);
+}
+
+.menu-btn{
+    display:none;
+    border:none;
+    background:var(--soft);
+    color:var(--text);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px 70px;
+
+    background:
+        radial-gradient(circle at 20% 20%,#e8ebff 0,transparent 35%),
+        radial-gradient(circle at 80% 70%,#e6f5ef 0,transparent 35%),
+        var(--bg);
+}
+
+body.dark .hero{
+    background:
+        radial-gradient(circle at 20% 20%,#272d55 0,transparent 35%),
+        radial-gradient(circle at 80% 70%,#18352f 0,transparent 35%),
+        var(--bg);
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 17px;
+    border-radius:30px;
+    background:var(--soft);
+    color:var(--primary);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.5px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:clamp(40px,7vw,72px);
+    line-height:1.05;
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:var(--primary);
+}
+
+.hero h2{
+    font-size:clamp(18px,3vw,27px);
+    font-weight:500;
+    color:var(--muted);
+    margin-bottom:25px;
+}
+
+.hero p{
+    max-width:720px;
+    margin:auto;
+    color:var(--muted);
+    font-size:17px;
+}
+
+.hero-buttons{
+    margin-top:32px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 21px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:700;
+    border:none;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+}
+
+.btn-outline{
+    color:var(--primary);
+    border:1px solid var(--primary);
+}
+
+.btn-outline:hover{
+    background:var(--soft);
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:90px 20px;
+}
+
+.container{
+    max-width:1150px;
+    margin:auto;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.section-title .small{
+    color:var(--primary);
+    font-weight:800;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.section-title h2{
+    font-size:35px;
+    margin:8px 0;
+}
+
+.section-title p{
+    max-width:700px;
+    margin:auto;
+    color:var(--muted);
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard{
+    margin-top:-50px;
+    position:relative;
+    z-index:5;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.stat-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    box-shadow:var(--shadow);
+}
+
+.stat-card .icon{
+    font-size:30px;
+}
+
+.stat-card strong{
+    display:block;
+    font-size:34px;
+    color:var(--primary);
+    line-height:1.2;
+    margin:7px 0;
+}
+
+.stat-card span{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1.5fr;
+    gap:25px;
+}
+
+.profile-card,
+.content-card,
+.project-card,
+.timeline-item,
+.drive-card,
+.reflection-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.profile-card{
+    padding:35px;
+    text-align:center;
+}
+
+.avatar{
+    width:125px;
+    height:125px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--soft);
+    font-size:55px;
+}
+
+.profile-card h3{
+    font-size:22px;
+}
+
+.profile-card p{
+    color:var(--muted);
+}
+
+.content-card{
+    padding:35px;
+}
+
+.content-card h3{
+    margin-bottom:13px;
+}
+
+.quote{
+    margin-top:25px;
+    padding:20px;
+    background:var(--soft);
+    border-left:4px solid var(--primary);
+    border-radius:10px;
+    font-style:italic;
+}
+
+/* =========================
+   PROJECTS
+========================= */
+
+.project-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.project-card{
+    overflow:hidden;
+    transition:.25s;
+}
+
+.project-card:hover{
+    transform:translateY(-5px);
+}
+
+.project-icon{
+    height:145px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--soft);
+    font-size:55px;
+}
+
+.project-body{
+    padding:23px;
+}
+
+.category{
+    font-size:11px;
+    font-weight:800;
+    color:var(--primary);
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.project-body h3{
+    margin:6px 0;
+}
+
+.project-body p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.project-links{
+    margin-top:17px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.small-btn{
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:8px;
+    background:var(--soft);
+    color:var(--primary);
+    font-size:12px;
+    font-weight:700;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+    max-width:650px;
+    margin:0 auto 30px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px 18px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+}
+
+.search-box input:focus{
+    border-color:var(--primary);
+}
+
+/* =========================
+   DRIVE
+========================= */
+
+.drive-section{
+    background:linear-gradient(135deg,var(--soft),var(--bg));
+}
+
+.drive-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.drive-card{
+    padding:27px;
+}
+
+.drive-card h3{
+    margin-bottom:8px;
+}
+
+.drive-card p{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.drive-input{
+    display:flex;
+    gap:8px;
+}
+
+.drive-input input{
+    flex:1;
+    min-width:0;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.drive-input button{
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    background:var(--primary);
+    color:white;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.drive-note{
+    max-width:800px;
+    margin:25px auto 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline{
+    max-width:850px;
+    margin:auto;
+    position:relative;
+}
+
+.timeline:before{
+    content:"";
+    position:absolute;
+    left:20px;
+    top:0;
+    bottom:0;
+    width:3px;
+    background:var(--soft);
+}
+
+.timeline-item{
+    position:relative;
+    margin:0 0 22px 58px;
+    padding:25px;
+}
+
+.timeline-dot{
+    position:absolute;
+    width:17px;
+    height:17px;
+    background:var(--primary);
+    border-radius:50%;
+    left:-47px;
+    top:30px;
+    border:4px solid var(--bg);
+}
+
+.timeline-date{
+    font-size:12px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+/* =========================
+   CONTRIBUTION
+========================= */
+
+.two-column{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.content-card .big-icon{
+    font-size:42px;
+    margin-bottom:8px;
+}
+
+.content-card ul{
+    padding-left:20px;
+    margin-top:12px;
+}
+
+/* =========================
+   REFLECTION
+========================= */
+
+.reflection-section{
+    background:linear-gradient(135deg,var(--soft),var(--bg));
+}
+
+.reflection-card{
+    max-width:850px;
+    margin:auto;
+    padding:38px;
+}
+
+.reflection-date{
+    color:var(--primary);
+    font-weight:800;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   DRIVE MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:rgba(0,0,0,.65);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-content{
+    width:min(850px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:var(--card);
+    border-radius:20px;
+    padding:30px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:15px;
+    font-size:28px;
+    border:none;
+    background:none;
+    color:var(--text);
+    cursor:pointer;
+}
+
+.modal-content h2{
+    margin-bottom:10px;
+}
+
+.modal-content p{
+    color:var(--muted);
+}
+
+/* =========================
+   BACK TO TOP
+========================= */
+
+.top-btn{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:none;
+    background:var(--primary);
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    z-index:900;
+    display:none;
+}
+
+.top-btn.show{
+    display:block;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#20263a;
+    color:white;
+    text-align:center;
+    padding:45px 20px;
+}
+
+footer p{
+    color:#cbd0df;
+    margin-top:8px;
+}
+
+.footer-note{
+    font-size:13px;
+    margin-top:18px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:65px;
+        left:15px;
+        right:15px;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:15px;
+        padding:20px;
+        flex-direction:column;
+        box-shadow:var(--shadow);
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .project-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .about-grid,
+    .two-column,
+    .drive-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:70px 15px;
+    }
+
+    .hero{
+        padding-top:110px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero h2{
+        font-size:19px;
+    }
+
+    .stats-grid,
+    .project-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-card,
+    .content-card,
+    .reflection-card{
+        padding:25px;
+    }
+
+    .timeline-item{
+        margin-left:45px;
+    }
+
+    .timeline:before{
+        left:12px;
+    }
+
+    .timeline-dot{
+        left:-40px;
+    }
+
+    .drive-input{
+        flex-direction:column;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<header class="navbar">
+
+<div class="nav-container">
+
+<div class="logo">
+JEJAK<span> GURU</span>
+</div>
+
+<ul class="nav-links" id="navLinks">
+
+<li><a href="#beranda">Beranda</a></li>
+<li><a href="#tentang">Tentang</a></li>
+<li><a href="#pembelajaran">Pembelajaran</a></li>
+<li><a href="#permainan">Permainan</a></li>
+<li><a href="#dokumentasi">Dokumentasi</a></li>
+<li><a href="#timeline">Timeline</a></li>
+<li><a href="#refleksi">Refleksi</a></li>
+
+</ul>
+
+<button class="menu-btn" onclick="toggleMenu()">
+☰
+</button>
+
+</div>
+
+</header>
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero" id="beranda">
+
+<div class="hero-content">
+
+<div class="badge">
+PORTOFOLIO TAHUN AJARAN 2026 / 2027
+</div>
+
+<h1>
+Siti Nur Hasanah, <span>S.Pd.</span>
+</h1>
+
+<h2>
+Guru • Pembelajar • Kreator Media Pembelajaran
+</h2>
+
+<p>
+Selamat datang di Portofolio Jejak Guru.
+Sebuah ruang untuk mendokumentasikan proses,
+karya, pembelajaran, kontribusi, dan perjalanan
+saya sebagai seorang guru.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#tentang" class="btn btn-primary">
+🌱 Mulai Menjelajah
+</a>
+
+<a href="#timeline" class="btn btn-outline">
+📅 Lihat Perjalanan
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section class="dashboard">
+
+<div class="container">
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<div class="icon">📚</div>
+
+<strong>6</strong>
+
+<span>
+Elemen Pembelajaran IPAS
+</span>
+
+</div>
+
+<div class="stat-card">
+
+<div class="icon">🎮</div>
+
+<strong>5</strong>
+
+<span>
+Media & Permainan
+</span>
+
+</div>
+
+<div class="stat-card">
+
+<div class="icon">🖥️</div>
+
+<strong>1</strong>
+
+<span>
+Laboratorium Komputer
+</span>
+
+</div>
+
+<div class="stat-card">
+
+<div class="icon">📅</div>
+
+<strong>2026/27</strong>
+
+<span>
+Tahun Perjalanan
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     TENTANG
+===================================================== -->
+
+<section id="tentang">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+01 • Tentang Saya
+</div>
+
+<h2>
+Perjalanan Seorang Guru
+</h2>
+
+<p>
+Bukan tentang menjadi yang paling terlihat,
+tetapi tentang terus memberikan sesuatu yang berarti.
+</p>
+
+</div>
+
+<div class="about-grid">
+
+<div class="profile-card">
+
+<div class="avatar">
+👩‍🏫
+</div>
+
+<h3>
+Siti Nur Hasanah, S.Pd.
+</h3>
+
+<p>
+Guru SMK Negeri 1 Pandanarum
+</p>
+
+<br>
+
+<p>
+Mulai mengajar sejak <strong>2017</strong>
+</p>
+
+</div>
+
+<div class="content-card">
+
+<h3>
+Tentang Saya
+</h3>
+
+<p>
+Saya adalah seorang guru yang terus belajar
+untuk menciptakan pembelajaran yang bermakna,
+menyenangkan, dan dekat dengan kehidupan siswa.
+</p>
+
+<br>
+
+<p>
+Bagi saya, menjadi guru bukan hanya tentang
+menyampaikan materi, tetapi juga tentang
+menciptakan pengalaman belajar yang membuat
+siswa berpikir, mencoba, bertanya, berkarya,
+dan berkembang.
+</p>
+
+<br>
+
+<p>
+Tahun ajaran 2026/2027 menjadi titik baru bagi saya
+untuk mulai mendokumentasikan perjalanan tersebut
+dengan lebih sadar.
+</p>
+
+<div class="quote">
+
+" Saya tidak harus selalu terlihat.
+Saya hanya ingin apa yang saya kerjakan memiliki arti. "
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     PEMBELAJARAN
+===================================================== -->
+
+<section id="pembelajaran">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+02 • Pembelajaran
+</div>
+
+<h2>
+Karya Pembelajaran
+</h2>
+
+<p>
+Materi, perangkat, aktivitas, dan pengalaman belajar
+yang saya kembangkan untuk siswa.
+</p>
+
+</div>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔍 Cari karya pembelajaran..."
+onkeyup="searchProjects()">
+
+</div>
+
+<div class="project-grid" id="projectContainer">
+
+<!-- IPAS -->
+
+<div class="project-card searchable">
+
+<div class="project-icon">
+🌿
+</div>
+
+<div class="project-body">
+
+<div class="category">
+IPAS
+</div>
+
+<h3>
+Makhluk Hidup & Lingkungannya
+</h3>
+
+<p>
+Pembelajaran tentang individu, populasi,
+komunitas, ekosistem, serta hubungan
+makhluk hidup dengan lingkungannya.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn drive-link" data-drive="ipas">
+📚 Materi
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card searchable">
+
+<div class="project-icon">
+🧪
+</div>
+
+<div class="project-body">
+
+<div class="category">
+IPAS
+</div>
+
+<h3>
+Zat & Perubahannya
+</h3>
+
+<p>
+Materi tentang zat, unsur, senyawa,
+campuran, sifat zat serta perubahan
+fisika dan kimia.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn drive-link" data-drive="ipas">
+📚 Materi
+</a>
+
+<a href="#permainan" class="small-btn">
+🎮 Game
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card searchable">
+
+<div class="project-icon">
+⚡
+</div>
+
+<div class="project-body">
+
+<div class="category">
+IPAS
+</div>
+
+<h3>
+Energi & Perubahannya
+</h3>
+
+<p>
+Ruang untuk menyimpan materi,
+aktivitas, LKPD, dan dokumentasi
+pembelajaran energi.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn drive-link" data-drive="ipas">
+📚 Materi
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card searchable">
+
+<div class="project-icon">
+🌏
+</div>
+
+<div class="project-body">
+
+<div class="category">
+IPAS
+</div>
+
+<h3>
+Keruangan & Konektivitas
+</h3>
+
+<p>
+Dokumentasi materi dan aktivitas
+pembelajaran tentang ruang,
+wilayah, dan konektivitas.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn drive-link" data-drive="ipas">
+📚 Materi
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- INFORMATIKA -->
+
+<div class="project-card searchable">
+
+<div class="project-icon">
+🧠
+</div>
+
+<div class="project-body">
+
+<div class="category">
+INFORMATIKA
+</div>
+
+<h3>
+Berpikir Komputasional
+</h3>
+
+<p>
+Dekomposisi, pengenalan pola,
+abstraksi, dan algoritma melalui
+permasalahan sehari-hari.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn drive-link" data-drive="informatika">
+📚 Materi
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card searchable">
+
+<div class="project-icon">
+💻
+</div>
+
+<div class="project-body">
+
+<div class="category">
+INFORMATIKA
+</div>
+
+<h3>
+Dasar-Dasar Algoritma
+</h3>
+
+<p>
+Pengenalan konsep algoritma,
+urutan langkah, logika,
+dan penyelesaian masalah.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn drive-link" data-drive="informatika">
+📚 Materi
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     PERMAINAN
+===================================================== -->
+
+<section id="permainan">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+03 • Media & Permainan
+</div>
+
+<h2>
+Belajar Melalui Permainan
+</h2>
+
+<p>
+Beberapa media permainan digital yang dikembangkan
+sebagai alternatif pembelajaran.
+</p>
+
+</div>
+
+<div class="project-grid">
+
+<div class="project-card">
+
+<div class="project-icon">
+🔎
+</div>
+
+<div class="project-body">
+
+<div class="category">
+GAME IPAS
+</div>
+
+<h3>
+DETEKTIF ZAT
+</h3>
+
+<p>
+Game pembelajaran untuk materi
+Zat dan Perubahannya.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn game-link" data-game="detektif">
+▶ Mainkan
+</a>
+
+<a href="#" class="small-btn drive-link" data-drive="permainan">
+📁 File
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card">
+
+<div class="project-icon">
+⚗️
+</div>
+
+<div class="project-body">
+
+<div class="category">
+GAME IPAS
+</div>
+
+<h3>
+PERMAINAN UNSUR
+</h3>
+
+<p>
+Media interaktif untuk mengenalkan
+unsur dan pembentukan senyawa.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn game-link" data-game="unsur">
+▶ Mainkan
+</a>
+
+<a href="#" class="small-btn drive-link" data-drive="permainan">
+📁 File
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card">
+
+<div class="project-icon">
+🎲
+</div>
+
+<div class="project-body">
+
+<div class="category">
+GAME IPAS
+</div>
+
+<h3>
+ULAR TANGGA SENYAWA
+</h3>
+
+<p>
+Permainan kelompok dengan
+tantangan materi senyawa dan campuran.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn game-link" data-game="ular">
+▶ Mainkan
+</a>
+
+<a href="#" class="small-btn drive-link" data-drive="permainan">
+📁 File
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card">
+
+<div class="project-icon">
+🤖
+</div>
+
+<div class="project-body">
+
+<div class="category">
+GAME INFORMATIKA
+</div>
+
+<h3>
+ALGORITHM QUEST
+</h3>
+
+<p>
+Robot, labirin, perintah,
+skor, timer, dan tantangan algoritma.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn game-link" data-game="algorithm">
+▶ Mainkan
+</a>
+
+<a href="#" class="small-btn drive-link" data-drive="permainan">
+📁 File
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="project-card">
+
+<div class="project-icon">
+🀄
+</div>
+
+<div class="project-body">
+
+<div class="category">
+GAME INFORMATIKA
+</div>
+
+<h3>
+MAHJONG INFORMATIKA
+</h3>
+
+<p>
+Permainan digital sebagai alternatif
+pembelajaran Informatika yang menyenangkan.
+</p>
+
+<div class="project-links">
+
+<a href="#" class="small-btn game-link" data-game="mahjong">
+▶ Mainkan
+</a>
+
+<a href="#" class="small-btn drive-link" data-drive="permainan">
+📁 File
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     PRESENTASI & LKPD
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+04 • Dokumen Pembelajaran
+</div>
+
+<h2>
+Materi, LKPD & Asesmen
+</h2>
+
+<p>
+Tempat menyimpan perangkat dan bahan pendukung
+pembelajaran.
+</p>
+
+</div>
+
+<div class="two-column">
+
+<div class="content-card">
+
+<div class="big-icon">
+📊
+</div>
+
+<h3>
+Materi Presentasi
+</h3>
+
+<p>
+PowerPoint dan bahan presentasi yang digunakan
+dalam pembelajaran IPAS maupun Informatika.
+</p>
+
+<br>
+
+<a href="#" class="btn btn-primary drive-link" data-drive="presentasi">
+Buka Folder Presentasi
+</a>
+
+</div>
+
+<div class="content-card">
+
+<div class="big-icon">
+📝
+</div>
+
+<h3>
+LKPD & Asesmen
+</h3>
+
+<p>
+LKPD, tugas, instrumen asesmen, rubrik,
+dan perangkat evaluasi pembelajaran.
+</p>
+
+<br>
+
+<a href="#" class="btn btn-primary drive-link" data-drive="lkpd">
+Buka Folder LKPD
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     DOKUMENTASI
+===================================================== -->
+
+<section id="dokumentasi">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+05 • Dokumentasi
+</div>
+
+<h2>
+Jejak dalam Gambar
+</h2>
+
+<p>
+Foto dan dokumentasi kegiatan menjadi bukti
+bahwa pembelajaran benar-benar dilaksanakan.
+</p>
+
+</div>
+
+<div class="two-column">
+
+<div class="content-card">
+
+<div class="big-icon">
+📸
+</div>
+
+<h3>
+Dokumentasi Pembelajaran
+</h3>
+
+<p>
+Foto kegiatan pembelajaran,
+aktivitas kelompok, praktik,
+dan proyek siswa.
+</p>
+
+<br>
+
+<a href="#" class="btn btn-primary drive-link" data-drive="foto">
+📸 Lihat Dokumentasi
+</a>
+
+</div>
+
+<div class="content-card">
+
+<div class="big-icon">
+🎥
+</div>
+
+<h3>
+Dokumentasi Video
+</h3>
+
+<p>
+Video kegiatan, media pembelajaran,
+atau dokumentasi proses belajar.
+</p>
+
+<br>
+
+<a href="#" class="btn btn-primary drive-link" data-drive="video">
+🎥 Lihat Video
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     LAB KOMPUTER
+===================================================== -->
+
+<section id="lab">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+06 • Laboratorium
+</div>
+
+<h2>
+Laboratorium Komputer
+</h2>
+
+<p>
+Jejak pengelolaan, administrasi, dan upaya membangun
+lingkungan laboratorium yang tertib dan nyaman.
+</p>
+
+</div>
+
+<div class="two-column">
+
+<div class="content-card">
+
+<div class="big-icon">
+🖥️
+</div>
+
+<h3>
+Administrasi Lab Komputer
+</h3>
+
+<p>
+Dokumen administrasi dan pengelolaan
+Laboratorium Komputer.
+</p>
+
+<ul>
+
+<li>Buku induk laboratorium</li>
+<li>Administrasi penggunaan</li>
+<li>Pengelolaan fasilitas</li>
+<li>Penataan ruang</li>
+
+</ul>
+
+<br>
+
+<a href="#" class="btn btn-primary drive-link" data-drive="lab">
+📁 Buka Arsip Lab
+</a>
+
+</div>
+
+<div class="content-card">
+
+<div class="big-icon">
+🧹
+</div>
+
+<h3>
+Budaya Menjaga Fasilitas
+</h3>
+
+<p>
+Penguatan kebiasaan siswa untuk menjaga
+kebersihan, kerapian, dan fasilitas laboratorium.
+</p>
+
+<ul>
+
+<li>Tidak makan dan minum</li>
+<li>Tidak meninggalkan sampah</li>
+<li>Merapikan komputer</li>
+<li>Menjaga meja dan kursi</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     KONTRIBUSI
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+07 • Kontribusi Sekolah
+</div>
+
+<h2>
+Kontribusi dalam Kegiatan Sekolah
+</h2>
+
+<p>
+Tidak semua kontribusi harus berupa program besar.
+Tanggung jawab yang dijalankan dengan baik juga merupakan
+bagian dari perjalanan seorang guru.
+</p>
+
+</div>
+
+<div class="two-column">
+
+<div class="content-card">
+
+<div class="big-icon">
+🎉
+</div>
+
+<h3>
+Dies Natalis / Ulang Tahun Sekolah
+</h3>
+
+<p>
+Terlibat dalam kepanitiaan kegiatan ulang tahun
+sekolah sebagai bagian dari sie acara dan dipercaya
+menjalankan peran sebagai koordinator.
+</p>
+
+<br>
+
+<a href="#" class="btn btn-primary drive-link" data-drive="sekolah">
+📁 Dokumentasi
+</a>
+
+</div>
+
+<div class="content-card">
+
+<div class="big-icon">
+🤝
+</div>
+
+<h3>
+Tanggung Jawab & Kolaborasi
+</h3>
+
+<p>
+Berusaha menjalankan tugas, membantu rekan,
+dan memberikan kontribusi sesuai tanggung jawab
+yang dipercayakan.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     TIMELINE
+===================================================== -->
+
+<section id="timeline">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+08 • Timeline
+</div>
+
+<h2>
+Perjalanan 2026 / 2027
+</h2>
+
+<p>
+Timeline ini akan terus bertambah sepanjang tahun ajaran.
+</p>
+
+</div>
+
+<div class="timeline">
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+JUNI 2026
+</div>
+
+<h3>
+Titik Awal
+</h3>
+
+<p>
+Memulai tahun ajaran baru dan mempersiapkan
+pembelajaran untuk siswa kelas X.
+</p>
+
+</div>
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+JULI 2026
+</div>
+
+<h3>
+Membangun Pembelajaran
+</h3>
+
+<p>
+Mengembangkan perangkat pembelajaran,
+aktivitas IPAS, Informatika, dan media pembelajaran.
+</p>
+
+</div>
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+AGUSTUS 2026
+</div>
+
+<h3>
+Mulai Berkarya Digital
+</h3>
+
+<p>
+Mengembangkan permainan pembelajaran,
+media HTML, aktivitas IPAS, pembelajaran Informatika,
+dan pengelolaan Laboratorium Komputer.
+</p>
+
+</div>
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-date">
+SEPTEMBER 2026 — JUNI 2027
+</div>
+
+<h3>
+Jejak Berikutnya...
+</h3>
+
+<p>
+Bagian ini akan terus kita isi setiap kali ada
+karya, kegiatan, pengalaman, atau pembelajaran
+baru yang layak didokumentasikan.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     JEJAK SISWA
+===================================================== -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+09 • Jejak Siswa
+</div>
+
+<h2>
+Dampak yang Saya Harapkan
+</h2>
+
+<p>
+Bagian ini nantinya dapat diisi dengan karya,
+refleksi, tanggapan, dan perkembangan siswa.
+</p>
+
+</div>
+
+<div class="project-grid">
+
+<div class="project-card">
+
+<div class="project-icon">
+💬
+</div>
+
+<div class="project-body">
+
+<div class="category">
+SUARA SISWA
+</div>
+
+<h3>
+Komentar & Refleksi
+</h3>
+
+<p>
+Tanggapan siswa terhadap pembelajaran
+dan pengalaman belajar.
+</p>
+
+</div>
+
+</div>
+
+<div class="project-card">
+
+<div class="project-icon">
+🏆
+</div>
+
+<div class="project-body">
+
+<div class="category">
+KARYA SISWA
+</div>
+
+<h3>
+Hasil Belajar
+</h3>
+
+<p>
+Karya, proyek, tugas, dan hasil belajar
+yang layak didokumentasikan.
+</p>
+
+</div>
+
+</div>
+
+<div class="project-card">
+
+<div class="project-icon">
+🌱
+</div>
+
+<div class="project-body">
+
+<div class="category">
+PERKEMBANGAN
+</div>
+
+<h3>
+Perubahan Kecil
+</h3>
+
+<p>
+Catatan perkembangan dan perubahan
+yang terlihat selama proses pembelajaran.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     REFLEKSI
+===================================================== -->
+
+<section id="refleksi" class="reflection-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+10 • Refleksi
+</div>
+
+<h2>
+Catatan Seorang Guru
+</h2>
+
+<p>
+Ruang untuk mencatat proses belajar,
+pengalaman, dan hal-hal yang ingin diperbaiki.
+</p>
+
+</div>
+
+<div class="reflection-card">
+
+<div class="reflection-date">
+AGUSTUS 2026
+</div>
+
+<h3>
+Memilih Mengubah Energi Menjadi Karya
+</h3>
+
+<br>
+
+<p>
+Menjadi guru bukan hanya tentang mengajar.
+Ada banyak hal yang terjadi di balik sebuah
+pembelajaran yang tidak selalu terlihat.
+</p>
+
+<br>
+
+<p>
+Tahun ini saya ingin belajar untuk lebih fokus
+pada hal-hal yang dapat saya bangun dan kembangkan.
+</p>
+
+<br>
+
+<p>
+Saya mulai mendokumentasikan pembelajaran,
+membuat media, mencoba teknologi baru,
+dan mencatat perjalanan saya sebagai guru.
+</p>
+
+<br>
+
+<p>
+Bukan untuk mencari pengakuan,
+tetapi agar saya sendiri tidak lupa bahwa
+setiap usaha kecil tetap memiliki nilai.
+</p>
+
+<div class="quote">
+
+" Saya tidak harus selalu terlihat.
+Saya hanya ingin apa yang saya kerjakan memiliki arti. "
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     GOOGLE DRIVE
+===================================================== -->
+
+<section class="drive-section" id="drive">
+
+<div class="container">
+
+<div class="section-title">
+
+<div class="small">
+11 • Arsip Digital
+</div>
+
+<h2>
+Google Drive
+</h2>
+
+<p>
+Tempat menyimpan materi, perangkat, permainan,
+foto, dan dokumentasi lengkap.
+</p>
+
+</div>
+
+<div class="drive-grid">
+
+<div class="drive-card">
+
+<h3>
+📚 Pembelajaran IPAS
+</h3>
+
+<p>
+Materi, LKPD, asesmen, dan perangkat
+pembelajaran IPAS.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-ipas"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('ipas')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+💻 Pembelajaran Informatika
+</h3>
+
+<p>
+Materi, LKPD, tugas, dan perangkat
+pembelajaran Informatika.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-informatika"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('informatika')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+🎮 Permainan
+</h3>
+
+<p>
+Kumpulan file game dan media pembelajaran
+yang telah dibuat.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-permainan"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('permainan')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+📊 Presentasi
+</h3>
+
+<p>
+Kumpulan PowerPoint dan bahan presentasi.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-presentasi"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('presentasi')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+📝 LKPD & Asesmen
+</h3>
+
+<p>
+Kumpulan LKPD, tugas, asesmen,
+dan rubrik penilaian.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-lkpd"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('lkpd')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+📸 Foto Dokumentasi
+</h3>
+
+<p>
+Dokumentasi kegiatan pembelajaran
+dan kegiatan sekolah.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-foto"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('foto')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+🎥 Video
+</h3>
+
+<p>
+Video kegiatan dan dokumentasi pembelajaran.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-video"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('video')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+🖥️ Laboratorium Komputer
+</h3>
+
+<p>
+Dokumen administrasi dan dokumentasi
+Laboratorium Komputer.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-lab"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('lab')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div class="drive-card">
+
+<h3>
+🏫 Kegiatan Sekolah
+</h3>
+
+<p>
+Dokumentasi kontribusi dalam kegiatan sekolah.
+</p>
+
+<div class="drive-input">
+
+<input
+id="input-sekolah"
+placeholder="Tempel link Google Drive">
+
+<button onclick="saveDrive('sekolah')">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="drive-note">
+
+💡
+Link yang disimpan hanya tersimpan di browser
+pada laptop ini. Website tidak mengirim data
+ke server mana pun.
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+<h2>
+PORTOFOLIO JEJAK GURU
+</h2>
+
+<p>
+Siti Nur Hasanah, S.Pd.
+</p>
+
+<p>
+SMK Negeri 1 Pandanarum
+</p>
+
+<p class="footer-note">
+Tahun Ajaran 2026 / 2027
+</p>
+
+<p class="footer-note">
+© 2026 • Dibangun sebagai catatan perjalanan,
+bukan sekadar kumpulan dokumen.
+</p>
+
+</footer>
+
+<!-- =====================================================
+     TOP BUTTON
+===================================================== -->
+
+<button
+class="top-btn"
+id="topBtn"
+onclick="window.scrollTo({top:0,behavior:'smooth'})">
+
+↑
+
+</button>
+
+<script>
+
+/* =====================================================
+   GOOGLE DRIVE DATA
+===================================================== */
+
+const driveLinks = {
+
+    ipas: "",
+    informatika: "",
+    permainan: "",
+    presentasi: "",
+    lkpd: "",
+    foto: "",
+    video: "",
+    lab: "",
+    sekolah: ""
+
+};
+
+
+/* =====================================================
+   LOAD DATA
+===================================================== */
+
+function loadDrive(){
+
+    Object.keys(driveLinks).forEach(key => {
+
+        const saved =
+            localStorage.getItem("drive_" + key);
+
+        if(saved){
+
+            driveLinks[key] = saved;
+
+            const input =
+                document.getElementById("input-" + key);
+
+            if(input){
+                input.value = saved;
+            }
+
+        }
+
+    });
+
+    updateDriveButtons();
+
+}
+
+
+/* =====================================================
+   SAVE DRIVE
+===================================================== */
+
+function saveDrive(key){
+
+    const input =
+        document.getElementById("input-" + key);
+
+    const value =
+        input.value.trim();
+
+    if(!value){
+
+        alert("Silakan masukkan link Google Drive terlebih dahulu.");
+
+        return;
+    }
+
+    localStorage.setItem(
+        "drive_" + key,
+        value
+    );
+
+    driveLinks[key] = value;
+
+    updateDriveButtons();
+
+    alert("Link Google Drive berhasil disimpan.");
+
+}
+
+
+/* =====================================================
+   UPDATE DRIVE BUTTON
+===================================================== */
+
+function updateDriveButtons(){
+
+    document
+    .querySelectorAll(".drive-link")
+    .forEach(link => {
+
+        const key =
+            link.dataset.drive;
+
+        const url =
+            driveLinks[key];
+
+        if(url){
+
+            link.href = url;
+            link.target = "_blank";
+
+        }else{
+
+            link.href = "#";
+
+            link.onclick = function(e){
+
+                e.preventDefault();
+
+                document
+                .getElementById("drive")
+                .scrollIntoView({
+                    behavior:"smooth"
+                });
+
+                alert(
+                    "Link untuk bagian ini belum dimasukkan. Silakan masukkan link Google Drive terlebih dahulu."
+                );
+
+            };
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+function toggleMenu(){
+
+    document
+    .getElementById("navLinks")
+    .classList
+    .toggle("active");
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchProjects(){
+
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    document
+    .querySelectorAll(".searchable")
+    .forEach(card => {
+
+        const text =
+            card.innerText.toLowerCase();
+
+        if(text.includes(query)){
+
+            card.style.display = "";
+
+        }else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   GAME LINK
+===================================================== */
+
+document
+.querySelectorAll(".game-link")
+.forEach(link => {
+
+    link.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        const game =
+            this.dataset.game;
+
+        const gameNames = {
+
+            detektif:
+                "DETEKTIF ZAT",
+
+            unsur:
+                "PERMAINAN UNSUR",
+
+            ular:
+                "ULAR TANGGA SENYAWA",
+
+            algorithm:
+                "ALGORITHM QUEST",
+
+            mahjong:
+                "MAHJONG INFORMATIKA"
+
+        };
+
+        alert(
+            "File " +
+            gameNames[game] +
+            " nanti dapat kita hubungkan langsung ke file game HTML yang ada di laptop atau Google Drive."
+        );
+
+    });
+
+});
+
+
+/* =====================================================
+   TOP BUTTON
+===================================================== */
+
+window.addEventListener("scroll", function(){
+
+    const btn =
+        document.getElementById("topBtn");
+
+    if(window.scrollY > 400){
+
+        btn.classList.add("show");
+
+    }else{
+
+        btn.classList.remove("show");
+
+    }
+
+});
+
+
+/* =====================================================
+   CLOSE MOBILE MENU WHEN CLICKING LINK
+===================================================== */
+
+document
+.querySelectorAll(".nav-links a")
+.forEach(link => {
+
+    link.addEventListener("click", function(){
+
+        document
+        .getElementById("navLinks")
+        .classList
+        .remove("active");
+
+    });
+
+});
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+const darkButton =
+document.createElement("button");
+
+darkButton.innerHTML = "🌙";
+
+darkButton.style.position = "fixed";
+darkButton.style.left = "20px";
+darkButton.style.bottom = "20px";
+darkButton.style.width = "45px";
+darkButton.style.height = "45px";
+darkButton.style.borderRadius = "50%";
+darkButton.style.border = "none";
+darkButton.style.background = "var(--primary)";
+darkButton.style.color = "white";
+darkButton.style.cursor = "pointer";
+darkButton.style.zIndex = "900";
+darkButton.style.fontSize = "18px";
+
+document.body.appendChild(darkButton);
+
+
+darkButton.addEventListener("click",function(){
+
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+
+        localStorage.setItem(
+            "darkMode",
+            "true"
+        );
+
+        darkButton.innerHTML = "☀️";
+
+    }else{
+
+        localStorage.setItem(
+            "darkMode",
+            "false"
+        );
+
+        darkButton.innerHTML = "🌙";
+
+    }
+
+});
+
+
+if(
+    localStorage.getItem("darkMode")
+    === "true"
+){
+
+    document.body.classList.add("dark");
+
+    darkButton.innerHTML = "☀️";
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadDrive();
+
+</script>
+
+</body>
+</html>

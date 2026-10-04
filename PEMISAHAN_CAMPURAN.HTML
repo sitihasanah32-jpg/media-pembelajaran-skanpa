@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pemisahan Campuran - IPAS Kelas X</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef7fb;
+    color: #17324d;
+}
+
+header {
+    background: linear-gradient(135deg, #087ea4, #0aa6c2);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+header p {
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+nav {
+    background: white;
+    padding: 12px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+nav button {
+    border: none;
+    background: #e2f4f8;
+    color: #087ea4;
+    padding: 10px 16px;
+    margin: 4px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+nav button:hover {
+    background: #087ea4;
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    color: #087ea4;
+}
+
+.highlight {
+    background: #e5f8fc;
+    border-left: 6px solid #0aa6c2;
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.method {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    border-top: 6px solid #0aa6c2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.2s;
+}
+
+.method:hover {
+    transform: translateY(-4px);
+}
+
+.method h3 {
+    color: #087ea4;
+}
+
+.keyword {
+    background: #f1f8fa;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #cbdde3;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background: #087ea4;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f3fafc;
+}
+
+.case {
+    background: #fff8df;
+    border-left: 6px solid #e8b72f;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 10px;
+}
+
+.quiz-question {
+    background: #f7fbfc;
+    padding: 18px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+}
+
+.option {
+    display: block;
+    padding: 10px;
+    margin: 7px 0;
+    background: white;
+    border: 1px solid #cbdde3;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #e7f7fa;
+}
+
+#hasil {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    background: #087ea4;
+    color: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #065d79;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #17324d;
+    color: white;
+    margin-top: 30px;
+}
+
+.small {
+    color: #607d8b;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🧪 PEMISAHAN CAMPURAN</h1>
+    <p>IPAS Kelas X • Belajar dari Kehidupan Sehari-hari</p>
+</header>
+
+<nav>
+    <button onclick="showSection('beranda')">🏠 Beranda</button>
+    <button onclick="showSection('materi')">📚 Materi</button>
+    <button onclick="showSection('metode')">🔬 Metode</button>
+    <button onclick="showSection('kasus')">🕵️ Misi Detektif</button>
+    <button onclick="showSection('kuis')">🎯 Kuis</button>
+</nav>
+
+<div class="container">
+
+<!-- BERANDA -->
+<section id="beranda" class="section active">
+
+    <div class="card">
+        <h2>👋 Selamat Datang!</h2>
+
+        <p>
+            Pernahkah kamu melihat orang menyaring kopi?
+            Atau melihat petani garam mengambil garam dari air laut?
+        </p>
+
+        <div class="highlight">
+            <strong>🧠 Pertanyaan Pemantik:</strong><br><br>
+            Jika pasir tercampur dengan air, bagaimana cara kita
+            memisahkan pasir dan air tersebut?
+        </div>
+
+        <p>
+            Ternyata, campuran dapat dipisahkan dengan berbagai cara.
+            Caranya tergantung pada sifat zat-zat yang bercampur.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Tujuan Pembelajaran</h2>
+
+        <ul>
+            <li>Menjelaskan pengertian pemisahan campuran.</li>
+            <li>Mengenali berbagai metode pemisahan campuran.</li>
+            <li>Menentukan metode yang tepat untuk suatu campuran.</li>
+            <li>Menghubungkan pemisahan campuran dengan kehidupan sehari-hari.</li>
+        </ul>
+    </div>
+
+</section>
+
+
+<!-- MATERI -->
+<section id="materi" class="section">
+
+    <div class="card">
+        <h2>📚 Apa Itu Pemisahan Campuran?</h2>
+
+        <p>
+            <strong>Pemisahan campuran</strong> adalah proses memisahkan
+            zat-zat penyusun suatu campuran berdasarkan perbedaan
+            sifat fisiknya.
+        </p>
+
+        <div class="highlight">
+            💡 <strong>Ingat!</strong><br><br>
+            Pemisahan campuran tidak menghasilkan zat baru.
+            Kita hanya memisahkan zat yang sebelumnya tercampur.
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔍 Mengapa Campuran Dipisahkan?</h2>
+
+        <p>
+            Dalam kehidupan sehari-hari kita sering menemukan campuran
+            yang perlu dipisahkan.
+        </p>
+
+        <ul>
+            <li>Air + pasir</li>
+            <li>Air + lumpur</li>
+            <li>Air + garam</li>
+            <li>Besi + pasir</li>
+            <li>Tinta</li>
+            <li>Air + minyak</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🧠 Kunci Berpikir</h2>
+
+        <div class="highlight">
+            <strong>
+                Metode pemisahan dipilih berdasarkan perbedaan sifat
+                zat penyusunnya.
+            </strong>
+        </div>
+
+        <p>
+            Jadi, jangan hanya menghafal nama metode.
+            Perhatikan dahulu sifat campurannya.
+        </p>
+    </div>
+
+</section>
+
+
+<!-- METODE -->
+<section id="metode" class="section">
+
+    <div class="card">
+        <h2>🔬 Metode Pemisahan Campuran</h2>
+
+        <div class="method-grid">
+
+            <div class="method">
+                <h3>1️⃣ Filtrasi</h3>
+                <p>
+                    Memisahkan campuran menggunakan penyaring berdasarkan
+                    perbedaan ukuran partikel.
+                </p>
+                <p><strong>Contoh:</strong> air + pasir</p>
+                <div class="keyword">🔑 Kata kunci: SARING</div>
+            </div>
+
+            <div class="method">
+                <h3>2️⃣ Sedimentasi</h3>
+                <p>
+                    Memisahkan campuran dengan membiarkan zat yang lebih
+                    berat mengendap.
+                </p>
+                <p><strong>Contoh:</strong> air + lumpur</p>
+                <div class="keyword">🔑 Kata kunci: ENDAP</div>
+            </div>
+
+            <div class="method">
+                <h3>3️⃣ Dekantasi</h3>
+                <p>
+                    Menuangkan cairan secara perlahan setelah zat padat
+                    mengendap.
+                </p>
+                <p><strong>Contoh:</strong> air + pasir</p>
+                <div class="keyword">🔑 Kata kunci: TUANG</div>
+            </div>
+
+            <div class="method">
+                <h3>4️⃣ Evaporasi</h3>
+                <p>
+                    Memisahkan zat dengan cara menguapkan salah satu
+                    komponennya.
+                </p>
+                <p><strong>Contoh:</strong> garam dari air laut</p>
+                <div class="keyword">🔑 Kata kunci: UAPKAN</div>
+            </div>
+
+            <div class="method">
+                <h3>5️⃣ Distilasi</h3>
+                <p>
+                    Memisahkan campuran berdasarkan perbedaan titik didih.
+                </p>
+                <p><strong>Contoh:</strong> air + alkohol</p>
+                <div class="keyword">🔑 Kata kunci: TITIK DIDIH</div>
+            </div>
+
+            <div class="method">
+                <h3>6️⃣ Kromatografi</h3>
+                <p>
+                    Memisahkan komponen zat terlarut berdasarkan perbedaan
+                    pergerakannya.
+                </p>
+                <p><strong>Contoh:</strong> tinta</p>
+                <div class="keyword">🔑 Kata kunci: WARNA</div>
+            </div>
+
+            <div class="method">
+                <h3>7️⃣ Sublimasi</h3>
+                <p>
+                    Memisahkan zat yang dapat berubah langsung dari
+                    padat menjadi gas.
+                </p>
+                <p><strong>Contoh:</strong> kapur barus + pasir</p>
+                <div class="keyword">🔑 Kata kunci: MENYUBLIM</div>
+            </div>
+
+            <div class="method">
+                <h3>8️⃣ Magnetisasi</h3>
+                <p>
+                    Memisahkan zat berdasarkan sifat kemagnetannya.
+                </p>
+                <p><strong>Contoh:</strong> serbuk besi + pasir</p>
+                <div class="keyword">🔑 Kata kunci: MAGNET</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📋 Ringkasan Cepat</h2>
+
+        <table>
+            <tr>
+                <th>Campuran</th>
+                <th>Metode</th>
+                <th>Kunci</th>
+            </tr>
+
+            <tr>
+                <td>Air + pasir</td>
+                <td>Filtrasi</td>
+                <td>Saringan</td>
+            </tr>
+
+            <tr>
+                <td>Air + lumpur</td>
+                <td>Sedimentasi</td>
+                <td>Pengendapan</td>
+            </tr>
+
+            <tr>
+                <td>Air + pasir setelah mengendap</td>
+                <td>Dekantasi</td>
+                <td>Dituang</td>
+            </tr>
+
+            <tr>
+                <td>Air laut → garam</td>
+                <td>Evaporasi</td>
+                <td>Penguapan</td>
+            </tr>
+
+            <tr>
+                <td>Air + alkohol</td>
+                <td>Distilasi</td>
+                <td>Titik didih</td>
+            </tr>
+
+            <tr>
+                <td>Tinta</td>
+                <td>Kromatografi</td>
+                <td>Pergerakan warna</td>
+            </tr>
+
+            <tr>
+                <td>Kapur barus + pasir</td>
+                <td>Sublimasi</td>
+                <td>Menyublim</td>
+            </tr>
+
+            <tr>
+                <td>Besi + pasir</td>
+                <td>Magnetisasi</td>
+                <td>Magnet</td>
+            </tr>
+
+        </table>
+    </div>
+
+</section>
+
+
+<!-- MISI DETEKTIF -->
+<section id="kasus" class="section">
+
+    <div class="card">
+        <h2>🕵️ MISI DETEKTIF CAMPURAN</h2>
+
+        <p>
+            Jadilah seorang <strong>Detektif Zat!</strong>
+            Tentukan metode yang paling tepat untuk setiap kasus.
+        </p>
+
+        <div class="case">
+            <strong>🔎 Kasus 1</strong>
+            <p>
+                Rani memiliki campuran pasir dan air.
+                Bagaimana cara memisahkannya?
+            </p>
+            <strong>Jawaban:</strong> Filtrasi
+        </div>
+
+        <div class="case">
+            <strong>🔎 Kasus 2</strong>
+            <p>
+                Petani garam ingin mendapatkan garam dari air laut.
+            </p>
+            <strong>Jawaban:</strong> Evaporasi
+        </div>
+
+        <div class="case">
+            <strong>🔎 Kasus 3</strong>
+            <p>
+                Budi menemukan campuran serbuk besi dan pasir.
+            </p>
+            <strong>Jawaban:</strong> Magnetisasi
+        </div>
+
+        <div class="case">
+            <strong>🔎 Kasus 4</strong>
+            <p>
+                Sinta ingin mengetahui warna penyusun tinta hitam.
+            </p>
+            <strong>Jawaban:</strong> Kromatografi
+        </div>
+
+        <div class="case">
+            <strong>🔎 Kasus 5</strong>
+            <p>
+                Laboratorium ingin memisahkan dua cairan berdasarkan
+                perbedaan titik didih.
+            </p>
+            <strong>Jawaban:</strong> Distilasi
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- KUIS -->
+<section id="kuis" class="section">
+
+    <div class="card">
+        <h2>🎯 KUIS PEMISAHAN CAMPURAN</h2>
+
+        <p>Pilih jawaban yang menurutmu paling tepat.</p>
+
+        <form id="quiz">
+
+            <div class="quiz-question">
+                <strong>1. Cara memisahkan pasir dari air adalah...</strong>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a">
+                    A. Distilasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="b">
+                    B. Filtrasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="c">
+                    C. Kromatografi
+                </label>
+            </div>
+
+
+            <div class="quiz-question">
+                <strong>2. Garam dapat diperoleh dari air laut dengan cara...</strong>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a">
+                    A. Evaporasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="b">
+                    B. Filtrasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="c">
+                    C. Magnetisasi
+                </label>
+            </div>
+
+
+            <div class="quiz-question">
+                <strong>3. Campuran besi dan pasir dapat dipisahkan menggunakan...</strong>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a">
+                    A. Magnet
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="b">
+                    B. Kertas saring
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="c">
+                    C. Air
+                </label>
+            </div>
+
+
+            <div class="quiz-question">
+                <strong>4. Tinta dapat dipisahkan berdasarkan perbedaan pergerakan komponennya menggunakan...</strong>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="a">
+                    A. Evaporasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="b">
+                    B. Kromatografi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="c">
+                    C. Magnetisasi
+                </label>
+            </div>
+
+
+            <div class="quiz-question">
+                <strong>5. Pemisahan berdasarkan perbedaan titik didih disebut...</strong>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="a">
+                    A. Distilasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="b">
+                    B. Filtrasi
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="c">
+                    C. Sedimentasi
+                </label>
+            </div>
+
+            <button type="button" class="btn" onclick="cekQuiz()">
+                ✅ Periksa Jawaban
+            </button>
+
+        </form>
+
+        <div id="hasil"></div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<footer>
+    <strong>IPAS Kelas X</strong><br>
+    Pemisahan Campuran
+    <p class="small">
+        Belajar sains melalui kehidupan sehari-hari.
+    </p>
+</footer>
+
+
+<script>
+
+function showSection(id) {
+
+    let sections = document.querySelectorAll(".section");
+
+    sections.forEach(function(section) {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function cekQuiz() {
+
+    let jawaban = {
+        q1: "b",
+        q2: "a",
+        q3: "a",
+        q4: "b",
+        q5: "a"
+    };
+
+    let benar = 0;
+
+    for (let q in jawaban) {
+
+        let pilihan = document.querySelector(
+            'input[name="' + q + '"]:checked'
+        );
+
+        if (pilihan && pilihan.value === jawaban[q]) {
+            benar++;
+        }
+    }
+
+    let nilai = benar * 20;
+
+    let pesan = "";
+
+    if (nilai === 100) {
+        pesan = "🏆 Luar biasa! Semua jawaban benar!";
+    }
+    else if (nilai >= 80) {
+        pesan = "👏 Bagus! Pemahamanmu sudah sangat baik.";
+    }
+    else if (nilai >= 60) {
+        pesan = "👍 Cukup baik. Coba pelajari kembali metode yang masih keliru.";
+    }
+    else {
+        pesan = "💪 Jangan menyerah! Baca kembali materi dan coba lagi.";
+    }
+
+    document.getElementById("hasil").innerHTML =
+        "Nilai kamu: " + nilai + "<br>" + pesan;
+}
+
+</script>
+
+</body>
+</html>

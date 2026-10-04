@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Permainan Unsur</title>
+</head>
+
+<body>
+
+    <h1>🔬 Permainan Unsur</h1>
+
+    <p><b>Pilih unsur untuk membuat senyawa!</b></p>
+
+    <button onclick="pilihUnsur('H')">H</button>
+    <button onclick="pilihUnsur('O')">O</button>
+
+    <h3>Unsur yang dipilih:</h3>
+
+    <div id="pilihan">
+        Belum ada unsur yang dipilih.
+    </div>
+
+    <br>
+
+    <button onclick="gabungkanUnsur()">🔬 GABUNGKAN</button>
+
+    <div id="hasil"></div>
+
+
+    <script>
+
+        // Menyimpan unsur yang dipilih
+        let unsurDipilih = [];
+
+
+        // Ketika siswa memilih unsur
+        function pilihUnsur(unsur) {
+
+            unsurDipilih.push(unsur);
+
+            tampilkanPilihan();
+
+        }
+
+
+        // Menampilkan unsur yang sudah dipilih
+        function tampilkanPilihan() {
+
+            document.getElementById("pilihan").innerHTML =
+                unsurDipilih.join(" + ");
+
+        }
+
+
+        // Tombol gabungkan
+        function gabungkanUnsur() {
+
+    let kombinasi = unsurDipilih.join("");
+
+    if (kombinasi === "HHO") {
+
+        document.getElementById("hasil").innerHTML = `
+            <h2>🎉 BENAR!</h2>
+            <h1>💧 H₂O</h1>
+            <h2>Air</h2>
+            <p>2 atom Hidrogen + 1 atom Oksigen</p>
+            <p><b>Jenis: Senyawa</b></p>
+        `;
+
+    } else {
+
+        document.getElementById("hasil").innerHTML = `
+            <h2>❌ Belum tepat!</h2>
+            <p>Coba periksa kembali kombinasi unsur yang kamu pilih.</p>
+        `;
+
+    }
+
+}
+
+    </script>
+
+</body>
+</html>

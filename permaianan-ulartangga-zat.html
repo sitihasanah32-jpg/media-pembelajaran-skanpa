@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ular Tangga - Senyawa & Campuran</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left, #e0f2fe, transparent 35%),
+        radial-gradient(circle at bottom right, #fef3c7, transparent 35%),
+        linear-gradient(135deg, #dbeafe, #f0fdf4);
+    min-height: 100vh;
+    color: #172033;
+}
+
+button {
+    font-family: inherit;
+}
+
+.header {
+    text-align: center;
+    padding: 15px 10px 5px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: clamp(25px, 4vw, 44px);
+    color: #173b70;
+    text-shadow: 2px 2px white;
+}
+
+.header p {
+    margin: 5px 0;
+    font-size: clamp(13px, 2vw, 18px);
+    font-weight: bold;
+}
+
+.game-wrapper {
+    width: 98%;
+    max-width: 1450px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: minmax(500px, 1fr) 330px;
+    gap: 15px;
+    padding: 10px;
+}
+
+.board-area {
+    background: rgba(255,255,255,0.88);
+    border-radius: 25px;
+    padding: 15px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+}
+
+.board {
+    width: min(90vw, 760px);
+    aspect-ratio: 1/1;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    border: 6px solid #173b70;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    background: white;
+}
+
+.cell {
+    position: relative;
+    border: 1px solid rgba(23,59,112,0.25);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 4px;
+    font-weight: bold;
+    font-size: clamp(10px, 1.3vw, 17px);
+    overflow: visible;
+}
+
+.cell:nth-child(odd) {
+    background: #fef9c3;
+}
+
+.cell:nth-child(even) {
+    background: #dcfce7;
+}
+
+.cell.start {
+    background: #bbf7d0;
+}
+
+.cell.finish {
+    background: #fde68a;
+}
+
+.cell.snake-head {
+    background: #fecaca;
+}
+
+.cell.ladder-bottom {
+    background: #bfdbfe;
+}
+
+.cell.bonus {
+    background: #f5d0fe;
+}
+
+.cell-number {
+    z-index: 1;
+}
+
+.special-icon {
+    position: absolute;
+    right: 3px;
+    bottom: 1px;
+    font-size: clamp(18px, 2.5vw, 32px);
+    z-index: 1;
+}
+
+.tokens {
+    position: absolute;
+    left: 50%;
+    bottom: 3px;
+    transform: translateX(-50%);
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1px;
+    z-index: 5;
+}
+
+.token {
+    width: clamp(17px, 2.4vw, 31px);
+    height: clamp(17px, 2.4vw, 31px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: clamp(8px, 1vw, 12px);
+    font-weight: bold;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+
+.token.active {
+    animation: pulseToken 0.8s infinite;
+}
+
+@keyframes pulseToken {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.t1 { background:#ef4444; }
+.t2 { background:#2563eb; }
+.t3 { background:#16a34a; }
+.t4 { background:#eab308; color:#222; }
+.t5 { background:#9333ea; }
+.t6 { background:#f97316; }
+
+.board-message {
+    text-align: center;
+    margin-top: 10px;
+    min-height: 30px;
+    font-weight: bold;
+    font-size: clamp(14px, 2vw, 20px);
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.panel {
+    background: rgba(255,255,255,0.94);
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 7px 20px rgba(0,0,0,0.12);
+}
+
+.turn-box {
+    text-align: center;
+    background: linear-gradient(135deg,#173b70,#2563eb);
+    color: white;
+}
+
+.turn-box small {
+    display: block;
+    opacity: 0.85;
+}
+
+.turn-box h2 {
+    margin: 5px 0;
+    font-size: 25px;
+}
+
+.dice-area {
+    text-align: center;
+}
+
+.dice {
+    width: 90px;
+    height: 90px;
+    margin: 8px auto 12px;
+    background: white;
+    border: 5px solid #173b70;
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 10px;
+    box-shadow: 0 7px 15px rgba(0,0,0,0.18);
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #173b70;
+    align-self: center;
+    justify-self: center;
+}
+
+.dice.rolling {
+    animation: shakeDice 0.12s infinite;
+}
+
+@keyframes shakeDice {
+    0% { transform: rotate(-8deg) scale(1.05); }
+    50% { transform: rotate(8deg) scale(1.1); }
+    100% { transform: rotate(-8deg) scale(1.05); }
+}
+
+.dice-result {
+    font-size: 17px;
+    font-weight: bold;
+    min-height: 25px;
+}
+
+.main-btn {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: 0.2s;
+}
+
+.main-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.main-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.roll-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.reset-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.pause-btn {
+    background: #f59e0b;
+    color: white;
+}
+
+.teacher-btn {
+    background: #7c3aed;
+    color: white;
+}
+
+.sound-btn {
+    background: #475569;
+    color: white;
+}
+
+.score-title {
+    text-align: center;
+    margin: 0 0 10px;
+    color: #173b70;
+}
+
+.score-row {
+    display: grid;
+    grid-template-columns: 30px 1fr 55px 55px;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 5px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    background: #f1f5f9;
+}
+
+.score-row.current {
+    outline: 3px solid #f59e0b;
+    background: #fef3c7;
+}
+
+.score-row .mini-token {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
+.leader {
+    text-align: center;
+    background: #fef3c7;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.legend div {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 7px;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.72);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-card {
+    width: min(720px, 96vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.question-label {
+    text-align: center;
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.question-text {
+    font-size: clamp(18px, 3vw, 27px);
+    font-weight: bold;
+    text-align: center;
+    margin: 15px 0 20px;
+    line-height: 1.4;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.option-btn {
+    border: 3px solid #cbd5e1;
+    background: #f8fafc;
+    border-radius: 13px;
+    padding: 15px;
+    font-size: 17px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.option-btn:hover {
+    background: #dbeafe;
+    border-color: #2563eb;
+}
+
+.option-btn:disabled {
+    cursor: not-allowed;
+}
+
+.result-box {
+    text-align: center;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 17px;
+}
+
+.correct {
+    background: #dcfce7;
+    color: #166534;
+    border: 2px solid #22c55e;
+}
+
+.wrong {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 2px solid #ef4444;
+}
+
+.explanation {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.continue-btn {
+    display: none;
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-weight: bold;
+    font-size: 17px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+/* START SCREEN */
+.start-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background:
+        radial-gradient(circle at top, #bfdbfe, transparent 45%),
+        linear-gradient(135deg,#eff6ff,#ecfdf5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.start-card {
+    background: rgba(255,255,255,0.96);
+    width: min(700px,95vw);
+    text-align: center;
+    padding: 35px;
+    border-radius: 30px;
+    box-shadow: 0 20px 70px rgba(0,0,0,0.2);
+}
+
+.start-card h1 {
+    color: #173b70;
+    font-size: clamp(30px,6vw,55px);
+    margin: 5px 0;
+}
+
+.start-card h2 {
+    color: #16a34a;
+}
+
+.start-card p {
+    line-height: 1.6;
+}
+
+.start-btn {
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 16px 35px;
+    font-size: 21px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.rules {
+    text-align: left;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+
+.rules li {
+    margin: 7px 0;
+}
+
+/* PAUSE */
+.pause-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1900;
+    background: rgba(15,23,42,0.85);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.pause-overlay.show {
+    display: flex;
+}
+
+.pause-overlay h1 {
+    font-size: 55px;
+}
+
+/* TEACHER */
+.teacher-content {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.teacher-question {
+    background: #f8fafc;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    border-left: 5px solid #2563eb;
+}
+
+.teacher-question strong {
+    color: #173b70;
+}
+
+/* WINNER */
+.winner-card {
+    text-align: center;
+}
+
+.winner-trophy {
+    font-size: 80px;
+    animation: trophy 1s infinite alternate;
+}
+
+@keyframes trophy {
+    from { transform: scale(1); }
+    to { transform: scale(1.15) rotate(3deg); }
+}
+
+.final-ranking {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.final-row {
+    display: grid;
+    grid-template-columns: 45px 1fr 100px 100px;
+    padding: 10px;
+    border-radius: 9px;
+    margin: 5px 0;
+    background: #f1f5f9;
+    font-weight: bold;
+}
+
+@media(max-width: 950px) {
+    .game-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .board {
+        width: min(94vw, 700px);
+    }
+
+    .sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .score-panel {
+        grid-column: 1 / -1;
+    }
+}
+
+@media(max-width: 600px) {
+    .game-wrapper {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .board-area {
+        padding: 7px;
+    }
+
+    .sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .options {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-card {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HALAMAN AWAL -->
+<div class="start-screen" id="startScreen">
+    <div class="start-card">
+        <div style="font-size:65px;">🧪🎲🐍🪜</div>
+
+        <h1>ULAR TANGGA</h1>
+        <h2>PETUALANGAN SENYAWA & CAMPURAN</h2>
+
+        <p>
+            Game pembelajaran IPAS untuk 6 kelompok.
+            Lempar dadu, bergerak di papan, jawab pertanyaan,
+            naik tangga dan hindari ular!
+        </p>
+
+        <div class="rules">
+            <strong>📜 ATURAN SINGKAT:</strong>
+            <ul>
+                <li>Setiap kelompok bermain secara bergiliran.</li>
+                <li>Klik 🎲 KOCOK DADU untuk bergerak.</li>
+                <li>Jawab pertanyaan Senyawa & Campuran.</li>
+                <li>Jawaban benar mendapat <strong>10 poin</strong>.</li>
+                <li>Jawaban salah tidak mendapat poin.</li>
+                <li>Berhasil di tangga → naik.</li>
+                <li>Salah di kepala ular → turun.</li>
+                <li>Kelompok pertama mencapai FINISH menjadi pemenang!</li>
+            </ul>
+        </div>
+
+        <button class="start-btn" onclick="startGame()">
+            🚀 MULAI PERMAINAN
+        </button>
+    </div>
+</div>
+
+<!-- PAUSE -->
+<div class="pause-overlay" id="pauseOverlay">
+    <div>
+        <div style="font-size:70px;">⏸️</div>
+        <h1>PERMAINAN DIJEDA</h1>
+        <button class="start-btn" onclick="togglePause()">▶️ LANJUTKAN</button>
+    </div>
+</div>
+
+<div class="header">
+    <h1>🧪 ULAR TANGGA SENYAWA & CAMPURAN 🎲</h1>
+    <p>Petualangan 6 Kelompok Menuju Puncak Pengetahuan</p>
+</div>
+
+<div class="game-wrapper">
+
+    <div class="board-area">
+        <div id="board" class="board"></div>
+        <div class="board-message" id="boardMessage">
+            Siapkan kelompokmu!
+        </div>
+    </div>
+
+    <div class="sidebar">
+
+        <div class="panel turn-box">
+            <small>GILIRAN SEKARANG</small>
+            <h2 id="turnName">Kelompok 1</h2>
+            <div id="turnPosition">Posisi: START</div>
+        </div>
+
+        <div class="panel dice-area">
+            <h3>🎲 DADU DIGITAL</h3>
+
+            <div class="dice" id="dice">
+                <div></div><div></div><div></div>
+                <div></div><div></div><div></div>
+                <div></div><div></div><div></div>
+            </div>
+
+            <div class="dice-result" id="diceResult">
+                Klik KOCOK DADU
+            </div>
+
+            <button class="main-btn roll-btn" id="rollButton" onclick="rollDice()">
+                🎲 KOCOK DADU
+            </button>
+        </div>
+
+        <div class="panel score-panel">
+            <h3 class="score-title">🏆 KLASEMEN</h3>
+            <div id="scoreBoard"></div>
+            <div class="leader" id="leaderBox">
+                👑 Pemimpin: Kelompok 1
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="legend">
+                <div>🪜 Tangga = Naik</div>
+                <div>🐍 Ular = Turun</div>
+                <div>⭐ Bonus = +20</div>
+                <div>⚡ Super = +30</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <button class="main-btn pause-btn" onclick="togglePause()">
+                ⏸️ JEDA
+            </button>
+
+            <button class="main-btn sound-btn" id="soundButton" onclick="toggleSound()">
+                🔊 SUARA: ON
+            </button>
+
+            <button class="main-btn teacher-btn" onclick="openTeacherMode()">
+                👩‍🏫 MODE GURU
+            </button>
+
+            <button class="main-btn reset-btn" onclick="resetGame()">
+                🔄 PERMAINAN BARU
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL PERTANYAAN -->
+<div class="modal" id="questionModal">
+    <div class="modal-card">
+
+        <div class="question-label" id="questionLabel">
+            🧪 PERTANYAAN
+        </div>
+
+        <div class="question-text" id="questionText"></div>
+
+        <div class="options" id="options"></div>
+
+        <div id="resultBox"></div>
+
+        <button class="continue-btn" id="continueButton" onclick="continueTurn()">
+            ▶️ LANJUTKAN
+        </button>
+
+    </div>
+</div>
+
+<!-- MODAL GURU -->
+<div class="modal" id="teacherModal">
+    <div class="modal-card">
+        <h2 style="text-align:center;color:#173b70;">
+            👩‍🏫 MODE GURU
+        </h2>
+
+        <div class="teacher-content" id="teacherContent"></div>
+
+        <button class="main-btn teacher-btn" onclick="closeTeacherMode()">
+            ↩️ KEMBALI KE PERMAINAN
+        </button>
+    </div>
+</div>
+
+<!-- MODAL PEMENANG -->
+<div class="modal" id="winnerModal">
+    <div class="modal-card winner-card">
+
+        <div class="winner-trophy">🏆</div>
+
+        <h1 id="winnerTitle">SELAMAT!</h1>
+
+        <h2 id="winnerText"></h2>
+
+        <p>
+            🎉 Luar biasa! Kalian berhasil mencapai FINISH!
+        </p>
+
+        <div class="final-ranking" id="finalRanking"></div>
+
+        <button class="main-btn reset-btn" onclick="resetGame()">
+            🔄 MAIN LAGI
+        </button>
+
+    </div>
+</div>
+
+<script>
+
+/* ============================================================
+   DATA PERMAINAN
+============================================================ */
+
+const teams = [
+    {
+        name: "Kelompok 1",
+        color: "#ef4444",
+        position: 1,
+        score: 0,
+        correct: 0,
+        wrong: 0
+    },
+    {
+        name: "Kelompok 2",
+        color: "#2563eb",
+        position: 1,
+        score: 0,
+        correct: 0,
+        wrong: 0
+    },
+    {
+        name: "Kelompok 3",
+        color: "#16a34a",
+        position: 1,
+        score: 0,
+        correct: 0,
+        wrong: 0
+    },
+    {
+        name: "Kelompok 4",
+        color: "#eab308",
+        position: 1,
+        score: 0,
+        correct: 0,
+        wrong: 0
+    },
+    {
+        name: "Kelompok 5",
+        color: "#9333ea",
+        position: 1,
+        score: 0,
+        correct: 0,
+        wrong: 0
+    },
+    {
+        name: "Kelompok 6",
+        color: "#f97316",
+        position: 1,
+        score: 0,
+        correct: 0,
+        wrong: 0
+    }
+];
+
+/* Tangga */
+const ladders = {
+    3: 14,
+    8: 20,
+    17: 29,
+    25: 38,
+    32: 45
+};
+
+/* Ular */
+const snakes = {
+    15: 6,
+    23: 12,
+    31: 19,
+    40: 27,
+    48: 35
+};
+
+/* Bonus */
+const bonuses = {
+    11: 20,
+    28: 20,
+    42: 30
+};
+
+/* Pertanyaan */
+const questions = [
+
+{
+    q: "Air (H₂O) termasuk...",
+    options: ["Unsur", "Senyawa", "Campuran homogen", "Campuran heterogen"],
+    answer: 1,
+    explanation: "Air murni H₂O adalah senyawa karena tersusun dari unsur hidrogen dan oksigen yang berikatan secara kimia."
+},
+
+{
+    q: "Manakah yang merupakan contoh campuran homogen?",
+    options: ["Air dan minyak", "Pasir dan air", "Air garam", "Batu dan pasir"],
+    answer: 2,
+    explanation: "Air garam tampak seragam sehingga termasuk campuran homogen."
+},
+
+{
+    q: "CO₂ merupakan contoh...",
+    options: ["Unsur", "Senyawa", "Campuran", "Larutan"],
+    answer: 1,
+    explanation: "CO₂ adalah senyawa yang tersusun dari karbon dan oksigen."
+},
+
+{
+    q: "Campuran yang memiliki komposisi seragam disebut...",
+    options: ["Campuran heterogen", "Senyawa", "Campuran homogen", "Unsur"],
+    answer: 2,
+    explanation: "Campuran homogen memiliki komposisi yang seragam di seluruh bagian campuran."
+},
+
+{
+    q: "Air dan minyak merupakan contoh...",
+    options: ["Unsur", "Senyawa", "Campuran homogen", "Campuran heterogen"],
+    answer: 3,
+    explanation: "Air dan minyak tidak tercampur merata sehingga termasuk campuran heterogen."
+},
+
+{
+    q: "NaCl dikenal dalam kehidupan sehari-hari sebagai...",
+    options: ["Gula", "Garam dapur", "Air", "Karbon"],
+    answer: 1,
+    explanation: "NaCl adalah natrium klorida atau garam dapur."
+},
+
+{
+    q: "Zat yang tersusun dari satu jenis atom disebut...",
+    options: ["Unsur", "Senyawa", "Campuran", "Larutan"],
+    answer: 0,
+    explanation: "Unsur adalah zat yang tersusun dari satu jenis atom."
+},
+
+{
+    q: "Campuran air dengan pasir termasuk...",
+    options: ["Campuran homogen", "Campuran heterogen", "Senyawa", "Unsur"],
+    answer: 1,
+    explanation: "Pasir tidak larut dalam air dan bagian-bagiannya masih dapat dibedakan."
+},
+
+{
+    q: "Manakah yang termasuk senyawa?",
+    options: ["O₂", "Fe", "H₂O", "Au"],
+    answer: 2,
+    explanation: "H₂O tersusun atas dua jenis unsur, yaitu hidrogen dan oksigen."
+},
+
+{
+    q: "Contoh campuran homogen dalam kehidupan sehari-hari adalah...",
+    options: ["Sirup", "Air lumpur", "Air dan pasir", "Minyak dan air"],
+    answer: 0,
+    explanation: "Sirup merupakan campuran yang tampak seragam."
+},
+
+{
+    q: "Contoh campuran heterogen adalah...",
+    options: ["Air gula", "Air garam", "Udara", "Air dan minyak"],
+    answer: 3,
+    explanation: "Air dan minyak membentuk dua lapisan sehingga termasuk campuran heterogen."
+},
+
+{
+    q: "Sifat senyawa berbeda dari unsur-unsur penyusunnya. Pernyataan tersebut...",
+    options: ["Benar", "Salah", "Kadang-kadang", "Tidak dapat ditentukan"],
+    answer: 0,
+    explanation: "Senyawa memiliki sifat baru yang berbeda dari sifat unsur penyusunnya."
+},
+
+{
+    q: "Gula yang dilarutkan dalam air menghasilkan...",
+    options: ["Senyawa baru", "Campuran homogen", "Campuran heterogen", "Unsur"],
+    answer: 1,
+    explanation: "Gula dan air membentuk larutan yang seragam."
+},
+
+{
+    q: "Besi (Fe) termasuk...",
+    options: ["Unsur", "Senyawa", "Campuran", "Larutan"],
+    answer: 0,
+    explanation: "Fe merupakan lambang kimia unsur besi."
+},
+
+{
+    q: "Udara termasuk...",
+    options: ["Unsur", "Senyawa tunggal", "Campuran", "Atom"],
+    answer: 2,
+    explanation: "Udara tersusun atas berbagai gas, seperti nitrogen, oksigen, dan karbon dioksida."
+},
+
+{
+    q: "Campuran dapat dipisahkan secara fisik. Pernyataan ini...",
+    options: ["Benar", "Salah", "Tidak selalu", "Mustahil"],
+    answer: 0,
+    explanation: "Komponen campuran dapat dipisahkan menggunakan metode fisika."
+},
+
+{
+    q: "Senyawa terbentuk melalui...",
+    options: [
+        "Pencampuran biasa",
+        "Ikatan kimia antarunsur",
+        "Penyaringan",
+        "Pengadukan"
+    ],
+    answer: 1,
+    explanation: "Senyawa terbentuk ketika unsur-unsur bergabung secara kimia."
+},
+
+{
+    q: "Air laut termasuk...",
+    options: ["Unsur", "Senyawa murni", "Campuran", "Atom"],
+    answer: 2,
+    explanation: "Air laut mengandung air, garam, mineral, dan berbagai zat lain."
+},
+
+{
+    q: "Campuran homogen disebut juga...",
+    options: ["Larutan", "Endapan", "Unsur", "Senyawa"],
+    answer: 0,
+    explanation: "Campuran homogen yang seragam sering disebut larutan."
+},
+
+{
+    q: "Pasir dan kerikil merupakan...",
+    options: ["Campuran homogen", "Campuran heterogen", "Senyawa", "Unsur"],
+    answer: 1,
+    explanation: "Pasir dan kerikil masih dapat dibedakan secara langsung."
+},
+
+{
+    q: "O₂ termasuk...",
+    options: ["Unsur", "Senyawa", "Campuran", "Larutan"],
+    answer: 0,
+    explanation: "O₂ tersusun dari satu jenis unsur, yaitu oksigen."
+},
+
+{
+    q: "Manakah yang bukan merupakan campuran?",
+    options: ["Air garam", "Udara", "Air murni H₂O", "Air laut"],
+    answer: 2,
+    explanation: "Air murni H₂O merupakan senyawa, bukan campuran."
+},
+
+{
+    q: "Campuran heterogen memiliki...",
+    options: [
+        "Komposisi seragam",
+        "Satu jenis atom",
+        "Bagian-bagian yang dapat dibedakan",
+        "Rumus kimia tetap"
+    ],
+    answer: 2,
+    explanation: "Pada campuran heterogen, komponen penyusunnya masih dapat dibedakan."
+},
+
+{
+    q: "Manakah pasangan yang benar?",
+    options: [
+        "Fe = senyawa",
+        "H₂O = unsur",
+        "CO₂ = senyawa",
+        "O₂ = campuran"
+    ],
+    answer: 2,
+    explanation: "CO₂ merupakan senyawa yang tersusun dari karbon dan oksigen."
+},
+
+{
+    q: "Garam dapur NaCl tersusun dari...",
+    options: [
+        "Natrium dan klorin",
+        "Hidrogen dan oksigen",
+        "Karbon dan oksigen",
+        "Besi dan oksigen"
+    ],
+    answer: 0,
+    explanation: "NaCl tersusun dari unsur natrium (Na) dan klorin (Cl)."
+},
+
+{
+    q: "Contoh senyawa yang terdapat dalam minuman bersoda adalah...",
+    options: ["CO₂", "Fe", "Au", "O₂"],
+    answer: 0,
+    explanation: "Minuman bersoda mengandung karbon dioksida (CO₂)."
+},
+
+{
+    q: "Jika air gula dipisahkan dengan cara menguapkan air, yang tersisa adalah...",
+    options: ["Oksigen", "Gula", "Karbon", "Pasir"],
+    answer: 1,
+    explanation: "Air dapat menguap sedangkan gula tertinggal."
+},
+
+{
+    q: "Metode yang tepat untuk memisahkan pasir dari air adalah...",
+    options: ["Penyaringan", "Penguapan", "Kromatografi", "Pembakaran"],
+    answer: 0,
+    explanation: "Pasir yang tidak larut dapat dipisahkan dari air dengan penyaringan."
+},
+
+{
+    q: "Senyawa memiliki...",
+    options: [
+        "Komposisi tidak tetap",
+        "Rumus kimia tertentu",
+        "Komponen yang mudah dipisahkan secara fisik",
+        "Sifat selalu sama dengan unsur penyusunnya"
+    ],
+    answer: 1,
+    explanation: "Senyawa mempunyai komposisi tertentu dan dapat dituliskan dengan rumus kimia."
+},
+
+{
+    q: "Manakah yang merupakan campuran heterogen?",
+    options: ["Air gula", "Air garam", "Salad buah", "Udara"],
+    answer: 2,
+    explanation: "Salad buah memiliki komponen yang dapat dilihat dan dibedakan."
+},
+
+{
+    q: "Salah satu ciri campuran adalah...",
+    options: [
+        "Terbentuk melalui ikatan kimia",
+        "Memiliki rumus kimia tetap",
+        "Komponen penyusunnya masih mempertahankan sifatnya",
+        "Hanya tersusun dari satu atom"
+    ],
+    answer: 2,
+    explanation: "Komponen dalam campuran pada dasarnya masih mempertahankan sifat masing-masing."
+},
+
+{
+    q: "Air mineral termasuk...",
+    options: ["Campuran", "Unsur tunggal", "Senyawa tunggal", "Atom"],
+    answer: 0,
+    explanation: "Air mineral mengandung air dan berbagai mineral terlarut sehingga termasuk campuran."
+},
+
+{
+    q: "Manakah yang termasuk campuran homogen?",
+    options: ["Air kopi dengan ampas", "Air garam", "Tanah", "Air lumpur"],
+    answer: 1,
+    explanation: "Air garam memiliki penyebaran garam yang seragam."
+},
+
+{
+    q: "Jika dua unsur bergabung secara kimia, maka dapat terbentuk...",
+    options: ["Campuran", "Senyawa", "Larutan", "Suspensi"],
+    answer: 1,
+    explanation: "Penggabungan unsur secara kimia menghasilkan senyawa."
+},
+
+{
+    q: "Contoh senyawa dalam kehidupan sehari-hari adalah...",
+    options: ["Air", "Besi", "Oksigen", "Emas"],
+    answer: 0,
+    explanation: "Air H₂O merupakan salah satu contoh senyawa."
+},
+
+{
+    q: "Campuran berbeda dengan senyawa karena...",
+    options: [
+        "Campuran memiliki ikatan kimia baru",
+        "Komponen campuran dapat dipisahkan secara fisik",
+        "Campuran selalu homogen",
+        "Campuran hanya terdiri dari satu zat"
+    ],
+    answer: 1,
+    explanation: "Komponen campuran dapat dipisahkan menggunakan metode fisika."
+},
+
+{
+    q: "Manakah yang merupakan campuran?",
+    options: ["H₂O", "CO₂", "NaCl", "Air laut"],
+    answer: 3,
+    explanation: "Air laut terdiri atas air, garam, mineral, dan zat lainnya."
+},
+
+{
+    q: "Campuran minyak dan air dapat dipisahkan berdasarkan...",
+    options: [
+        "Perbedaan massa jenis",
+        "Ikatan kimia",
+        "Rumus kimia",
+        "Jenis atom"
+    ],
+    answer: 0,
+    explanation: "Minyak dan air memiliki massa jenis berbeda dan tidak saling melarutkan."
+},
+
+{
+    q: "Yang termasuk unsur adalah...",
+    options: ["H₂O", "NaCl", "O₂", "CO₂"],
+    answer: 2,
+    explanation: "O₂ hanya tersusun dari unsur oksigen."
+},
+
+{
+    q: "Perbedaan utama senyawa dan campuran adalah...",
+    options: [
+        "Senyawa terbentuk secara kimia, campuran secara fisik",
+        "Senyawa selalu cair",
+        "Campuran selalu padat",
+        "Senyawa tidak mempunyai sifat"
+    ],
+    answer: 0,
+    explanation: "Senyawa terbentuk melalui ikatan kimia, sedangkan campuran merupakan gabungan zat tanpa membentuk zat baru."
+}
+
+];
+
+/* ============================================================
+   VARIABEL GAME
+============================================================ */
+
+let currentTeam = 0;
+let gameStarted = false;
+let rolling = false;
+let paused = false;
+let soundOn = true;
+
+let currentQuestion = null;
+let currentSpecial = null;
+
+const board = document.getElementById("board");
+
+/* ============================================================
+   MEMBUAT PAPAN
+============================================================ */
+
+function createBoard() {
+
+    board.innerHTML = "";
+
+    /*
+      Kita membuat 50 kotak.
+      Posisi grid dibuat zig-zag.
+    */
+
+    for (let row = 4; row >= 0; row--) {
+
+        let rowNumbers = [];
+
+        const startNumber = row * 10 + 1;
+
+        for (let n = startNumber; n <= startNumber + 9; n++) {
+            rowNumbers.push(n);
+        }
+
+        if ((4 - row) % 2 === 1) {
+            rowNumbers.reverse();
+        }
+
+        rowNumbers.forEach(number => {
+
+            const cell = document.createElement("div");
+            cell.className = "cell";
+            cell.id = "cell-" + number;
+
+            if (number === 1) {
+                cell.classList.add("start");
+            }
+
+            if (number === 50) {
+                cell.classList.add("finish");
+            }
+
+            if (ladders[number]) {
+                cell.classList.add("ladder-bottom");
+            }
+
+            if (snakes[number]) {
+                cell.classList.add("snake-head");
+            }
+
+            if (bonuses[number]) {
+                cell.classList.add("bonus");
+            }
+
+            const numberSpan = document.createElement("span");
+            numberSpan.className = "cell-number";
+            numberSpan.textContent = number === 1 ? "START" : number === 50 ? "FINISH" : number;
+
+            cell.appendChild(numberSpan);
+
+            const icon = document.createElement("div");
+            icon.className = "special-icon";
+
+            if (ladders[number]) {
+                icon.textContent = "🪜";
+            }
+
+            if (snakes[number]) {
+                icon.textContent = "🐍";
+            }
+
+            if (bonuses[number]) {
+                icon.textContent = bonuses[number] === 30 ? "⚡" : "⭐";
+            }
+
+            if (number === 50) {
+                icon.textContent = "🏆";
+            }
+
+            cell.appendChild(icon);
+
+            const tokenContainer = document.createElement("div");
+            tokenContainer.className = "tokens";
+            tokenContainer.id = "tokens-" + number;
+
+            cell.appendChild(tokenContainer);
+
+            board.appendChild(cell);
+        });
+    }
+
+    renderTokens();
+}
+
+/* ============================================================
+   MENAMPILKAN BIDAK
+============================================================ */
+
+function renderTokens() {
+
+    document.querySelectorAll(".tokens").forEach(container => {
+        container.innerHTML = "";
+    });
+
+    teams.forEach((team, index) => {
+
+        const container = document.getElementById(
+            "tokens-" + team.position
+        );
+
+        if (!container) return;
+
+        const token = document.createElement("div");
+
+        token.className = "token t" + (index + 1);
+
+        if (index === currentTeam && gameStarted) {
+            token.classList.add("active");
+        }
+
+        token.textContent = index + 1;
+        token.title = team.name;
+
+        container.appendChild(token);
+    });
+}
+
+/* ============================================================
+   UPDATE SCOREBOARD
+============================================================ */
+
+function updateScoreboard() {
+
+    const scoreBoard = document.getElementById("scoreBoard");
+
+    scoreBoard.innerHTML = "";
+
+    teams.forEach((team, index) => {
+
+        const row = document.createElement("div");
+
+        row.className = "score-row";
+
+        if (index === currentTeam) {
+            row.classList.add("current");
+        }
+
+        row.innerHTML = `
+            <div class="mini-token t${index+1}"></div>
+            <div>${team.name}</div>
+            <div>${team.position}</div>
+            <div><strong>${team.score}</strong></div>
+        `;
+
+        scoreBoard.appendChild(row);
+    });
+
+    const sorted = [...teams].sort((a,b) => b.score - a.score);
+
+    document.getElementById("leaderBox").innerHTML =
+        "👑 Pemimpin: <strong>" + sorted[0].name +
+        "</strong> (" + sorted[0].score + " poin)";
+}
+
+/* ============================================================
+   UPDATE TURN
+============================================================ */
+
+function updateTurnDisplay() {
+
+    const team = teams[currentTeam];
+
+    document.getElementById("turnName").textContent = team.name;
+
+    document.getElementById("turnPosition").textContent =
+        team.position === 1
+        ? "Posisi: START"
+        : "Posisi: " + team.position;
+
+    document.getElementById("boardMessage").textContent =
+        "🎯 Sekarang giliran " + team.name + "!";
+
+    renderTokens();
+    updateScoreboard();
+}
+
+/* ============================================================
+   START GAME
+============================================================ */
+
+function startGame() {
+
+    document.getElementById("startScreen").style.display = "none";
+
+    gameStarted = true;
+
+    createBoard();
+
+    updateTurnDisplay();
+
+    playSound("start");
+}
+
+/* ============================================================
+   DADU
+============================================================ */
+
+const dicePatterns = {
+    1: [4],
+    2: [0,8],
+    3: [0,4,8],
+    4: [0,2,6,8],
+    5: [0,2,4,6,8],
+    6: [0,2,3,5,6,8]
+};
+
+function showDice(number) {
+
+    const dice = document.getElementById("dice");
+
+    const squares = dice.children;
+
+    for (let i = 0; i < 9; i++) {
+        squares[i].innerHTML = "";
+    }
+
+    dicePatterns[number].forEach(index => {
+
+        const dot = document.createElement("div");
+
+        dot.className = "dot";
+
+        squares[index].appendChild(dot);
+    });
+}
+
+/* ============================================================
+   KOCOK DADU
+============================================================ */
+
+function rollDice() {
+
+    if (!gameStarted || rolling || paused) return;
+
+    rolling = true;
+
+    const button = document.getElementById("rollButton");
+
+    button.disabled = true;
+
+    const dice = document.getElementById("dice");
+
+    dice.classList.add("rolling");
+
+    document.getElementById("diceResult").textContent =
+        "🎲 Dadu sedang dikocok...";
+
+    playSound("dice");
+
+    let counter = 0;
+
+    const animation = setInterval(() => {
+
+        const randomNumber = Math.floor(Math.random() * 6) + 1;
+
+        showDice(randomNumber);
+
+        counter++;
+
+        if (counter >= 12) {
+
+            clearInterval(animation);
+
+            const result =
+                Math.floor(Math.random() * 6) + 1;
+
+            showDice(result);
+
+            dice.classList.remove("rolling");
+
+            document.getElementById("diceResult").innerHTML =
+                "🎲 HASIL: <strong>" + result + "</strong>";
+
+            setTimeout(() => {
+
+                moveTeam(result);
+
+            }, 500);
+        }
+
+    }, 100);
+}
+
+/* ============================================================
+   GERAK BIDAK
+============================================================ */
+
+async function moveTeam(steps) {
+
+    const team = teams[currentTeam];
+
+    document.getElementById("boardMessage").textContent =
+        team.name + " bergerak " + steps + " langkah!";
+
+    for (let i = 0; i < steps; i++) {
+
+        if (team.position < 50) {
+            team.position++;
+        }
+
+        renderTokens();
+
+        await wait(300);
+    }
+
+    playSound("move");
+
+    await wait(300);
+
+    handleLanding();
+}
+
+/* ============================================================
+   HANDLE KOTAK
+============================================================ */
+
+function handleLanding() {
+
+    const team = teams[currentTeam];
+
+    if (team.position === 50) {
+
+        showQuestion("FINISH");
+
+        return;
+    }
+
+    if (ladders[team.position]) {
+
+        currentSpecial = {
+            type: "ladder",
+            from: team.position,
+            to: ladders[team.position]
+        };
+
+        showQuestion("LADDER");
+
+        return;
+    }
+
+    if (snakes[team.position]) {
+
+        currentSpecial = {
+            type: "snake",
+            from: team.position,
+            to: snakes[team.position]
+        };
+
+        showQuestion("SNAKE");
+
+        return;
+    }
+
+    if (bonuses[team.position]) {
+
+        currentSpecial = {
+            type: "bonus",
+            points: bonuses[team.position]
+        };
+
+        showQuestion("BONUS");
+
+        return;
+    }
+
+    currentSpecial = null;
+
+    showQuestion("NORMAL");
+}
+
+/* ============================================================
+   PERTANYAAN
+============================================================ */
+
+function showQuestion(type) {
+
+    const modal = document.getElementById("questionModal");
+
+    const randomIndex =
+        Math.floor(Math.random() * questions.length);
+
+    currentQuestion = questions[randomIndex];
+
+    let label = "🧪 PERTANYAAN";
+
+    if (type === "LADDER") {
+        label = "🪜 PERTANYAAN TANGGA";
+    }
+
+    if (type === "SNAKE") {
+        label = "🐍 AWAS ULAR!";
+    }
+
+    if (type === "BONUS") {
+        label = "⭐ PERTANYAAN BONUS";
+    }
+
+    if (type === "FINISH") {
+        label = "🏆 PERTANYAAN TERAKHIR";
+    }
+
+    document.getElementById("questionLabel").textContent = label;
+
+    document.getElementById("questionText").textContent =
+        currentQuestion.q;
+
+    const options = document.getElementById("options");
+
+    options.innerHTML = "";
+
+    currentQuestion.options.forEach((option, index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "option-btn";
+
+        button.innerHTML =
+            "<strong>" +
+            String.fromCharCode(65 + index) +
+            ".</strong> " +
+            option;
+
+        button.onclick = () => answerQuestion(index);
+
+        options.appendChild(button);
+    });
+
+    document.getElementById("resultBox").innerHTML = "";
+
+    document.getElementById("continueButton").style.display = "none";
+
+    modal.classList.add("show");
+}
+
+/* ============================================================
+   JAWABAN
+============================================================ */
+
+function answerQuestion(selected) {
+
+    const team = teams[currentTeam];
+
+    const buttons =
+        document.querySelectorAll(".option-btn");
+
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
+
+    const resultBox =
+        document.getElementById("resultBox");
+
+    const correct =
+        selected === currentQuestion.answer;
+
+    if (correct) {
+
+        team.correct++;
+
+        team.score += 10;
+
+        playSound("correct");
+
+        resultBox.className = "result-box correct";
+
+        let extra = "";
+
+        if (currentSpecial &&
+            currentSpecial.type === "bonus") {
+
+            team.score += currentSpecial.points;
+
+            extra =
+                "<br><strong>⭐ BONUS +" +
+                currentSpecial.points +
+                " POIN!</strong>";
+        }
+
+        resultBox.innerHTML =
+            "🎉 <strong>JAWABAN BENAR!</strong>" +
+            extra +
+            "<div class='explanation'>" +
+            currentQuestion.explanation +
+            "</div>";
+
+        if (currentSpecial &&
+            currentSpecial.type === "ladder") {
+
+            resultBox.innerHTML +=
+                "<br>🪜 <strong>Naik tangga!</strong>";
+        }
+
+        if (currentSpecial &&
+            currentSpecial.type === "snake") {
+
+            resultBox.innerHTML +=
+                "<br>🎉 <strong>Berhasil menghindari ular!</strong>";
+        }
+
+    } else {
+
+        team.wrong++;
+
+        playSound("wrong");
+
+        resultBox.className = "result-box wrong";
+
+        resultBox.innerHTML =
+            "❌ <strong>JAWABAN SALAH</strong>" +
+            "<div class='explanation'>" +
+            "Jawaban yang benar adalah <strong>" +
+            String.fromCharCode(65 + currentQuestion.answer) +
+            ". " +
+            currentQuestion.options[currentQuestion.answer] +
+            "</strong><br>" +
+            currentQuestion.explanation +
+            "</div>";
+
+        if (currentSpecial &&
+            currentSpecial.type === "ladder") {
+
+            resultBox.innerHTML +=
+                "<br>🪜 Tangga tidak bisa dinaiki.";
+        }
+
+        if (currentSpecial &&
+            currentSpecial.type === "snake") {
+
+            resultBox.innerHTML +=
+                "<br>🐍 Kamu terkena ular!";
+        }
+    }
+
+    updateScoreboard();
+
+    document.getElementById("continueButton").style.display =
+        "block";
+}
+
+/* ============================================================
+   LANJUTKAN
+============================================================ */
+
+async function continueTurn() {
+
+    document.getElementById("questionModal")
+        .classList.remove("show");
+
+    const team = teams[currentTeam];
+
+    /* Jika tangga */
+    if (currentSpecial &&
+        currentSpecial.type === "ladder") {
+
+        const wasCorrect =
+            team.correct + team.wrong > 0;
+
+        /*
+          Kita cek jawaban terakhir dengan cara:
+          tombol hasil sudah mengubah statistik.
+          Karena currentQuestion selesai, kita cek
+          apakah jumlah correct meningkat dibanding
+          jumlah sebelum jawaban tidak tersedia.
+          Maka kita gunakan isi resultBox.
+        */
+
+        const resultText =
+            document.getElementById("resultBox").textContent;
+
+        if (resultText.includes("JAWABAN BENAR")) {
+
+            team.position = currentSpecial.to;
+
+            document.getElementById("boardMessage").textContent =
+                "🪜 " + team.name +
+                " naik dari " + currentSpecial.from +
+                " ke " + currentSpecial.to + "!";
+
+            renderTokens();
+
+            playSound("ladder");
+
+            await wait(800);
+        }
+    }
+
+    /* Jika ular */
+    if (currentSpecial &&
+        currentSpecial.type === "snake") {
+
+        const resultText =
+            document.getElementById("resultBox").textContent;
+
+        if (resultText.includes("JAWABAN SALAH")) {
+
+            team.position = currentSpecial.to;
+
+            document.getElementById("boardMessage").textContent =
+                "🐍 " + team.name +
+                " terkena ular dan turun ke " +
+                currentSpecial.to + "!";
+
+            renderTokens();
+
+            playSound("snake");
+
+            await wait(800);
+        }
+    }
+
+    /* Jika finish */
+    if (team.position >= 50) {
+
+        team.position = 50;
+
+        renderTokens();
+
+        showWinner();
+
+        return;
+    }
+
+    currentSpecial = null;
+
+    nextTurn();
+}
+
+/* ============================================================
+   GILIRAN BERIKUTNYA
+============================================================ */
+
+function nextTurn() {
+
+    currentTeam++;
+
+    if (currentTeam >= teams.length) {
+        currentTeam = 0;
+    }
+
+    rolling = false;
+
+    document.getElementById("rollButton").disabled = false;
+
+    document.getElementById("diceResult").textContent =
+        "Klik KOCOK DADU";
+
+    updateTurnDisplay();
+}
+
+/* ============================================================
+   PAUSE
+============================================================ */
+
+function togglePause() {
+
+    if (!gameStarted) return;
+
+    paused = !paused;
+
+    const overlay =
+        document.getElementById("pauseOverlay");
+
+    if (paused) {
+
+        overlay.classList.add("show");
+
+        document.getElementById("rollButton").disabled = true;
+
+    } else {
+
+        overlay.classList.remove("show");
+
+        if (!rolling) {
+            document.getElementById("rollButton").disabled = false;
+        }
+    }
+}
+
+/* ============================================================
+   MODE GURU
+============================================================ */
+
+function openTeacherMode() {
+
+    const content =
+        document.getElementById("teacherContent");
+
+    content.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "teacher-question";
+
+        div.innerHTML = `
+            <strong>Soal ${index + 1}</strong><br>
+            ${question.q}
+            <br><br>
+            A. ${question.options[0]}<br>
+            B. ${question.options[1]}<br>
+            C. ${question.options[2]}<br>
+            D. ${question.options[3]}
+            <br><br>
+            <strong>Jawaban:
+            ${String.fromCharCode(65 + question.answer)}
+            . ${question.options[question.answer]}</strong>
+            <br>
+            <small>${question.explanation}</small>
+        `;
+
+        content.appendChild(div);
+    });
+
+    document.getElementById("teacherModal")
+        .classList.add("show");
+}
+
+function closeTeacherMode() {
+
+    document.getElementById("teacherModal")
+        .classList.remove("show");
+}
+
+/* ============================================================
+   PEMENANG
+============================================================ */
+
+function showWinner() {
+
+    const winner = teams[currentTeam];
+
+    playSound("winner");
+
+    document.getElementById("winnerText").innerHTML =
+        winner.name +
+        " menjadi <strong>PEMENANG!</strong>";
+
+    const ranking =
+        [...teams].sort((a,b) => {
+
+            if (b.position !== a.position) {
+                return b.position - a.position;
+            }
+
+            return b.score - a.score;
+
+        });
+
+    const rankingBox =
+        document.getElementById("finalRanking");
+
+    rankingBox.innerHTML =
+        "<h3>📊 HASIL AKHIR</h3>";
+
+    ranking.forEach((team,index) => {
+
+        let medal = "";
+
+        if (index === 0) medal = "🥇";
+        if (index === 1) medal = "🥈";
+        if (index === 2) medal = "🥉";
+
+        rankingBox.innerHTML += `
+            <div class="final-row">
+                <div>${medal || (index+1)}</div>
+                <div>${team.name}</div>
+                <div>Posisi ${team.position}</div>
+                <div>${team.score} poin</div>
+            </div>
+        `;
+    });
+
+    document.getElementById("winnerModal")
+        .classList.add("show");
+
+    confetti();
+}
+
+/* ============================================================
+   CONFETTI
+============================================================ */
+
+function confetti() {
+
+    for (let i = 0; i < 80; i++) {
+
+        const piece =
+            document.createElement("div");
+
+        piece.style.position = "fixed";
+        piece.style.width = "10px";
+        piece.style.height = "10px";
+        piece.style.left =
+            Math.random() * 100 + "vw";
+        piece.style.top = "-20px";
+        piece.style.zIndex = "3000";
+        piece.style.background =
+            `hsl(${Math.random()*360},80%,55%)`;
+        piece.style.borderRadius =
+            Math.random() > .5 ? "50%" : "2px";
+
+        document.body.appendChild(piece);
+
+        const duration =
+            1500 + Math.random() * 2500;
+
+        piece.animate(
+            [
+                {
+                    transform:
+                        "translateY(0) rotate(0deg)"
+                },
+                {
+                    transform:
+                        "translateY(110vh) rotate(720deg)"
+                }
+            ],
+            {
+                duration: duration,
+                easing: "ease-in",
+                iterations: 1
+            }
+        );
+
+        setTimeout(() => {
+            piece.remove();
+        }, duration + 100);
+    }
+}
+
+/* ============================================================
+   RESET
+============================================================ */
+
+function resetGame() {
+
+    teams.forEach(team => {
+
+        team.position = 1;
+        team.score = 0;
+        team.correct = 0;
+        team.wrong = 0;
+
+    });
+
+    currentTeam = 0;
+    rolling = false;
+    paused = false;
+    currentSpecial = null;
+
+    document.getElementById("questionModal")
+        .classList.remove("show");
+
+    document.getElementById("winnerModal")
+        .classList.remove("show");
+
+    document.getElementById("pauseOverlay")
+        .classList.remove("show");
+
+    document.getElementById("rollButton").disabled = false;
+
+    document.getElementById("diceResult").textContent =
+        "Klik KOCOK DADU";
+
+    showDice(1);
+
+    createBoard();
+
+    updateTurnDisplay();
+
+    document.getElementById("startScreen").style.display =
+        "none";
+
+    gameStarted = true;
+}
+
+/* ============================================================
+   SUARA
+   Menggunakan Web Audio API sehingga tidak membutuhkan file
+   suara eksternal.
+============================================================ */
+
+let audioContext = null;
+
+function getAudioContext() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (window.AudioContext ||
+            window.webkitAudioContext)();
+    }
+
+    return audioContext;
+}
+
+function beep(frequency, duration, type="sine") {
+
+    if (!soundOn) return;
+
+    try {
+
+        const ctx = getAudioContext();
+
+        const oscillator =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        oscillator.type = type;
+
+        oscillator.frequency.value =
+            frequency;
+
+        gain.gain.setValueAtTime(
+            0.08,
+            ctx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            ctx.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(ctx.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            ctx.currentTime + duration
+        );
+
+    } catch(e) {}
+}
+
+function playSound(type) {
+
+    if (!soundOn) return;
+
+    if (type === "dice") {
+
+        beep(180,0.08);
+        setTimeout(() => beep(240,0.08),80);
+        setTimeout(() => beep(300,0.08),160);
+
+    }
+
+    else if (type === "move") {
+
+        beep(400,0.08);
+
+    }
+
+    else if (type === "correct") {
+
+        beep(600,0.12);
+        setTimeout(() => beep(800,0.18),120);
+
+    }
+
+    else if (type === "wrong") {
+
+        beep(250,0.2,"sawtooth");
+        setTimeout(() => beep(180,0.25,"sawtooth"),150);
+
+    }
+
+    else if (type === "ladder") {
+
+        beep(500,0.1);
+        setTimeout(() => beep(650,0.1),100);
+        setTimeout(() => beep(800,0.2),200);
+
+    }
+
+    else if (type === "snake") {
+
+        beep(300,0.15,"sawtooth");
+        setTimeout(() => beep(180,0.3,"sawtooth"),150);
+
+    }
+
+    else if (type === "winner") {
+
+        beep(500,0.12);
+        setTimeout(() => beep(650,0.12),150);
+        setTimeout(() => beep(800,0.12),300);
+        setTimeout(() => beep(1000,0.3),450);
+
+    }
+
+    else if (type === "start") {
+
+        beep(500,0.1);
+        setTimeout(() => beep(700,0.15),120);
+
+    }
+}
+
+function toggleSound() {
+
+    soundOn = !soundOn;
+
+    document.getElementById("soundButton").textContent =
+        soundOn
+        ? "🔊 SUARA: ON"
+        : "🔇 SUARA: OFF";
+}
+
+/* ============================================================
+   UTILITAS
+============================================================ */
+
+function wait(ms) {
+
+    return new Promise(resolve =>
+        setTimeout(resolve, ms)
+    );
+}
+
+/* ============================================================
+   INITIAL
+============================================================ */
+
+createBoard();
+
+showDice(1);
+
+updateScoreboard();
+
+</script>
+
+</body>
+</html>

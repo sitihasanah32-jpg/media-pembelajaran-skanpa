@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KOMPUTER PENURUT - Misi Algoritma</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef4ff;
+    color: #1f2937;
+}
+
+/* HEADER */
+
+header {
+    background: linear-gradient(135deg, #173b6c, #2563a6);
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+/* CONTAINER */
+
+.container {
+    width: 94%;
+    max-width: 1100px;
+    margin: 20px auto 50px;
+}
+
+/* CARD */
+
+.card {
+    background: white;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* INFO */
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.info-box {
+    background: #edf4ff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 150px;
+}
+
+.info-box strong {
+    display: block;
+    font-size: 20px;
+    color: #173b6c;
+}
+
+/* BUTTON */
+
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 5px;
+    background: #2563a6;
+    color: white;
+}
+
+button:hover {
+    background: #173b6c;
+}
+
+button.secondary {
+    background: #64748b;
+}
+
+button.success {
+    background: #15803d;
+}
+
+/* MISSION */
+
+.mission {
+    background: #f8fafc;
+    border-left: 6px solid #2563a6;
+    padding: 18px;
+    border-radius: 8px;
+}
+
+.mission h2 {
+    margin-top: 0;
+    color: #173b6c;
+}
+
+/* COMMANDS */
+
+.commands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.command {
+    background: #e8f1ff;
+    color: #173b6c;
+    border: 2px solid #8db7e8;
+    padding: 12px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.command:hover {
+    background: #d7e8ff;
+}
+
+/* ALGORITHM */
+
+.algorithm {
+    min-height: 80px;
+    border: 2px dashed #94a3b8;
+    border-radius: 10px;
+    padding: 15px;
+    background: #f8fafc;
+}
+
+.algorithm-item {
+    background: white;
+    border: 1px solid #cbd5e1;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+}
+
+.number {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: #2563a6;
+    color: white;
+    text-align: center;
+    line-height: 28px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+/* RESULT */
+
+.result {
+    display: none;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.correct {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.wrong {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* VISUAL */
+
+.visual {
+    height: 300px;
+    border: 3px solid #1f2937;
+    border-radius: 12px;
+    background: #dff3ff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* GROUND */
+
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #8bc34a;
+}
+
+/* HOUSE */
+
+.house {
+    position: absolute;
+    width: 180px;
+    height: 120px;
+    background: #f4a261;
+    left: 50%;
+    bottom: 70px;
+    transform: translateX(-50%);
+}
+
+.roof {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 90px solid #d62828;
+    left: -20px;
+    top: -90px;
+}
+
+.door {
+    position: absolute;
+    width: 45px;
+    height: 70px;
+    background: #7b4f2c;
+    bottom: 0;
+    left: 67px;
+}
+
+.window {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: #87ceeb;
+    border: 3px solid #333;
+    top: 35px;
+}
+
+.window.left {
+    left: 20px;
+}
+
+.window.right {
+    right: 20px;
+}
+
+/* ROBOT */
+
+.robot {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #64748b;
+    border-radius: 10px;
+    bottom: 70px;
+    left: 30px;
+}
+
+.robot::before {
+    content: "🤖";
+    font-size: 45px;
+    position: absolute;
+    top: 3px;
+    left: 7px;
+}
+
+/* GOAL */
+
+.goal {
+    position: absolute;
+    right: 30px;
+    bottom: 70px;
+    font-size: 55px;
+}
+
+/* TREE */
+
+.tree {
+    position: absolute;
+    left: 70px;
+    bottom: 70px;
+    font-size: 100px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px) {
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    .info-box {
+        width: 100%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>🤖 KOMPUTER PENURUT</h1>
+
+<p>🎮 MISI ALGORITMA</p>
+
+<p>
+Belajar Berpikir Komputasional melalui permainan
+</p>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- DATA -->
+
+<div class="card">
+
+<div class="info">
+
+<div class="info-box">
+LEVEL
+<strong id="level">1</strong>
+</div>
+
+<div class="info-box">
+SKOR
+<strong id="score">0</strong>
+</div>
+
+<div class="info-box">
+❤️ NYAWA
+<strong id="lives">3</strong>
+</div>
+
+<div class="info-box">
+⏱️ WAKTU
+<strong id="timer">60</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MISI -->
+
+<div class="card">
+
+<div class="mission">
+
+<h2 id="missionTitle">
+🏠 MISI 1 — MEMBUAT RUMAH
+</h2>
+
+<p id="missionText">
+
+Komputer ingin membuat sebuah rumah.
+
+Susunlah perintah agar rumah memiliki:
+
+<ul>
+<li>Dinding</li>
+<li>Atap</li>
+<li>Pintu</li>
+<li>2 jendela</li>
+</ul>
+
+<b>Susun perintah dengan urutan yang tepat!</b>
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- COMMAND -->
+
+<div class="card">
+
+<h2>🧩 PILIH PERINTAH</h2>
+
+<p>
+Klik perintah untuk memasukkannya ke dalam algoritma.
+</p>
+
+<div id="commands" class="commands">
+</div>
+
+</div>
+
+
+<!-- ALGORITHM -->
+
+<div class="card">
+
+<h2>📋 ALGORITMA KAMU</h2>
+
+<div id="algorithm" class="algorithm">
+
+<p>
+Belum ada perintah.
+</p>
+
+</div>
+
+<button onclick="hapusSemua()" class="secondary">
+🗑️ HAPUS SEMUA
+</button>
+
+<button onclick="jalankan()" class="success">
+▶️ JALANKAN ALGORITMA
+</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+
+<!-- VISUAL -->
+
+<div class="card">
+
+<h2>🖼️ HASIL PERINTAH</h2>
+
+<div class="visual" id="visual">
+
+<div class="ground"></div>
+
+</div>
+
+</div>
+
+
+<!-- PETUNJUK -->
+
+<div class="card">
+
+<h2>💡 PETUNJUK</h2>
+
+<p id="hint">
+
+Algoritma yang baik memiliki langkah-langkah yang jelas dan berurutan.
+
+</p>
+
+<button onclick="tampilkanPetunjuk()">
+💡 Tampilkan Petunjuk
+</button>
+
+</div>
+
+
+<!-- NEXT -->
+
+<div class="card" style="text-align:center">
+
+<button onclick="nextLevel()" id="nextButton" style="display:none">
+
+➡️ LEVEL BERIKUTNYA
+
+</button>
+
+<button onclick="restartGame()" class="secondary">
+
+🔄 MULAI ULANG
+
+</button>
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+KOMPUTER PENURUT • Informatika Kelas X  
+<br>
+SMK Negeri 1 Pandanarum
+
+</footer>
+
+
+<script>
+
+
+/* ============================
+DATA LEVEL
+============================ */
+
+const levels = [
+
+{
+
+title: "🏠 MISI 1 — MEMBUAT RUMAH",
+
+text: `
+Komputer ingin membuat sebuah rumah.
+
+Susun perintah agar rumah memiliki:
+
+<ul>
+<li>Dinding</li>
+<li>Atap</li>
+<li>Pintu</li>
+<li>2 jendela</li>
+</ul>
+`,
+
+commands: [
+"BUAT DINDING",
+"BUAT ATAP",
+"BUAT PINTU",
+"BUAT 2 JENDELA"
+],
+
+answer: [
+"BUAT DINDING",
+"BUAT ATAP",
+"BUAT PINTU",
+"BUAT 2 JENDELA"
+]
+
+},
+
+{
+
+title: "🤖 MISI 2 — ROBOT MENUJU TUJUAN",
+
+text: `
+Robot berada di sebelah kiri.
+
+Buatlah algoritma agar robot
+bergerak menuju bendera.
+
+Urutkan langkahnya dengan benar.
+`,
+
+commands: [
+"MAJU",
+"MAJU",
+"MAJU",
+"SELESAI"
+],
+
+answer: [
+"MAJU",
+"MAJU",
+"MAJU",
+"SELESAI"
+]
+
+},
+
+{
+
+title: "🌳 MISI 3 — MEMBUAT TAMAN",
+
+text: `
+Buatlah sebuah taman sederhana.
+
+Taman harus memiliki:
+
+<ul>
+<li>Rumput</li>
+<li>Pohon</li>
+<li>Matahari</li>
+</ul>
+
+Susun langkah dengan urutan yang tepat.
+`,
+
+commands: [
+"BUAT RUMPUT",
+"BUAT POHON",
+"BUAT MATAHARI"
+],
+
+answer: [
+"BUAT RUMPUT",
+"BUAT POHON",
+"BUAT MATAHARI"
+]
+
+},
+
+{
+
+title: "☀️ MISI 4 — GAMBAR LINGKUNGAN",
+
+text: `
+Buatlah sebuah lingkungan sederhana.
+
+Harus terdapat:
+
+<ul>
+<li>Rumah</li>
+<li>Pohon</li>
+<li>Matahari</li>
+</ul>
+`,
+
+commands: [
+"BUAT RUMAH",
+"BUAT POHON",
+"BUAT MATAHARI"
+],
+
+answer: [
+"BUAT RUMAH",
+"BUAT POHON",
+"BUAT MATAHARI"
+]
+
+},
+
+{
+
+title: "🏆 MISI 5 — MASTER ALGORITHM",
+
+text: `
+Kamu adalah programmer utama!
+
+Buat algoritma untuk membuat
+sebuah lingkungan lengkap.
+
+Urutkan:
+
+<ul>
+<li>Rumah</li>
+<li>Pohon</li>
+<li>Matahari</li>
+<li>Selesai</li>
+</ul>
+`,
+
+commands: [
+"BUAT RUMAH",
+"BUAT POHON",
+"BUAT MATAHARI",
+"SELESAI"
+],
+
+answer: [
+"BUAT RUMAH",
+"BUAT POHON",
+"BUAT MATAHARI",
+"SELESAI"
+]
+
+}
+
+];
+
+
+/* ============================
+VARIABEL
+============================ */
+
+let currentLevel = 0;
+
+let score = 0;
+
+let lives = 3;
+
+let time = 60;
+
+let playerAlgorithm = [];
+
+let timerInterval;
+
+
+/* ============================
+MULAI GAME
+============================ */
+
+function startGame() {
+
+currentLevel = 0;
+
+score = 0;
+
+lives = 3;
+
+loadLevel();
+
+}
+
+
+/* ============================
+LOAD LEVEL
+============================ */
+
+function loadLevel() {
+
+clearInterval(timerInterval);
+
+playerAlgorithm = [];
+
+time = 60;
+
+document.getElementById("level").innerText =
+currentLevel + 1;
+
+document.getElementById("score").innerText =
+score;
+
+document.getElementById("lives").innerText =
+lives;
+
+document.getElementById("timer").innerText =
+time;
+
+
+document.getElementById("missionTitle").innerText =
+levels[currentLevel].title;
+
+
+document.getElementById("missionText").innerHTML =
+levels[currentLevel].text;
+
+
+document.getElementById("result").style.display =
+"none";
+
+
+document.getElementById("nextButton").style.display =
+"none";
+
+
+document.getElementById("algorithm").innerHTML =
+"<p>Belum ada perintah.</p>";
+
+
+buatPerintah();
+
+buatVisual();
+
+
+mulaiTimer();
+
+}
+
+
+/* ============================
+BUAT PERINTAH
+============================ */
+
+function buatPerintah() {
+
+let container =
+document.getElementById("commands");
+
+container.innerHTML = "";
+
+
+let commands =
+levels[currentLevel].commands;
+
+
+// Acak perintah
+
+let shuffled =
+[...commands].sort(() => Math.random() - 0.5);
+
+
+shuffled.forEach(function(command) {
+
+let button =
+document.createElement("button");
+
+button.className = "command";
+
+button.innerText = command;
+
+button.onclick = function() {
+
+tambahPerintah(command);
+
+};
+
+container.appendChild(button);
+
+});
+
+}
+
+
+/* ============================
+TAMBAH PERINTAH
+============================ */
+
+function tambahPerintah(command) {
+
+playerAlgorithm.push(command);
+
+tampilkanAlgorithm();
+
+}
+
+
+/* ============================
+TAMPILKAN ALGORITMA
+============================ */
+
+function tampilkanAlgorithm() {
+
+let container =
+document.getElementById("algorithm");
+
+container.innerHTML = "";
+
+
+playerAlgorithm.forEach(function(command, index) {
+
+let item =
+document.createElement("div");
+
+item.className =
+"algorithm-item";
+
+
+item.innerHTML =
+
+'<span class="number">' +
+(index + 1) +
+'</span>' +
+
+command;
+
+
+container.appendChild(item);
+
+});
+
+
+if(playerAlgorithm.length === 0) {
+
+container.innerHTML =
+"<p>Belum ada perintah.</p>";
+
+}
+
+}
+
+
+/* ============================
+HAPUS
+============================ */
+
+function hapusSemua() {
+
+playerAlgorithm = [];
+
+tampilkanAlgorithm();
+
+}
+
+
+/* ============================
+JALANKAN
+============================ */
+
+function jalankan() {
+
+let correct =
+JSON.stringify(playerAlgorithm) ===
+JSON.stringify(levels[currentLevel].answer);
+
+
+let result =
+document.getElementById("result");
+
+
+result.style.display = "block";
+
+
+if(correct) {
+
+score += 100;
+
+document.getElementById("score").innerText =
+score;
+
+
+result.className =
+"result correct";
+
+
+result.innerHTML =
+
+"🎉 MISI BERHASIL!<br><br>" +
+
+"Algoritma kamu benar.<br>" +
+
+"Komputer berhasil menjalankan semua perintah!";
+
+
+clearInterval(timerInterval);
+
+
+document.getElementById("nextButton").style.display =
+"inline-block";
+
+
+gambarHasil();
+
+
+}
+
+else {
+
+lives--;
+
+document.getElementById("lives").innerText =
+lives;
+
+
+result.className =
+"result wrong";
+
+
+result.innerHTML =
+
+"❌ ALGORITMA BELUM TEPAT!<br><br>" +
+
+"Coba periksa kembali urutan langkahmu.";
+
+
+if(lives <= 0) {
+
+result.innerHTML +=
+
+"<br><br>💔 Nyawa habis. Permainan dimulai ulang.";
+
+setTimeout(function() {
+
+restartGame();
+
+},3000);
+
+}
+
+}
+
+}
+
+
+/* ============================
+PETUNJUK
+============================ */
+
+function tampilkanPetunjuk() {
+
+let answer =
+levels[currentLevel].answer;
+
+
+document.getElementById("hint").innerHTML =
+
+"💡 Langkah pertama adalah: <b>" +
+
+answer[0] +
+
+"</b><br><br>" +
+
+"Setelah itu pikirkan langkah berikutnya secara logis.";
+
+}
+
+
+/* ============================
+TIMER
+============================ */
+
+function mulaiTimer() {
+
+timerInterval =
+setInterval(function() {
+
+time--;
+
+document.getElementById("timer").innerText =
+time;
+
+
+if(time <= 0) {
+
+clearInterval(timerInterval);
+
+
+let result =
+document.getElementById("result");
+
+
+result.style.display =
+"block";
+
+
+result.className =
+"result wrong";
+
+
+result.innerHTML =
+
+"⏰ WAKTU HABIS!<br><br>" +
+
+"Periksa kembali algoritmamu.";
+
+
+}
+
+},1000);
+
+}
+
+
+/* ============================
+LEVEL BERIKUT
+============================ */
+
+function nextLevel() {
+
+if(currentLevel <
+levels.length - 1) {
+
+currentLevel++;
+
+loadLevel();
+
+}
+
+else {
+
+selesaiGame();
+
+}
+
+}
+
+
+/* ============================
+GAME SELESAI
+============================ */
+
+function selesaiGame() {
+
+clearInterval(timerInterval);
+
+document.getElementById("missionTitle").innerText =
+"🏆 SELAMAT!";
+
+
+document.getElementById("missionText").innerHTML =
+
+`
+<h2>Kamu telah menyelesaikan semua misi!</h2>
+
+<p>
+Kamu berhasil membuktikan bahwa komputer
+hanya dapat bekerja dengan baik jika diberikan
+instruksi yang jelas dan berurutan.
+</p>
+
+<h2>🎯 SKOR AKHIR: ${score}</h2>
+
+<p>
+Kamu telah berlatih:
+</p>
+
+<ul>
+<li>Berpikir Komputasional</li>
+<li>Decomposition</li>
+<li>Algorithm Design</li>
+<li>Urutan langkah</li>
+<li>Pemecahan masalah</li>
+</ul>
+`;
+
+
+document.getElementById("commands").innerHTML =
+"🎉 SEMUA MISI SELESAI!";
+
+
+document.getElementById("algorithm").innerHTML =
+
+"<h2>🏆 MASTER ALGORITHM</h2>" +
+
+"<p>Kamu adalah programmer hebat!</p>";
+
+
+document.getElementById("nextButton").style.display =
+"none";
+
+}
+
+
+/* ============================
+RESTART
+============================ */
+
+function restartGame() {
+
+startGame();
+
+}
+
+
+/* ============================
+VISUAL
+============================ */
+
+function buatVisual() {
+
+let visual =
+document.getElementById("visual");
+
+visual.innerHTML =
+'<div class="ground"></div>';
+
+}
+
+
+function gambarHasil() {
+
+let visual =
+document.getElementById("visual");
+
+
+let level =
+currentLevel;
+
+
+if(level === 0) {
+
+visual.innerHTML = `
+
+<div class="ground"></div>
+
+<div class="house">
+
+<div class="roof"></div>
+
+<div class="door"></div>
+
+<div class="window left"></div>
+
+<div class="window right"></div>
+
+</div>
+
+`;
+
+}
+
+
+else if(level === 1) {
+
+visual.innerHTML = `
+
+<div class="ground"></div>
+
+<div class="robot"></div>
+
+<div class="goal">🏁</div>
+
+`;
+
+}
+
+
+else if(level === 2) {
+
+visual.innerHTML = `
+
+<div class="ground"></div>
+
+<div class="tree">🌳</div>
+
+<div class="goal">☀️</div>
+
+`;
+
+}
+
+
+else {
+
+visual.innerHTML = `
+
+<div class="ground"></div>
+
+<div class="house">
+
+<div class="roof"></div>
+
+<div class="door"></div>
+
+<div class="window left"></div>
+
+<div class="window right"></div>
+
+</div>
+
+<div class="tree">🌳</div>
+
+<div class="goal">☀️</div>
+
+`;
+
+}
+
+}
+
+
+/* ============================
+JALANKAN
+============================ */
+
+startGame();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Laboratorium Digital IPAS</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #e8f5ff, #f8fbff);
+    color: #222;
+}
+
+header {
+    background: linear-gradient(135deg, #1769aa, #2196f3);
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+
+/* MENU */
+
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px auto;
+    flex-wrap: wrap;
+}
+
+.menu button {
+    border: none;
+    padding: 14px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: white;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.menu button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* HALAMAN */
+
+.halaman {
+    max-width: 1000px;
+    margin: auto;
+    padding: 15px;
+}
+
+.kartu {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+
+/* PILIHAN */
+
+.pilihan {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.zat {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    border: 3px solid #555;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.zat:hover {
+    transform: scale(1.08);
+}
+
+.zat .simbol {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.zat .nama {
+    font-size: 14px;
+}
+
+
+/* AREA REAKSI */
+
+.area-reaksi {
+    min-height: 220px;
+    border: 3px dashed #aaa;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-top: 20px;
+    background: #fafafa;
+}
+
+.partikel {
+    display: inline-flex;
+    width: 75px;
+    height: 75px;
+    margin: 10px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    background: #dff1ff;
+    border: 3px solid #1976d2;
+}
+
+
+/* ANIMASI */
+
+.reaksi {
+    animation: bergerak 1.5s ease-in-out;
+}
+
+@keyframes bergerak {
+
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5) rotate(15deg);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+
+/* TOMBOL */
+
+.tombol-aksi {
+    display: block;
+    margin: 20px auto;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #1976d2;
+    color: white;
+}
+
+.tombol-aksi:hover {
+    background: #125ca1;
+}
+
+
+/* HASIL */
+
+.hasil {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    display: none;
+}
+
+.hasil.berhasil {
+    display: block;
+    background: #e7f7e7;
+    border: 2px solid #43a047;
+}
+
+.hasil.campuran {
+    display: block;
+    background: #fff8df;
+    border: 2px solid #f0ad00;
+}
+
+.hasil h2 {
+    margin-top: 0;
+}
+
+
+/* PERTANYAAN */
+
+.prediksi {
+    background: #f1f7ff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.prediksi button {
+    padding: 10px 18px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    background: white;
+    cursor: pointer;
+}
+
+.prediksi button:hover {
+    background: #e5f2ff;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .zat {
+        width: 80px;
+        height: 80px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>🔬 Laboratorium Digital IPAS</h1>
+
+    <p>
+        Mari memahami perbedaan unsur, senyawa, dan campuran
+        melalui percobaan virtual.
+    </p>
+
+</header>
+
+
+<!-- MENU -->
+
+<div class="menu">
+
+    <button onclick="bukaHalaman('senyawa')">
+        ⚗️ Senyawa
+    </button>
+
+    <button onclick="bukaHalaman('campuran')">
+        🥣 Campuran
+    </button>
+
+</div>
+
+
+
+<div class="halaman">
+
+
+<!-- ================================================= -->
+<!-- SENYAWA -->
+<!-- ================================================= -->
+
+<div id="senyawa" class="kartu">
+
+    <h2>⚗️ Percobaan 1 — Membentuk Senyawa</h2>
+
+    <p>
+        Pilih unsur yang akan digabungkan.
+    </p>
+
+
+    <div class="pilihan">
+
+        <button class="zat"
+                onclick="pilihUnsur('H','Hidrogen')">
+
+            <div class="simbol">H</div>
+            <div class="nama">Hidrogen</div>
+
+        </button>
+
+
+        <button class="zat"
+                onclick="pilihUnsur('O','Oksigen')">
+
+            <div class="simbol">O</div>
+            <div class="nama">Oksigen</div>
+
+        </button>
+
+    </div>
+
+
+    <h3>🧪 Unsur yang dipilih:</h3>
+
+    <div id="pilihanUnsur">
+        Belum ada unsur.
+    </div>
+
+
+    <!-- PREDIKSI -->
+
+    <div class="prediksi">
+
+        <h3>🤔 Prediksi kamu</h3>
+
+        <p>
+            Jika Hidrogen dan Oksigen mengalami
+            reaksi kimia, apa yang terjadi?
+        </p>
+
+        <button onclick="prediksi('campur')">
+            A. Hanya bercampur
+        </button>
+
+        <button onclick="prediksi('baru')">
+            B. Terbentuk zat baru
+        </button>
+
+    </div>
+
+
+    <button class="tombol-aksi"
+            onclick="reaksiKimia()">
+
+        ⚡ REAKSI KIMIA
+
+    </button>
+
+
+    <div id="areaReaksi"
+         class="area-reaksi">
+
+        <h3>🔬 Area Reaksi</h3>
+
+        <p>
+            Pilih H + H + O untuk memulai.
+        </p>
+
+    </div>
+
+
+    <div id="hasilSenyawa"
+         class="hasil">
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- CAMPURAN -->
+<!-- ================================================= -->
+
+<div id="campuran"
+     class="kartu"
+     style="display:none;">
+
+    <h2>🥣 Percobaan 2 — Membuat Campuran</h2>
+
+    <p>
+        Kita akan mencampurkan <b>air</b> dan
+        <b>garam</b>.
+    </p>
+
+
+    <div class="pilihan">
+
+        <button class="zat"
+                onclick="pilihCampuran('air')">
+
+            <div class="simbol">💧</div>
+
+            <div class="nama">
+                Air
+            </div>
+
+        </button>
+
+
+        <button class="zat"
+                onclick="pilihCampuran('garam')">
+
+            <div class="simbol">🧂</div>
+
+            <div class="nama">
+                Garam
+            </div>
+
+        </button>
+
+    </div>
+
+
+    <h3>🥣 Bahan yang dipilih:</h3>
+
+    <div id="pilihanCampuran">
+
+        Belum ada bahan.
+
+    </div>
+
+
+    <div class="prediksi">
+
+        <h3>🤔 Prediksi kamu</h3>
+
+        <p>
+            Apa yang terjadi ketika garam dicampurkan
+            ke dalam air?
+        </p>
+
+        <button onclick="prediksiCampuran('baru')">
+            A. Terbentuk zat baru
+        </button>
+
+        <button onclick="prediksiCampuran('campur')">
+            B. Hanya terjadi pencampuran
+        </button>
+
+    </div>
+
+
+    <button class="tombol-aksi"
+            onclick="campurkan()">
+
+        🥣 CAMPURKAN
+
+    </button>
+
+
+    <div id="areaCampuran"
+         class="area-reaksi">
+
+        <h3>🥣 Area Pencampuran</h3>
+
+        <p>
+            Pilih air dan garam.
+        </p>
+
+    </div>
+
+
+    <div id="hasilCampuran"
+         class="hasil">
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   DATA SENYAWA
+========================================= */
+
+let unsurDipilih = [];
+
+
+/* =========================================
+   PILIH UNSUR
+========================================= */
+
+function pilihUnsur(simbol,nama) {
+
+    if (unsurDipilih.length >= 3) {
+
+        alert(
+            "Maksimal 3 unsur untuk percobaan ini."
+        );
+
+        return;
+    }
+
+
+    unsurDipilih.push({
+        simbol: simbol,
+        nama: nama
+    });
+
+
+    tampilkanPilihan();
+
+}
+
+
+/* =========================================
+   TAMPILKAN UNSUR
+========================================= */
+
+function tampilkanPilihan() {
+
+    let area =
+        document.getElementById("pilihanUnsur");
+
+
+    if (unsurDipilih.length === 0) {
+
+        area.innerHTML =
+            "Belum ada unsur.";
+
+        return;
+
+    }
+
+
+    area.innerHTML =
+        unsurDipilih
+        .map(x => x.simbol)
+        .join(" + ");
+
+}
+
+
+/* =========================================
+   REAKSI KIMIA
+========================================= */
+
+function reaksiKimia() {
+
+    let area =
+        document.getElementById("areaReaksi");
+
+    let hasil =
+        document.getElementById("hasilSenyawa");
+
+
+    if (unsurDipilih.length !== 3) {
+
+        alert(
+            "Untuk percobaan ini pilih H + H + O."
+        );
+
+        return;
+    }
+
+
+    let pola =
+        unsurDipilih
+        .map(x => x.simbol)
+        .sort()
+        .join("");
+
+
+    if (pola !== "HHO") {
+
+        alert(
+            "Coba gunakan 2 Hidrogen dan 1 Oksigen."
+        );
+
+        return;
+    }
+
+
+    /* ANIMASI */
+
+    area.innerHTML = `
+
+        <h3>⚡ REAKSI KIMIA BERLANGSUNG...</h3>
+
+        <div>
+
+            <span class="partikel reaksi">
+                H
+            </span>
+
+            <span class="partikel reaksi">
+                H
+            </span>
+
+            <span class="partikel reaksi">
+                O
+            </span>
+
+        </div>
+
+        <h2>⚡ ⚡ ⚡</h2>
+
+        <p>
+            Partikel mengalami perubahan dan
+            membentuk susunan baru...
+        </p>
+
+    `;
+
+
+    setTimeout(function() {
+
+        area.innerHTML = `
+
+            <h3>✨ HASIL REAKSI</h3>
+
+            <div>
+
+                <span class="partikel">
+                    H
+                </span>
+
+                <span class="partikel">
+                    O
+                </span>
+
+                <span class="partikel">
+                    H
+                </span>
+
+            </div>
+
+            <h1>💧 H₂O</h1>
+
+            <p>
+                Air
+            </p>
+
+        `;
+
+
+        hasil.className =
+            "hasil berhasil";
+
+
+        hasil.innerHTML = `
+
+            <h2>
+                🎉 TERBENTUK SENYAWA BARU!
+            </h2>
+
+            <p>
+                Hidrogen dan oksigen mengalami
+                <b>reaksi kimia</b>.
+            </p>
+
+            <p>
+                Hasilnya adalah zat baru yaitu
+                <b>H₂O (air)</b>.
+            </p>
+
+            <hr>
+
+            <p>
+                🔴 Zat baru terbentuk
+            </p>
+
+            <p>
+                🔴 Sifat zat hasil berbeda dari
+                zat penyusunnya
+            </p>
+
+            <p>
+                🔴 Terjadi perubahan secara kimia
+            </p>
+
+        `;
+
+    },1500);
+
+}
+
+
+/* =========================================
+   PREDIKSI
+========================================= */
+
+function prediksi(jawaban) {
+
+    if (jawaban === "baru") {
+
+        alert(
+            "🎉 Prediksi kamu benar! " +
+            "Mari lihat reaksinya."
+        );
+
+    }
+
+    else {
+
+        alert(
+            "Belum tepat. Perhatikan hasil reaksi."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   DATA CAMPURAN
+========================================= */
+
+let campuranDipilih = [];
+
+
+/* =========================================
+   PILIH BAHAN
+========================================= */
+
+function pilihCampuran(bahan) {
+
+    if (campuranDipilih.includes(bahan)) {
+
+        return;
+
+    }
+
+
+    campuranDipilih.push(bahan);
+
+
+    document.getElementById(
+        "pilihanCampuran"
+    ).innerHTML =
+
+        campuranDipilih
+        .map(x => {
+
+            if (x === "air")
+                return "💧 Air";
+
+            if (x === "garam")
+                return "🧂 Garam";
+
+        })
+        .join(" + ");
+
+}
+
+
+/* =========================================
+   CAMPURKAN
+========================================= */
+
+function campurkan() {
+
+    let area =
+        document.getElementById("areaCampuran");
+
+    let hasil =
+        document.getElementById("hasilCampuran");
+
+
+    if (
+        !campuranDipilih.includes("air") ||
+        !campuranDipilih.includes("garam")
+    ) {
+
+        alert(
+            "Pilih air dan garam terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    area.innerHTML = `
+
+        <h3>🥣 PROSES PENCAMPURAN</h3>
+
+        <div>
+
+            <span class="partikel">
+                💧
+            </span>
+
+            <span class="partikel">
+                🧂
+            </span>
+
+        </div>
+
+        <h2>🔄 🔄 🔄</h2>
+
+        <p>
+            Garam bercampur dengan air.
+        </p>
+
+    `;
+
+
+    setTimeout(function() {
+
+        area.innerHTML = `
+
+            <h3>🥣 HASIL CAMPURAN</h3>
+
+            <div>
+
+                <span class="partikel">
+                    💧
+                </span>
+
+                <span class="partikel">
+                    🧂
+                </span>
+
+                <span class="partikel">
+                    💧
+                </span>
+
+            </div>
+
+            <h2>
+                💧 + 🧂
+            </h2>
+
+            <p>
+                Air garam
+            </p>
+
+        `;
+
+
+        hasil.className =
+            "hasil campuran";
+
+
+        hasil.innerHTML = `
+
+            <h2>
+                ✅ INI ADALAH CAMPURAN
+            </h2>
+
+            <p>
+                Air dan garam bercampur,
+                tetapi <b>tidak terbentuk zat baru</b>.
+            </p>
+
+            <hr>
+
+            <p>
+                🔵 Tidak menghasilkan zat baru
+            </p>
+
+            <p>
+                🔵 Komponen masih memiliki sifatnya
+            </p>
+
+            <p>
+                🔵 Dapat dipisahkan dengan metode fisik
+            </p>
+
+            <p>
+                Contohnya, air dapat diuapkan sehingga
+                garam dapat diperoleh kembali.
+            </p>
+
+        `;
+
+    },1200);
+
+}
+
+
+/* =========================================
+   PREDIKSI CAMPURAN
+========================================= */
+
+function prediksiCampuran(jawaban) {
+
+    if (jawaban === "campur") {
+
+        alert(
+            "🎉 Benar! Tidak terbentuk zat baru."
+        );
+
+    }
+
+    else {
+
+        alert(
+            "Belum tepat. Mari lihat hasil pencampurannya."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   PINDAH HALAMAN
+========================================= */
+
+function bukaHalaman(nama) {
+
+    document.getElementById(
+        "senyawa"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "campuran"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        nama
+    ).style.display = "block";
+
+}
+
+</script>
+
+
+</body>
+</html>

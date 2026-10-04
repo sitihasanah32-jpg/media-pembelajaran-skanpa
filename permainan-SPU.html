@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sistem Periodik Unsur Interaktif</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    color: #222;
+}
+
+.subjudul {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* TABEL PERIODIK */
+
+.tabel-periodik {
+    display: grid;
+    grid-template-columns: repeat(18, minmax(55px, 1fr));
+    gap: 5px;
+    max-width: 1450px;
+    margin: auto;
+}
+
+.unsur {
+    min-height: 82px;
+    border: 2px solid #555;
+    border-radius: 7px;
+    padding: 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    background: white;
+}
+
+.unsur:hover {
+    transform: scale(1.08);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+    z-index: 10;
+}
+
+.nomor {
+    font-size: 11px;
+    text-align: left;
+}
+
+.simbol {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.nama {
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+/* KATEGORI */
+
+.alkali {
+    background: #ffd6d6;
+}
+
+.alkali-tanah {
+    background: #ffe8c2;
+}
+
+.transisi {
+    background: #fff4b5;
+}
+
+.post-transisi {
+    background: #eeeeee;
+}
+
+.metaloid {
+    background: #d9f2d9;
+}
+
+.nonlogam {
+    background: #cfe8ff;
+}
+
+.halogen {
+    background: #e6d5ff;
+}
+
+.gas-mulia {
+    background: #ffd6f2;
+}
+
+.lantanida {
+    background: #d9d9ff;
+}
+
+.aktinida {
+    background: #d9f2f2;
+}
+
+/* INFORMASI */
+
+.informasi {
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.informasi h2 {
+    margin-top: 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.info-item {
+    padding: 10px;
+    background: #f1f4f8;
+    border-radius: 6px;
+}
+
+.keterangan {
+    margin-top: 20px;
+    padding: 15px;
+    background: #eef7ff;
+    border-radius: 8px;
+}
+
+/* LANTANIDA AKTINIDA */
+
+.judul-bawah {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.deret-bawah {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.deret-bawah .unsur {
+    width: 75px;
+}
+
+/* LEGENDA */
+
+.legenda {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+.legenda-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.legenda-item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid #aaa;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .tabel-periodik {
+        overflow-x: auto;
+        grid-template-columns: repeat(18, 60px);
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<h1>🔬 SISTEM PERIODIK UNSUR</h1>
+
+<p class="subjudul">
+    Klik salah satu unsur untuk melihat informasi
+</p>
+
+
+<!-- ============================= -->
+<!-- TABEL PERIODIK -->
+<!-- ============================= -->
+
+<div class="tabel-periodik" id="tabelPeriodik"></div>
+
+
+<!-- ============================= -->
+<!-- LANTANIDA -->
+<!-- ============================= -->
+
+<h2 class="judul-bawah">Lantanida</h2>
+
+<div class="deret-bawah" id="lantanida"></div>
+
+
+<!-- ============================= -->
+<!-- AKTINIDA -->
+<!-- ============================= -->
+
+<h2 class="judul-bawah">Aktinida</h2>
+
+<div class="deret-bawah" id="aktinida"></div>
+
+
+<!-- ============================= -->
+<!-- INFORMASI -->
+<!-- ============================= -->
+
+<div class="informasi" id="informasi">
+
+    <h2>🔎 Informasi Unsur</h2>
+
+    <p>
+        Klik salah satu unsur pada tabel untuk melihat
+        informasi lengkapnya.
+    </p>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- LEGENDA -->
+<!-- ============================= -->
+
+<div class="legenda">
+
+    <h3 style="text-align:center;">
+        🎨 Kategori Unsur
+    </h3>
+
+    <div class="legenda-container">
+
+        <div class="legenda-item alkali">
+            Logam Alkali
+        </div>
+
+        <div class="legenda-item alkali-tanah">
+            Logam Alkali Tanah
+        </div>
+
+        <div class="legenda-item transisi">
+            Logam Transisi
+        </div>
+
+        <div class="legenda-item post-transisi">
+            Logam Pascatransisi
+        </div>
+
+        <div class="legenda-item metaloid">
+            Metaloid
+        </div>
+
+        <div class="legenda-item nonlogam">
+            Nonlogam
+        </div>
+
+        <div class="legenda-item halogen">
+            Halogen
+        </div>
+
+        <div class="legenda-item gas-mulia">
+            Gas Mulia
+        </div>
+
+        <div class="legenda-item lantanida">
+            Lantanida
+        </div>
+
+        <div class="legenda-item aktinida">
+            Aktinida
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   DATABASE 118 UNSUR
+========================================= */
+
+const unsur = [
+
+[1,"H","Hidrogen","1,008","1","1","nonlogam"],
+[2,"He","Helium","4,0026","18","1","gas-mulia"],
+
+[3,"Li","Litium","6,94","1","2","alkali"],
+[4,"Be","Berilium","9,0122","2","2","alkali-tanah"],
+[5,"B","Boron","10,81","13","2","metaloid"],
+[6,"C","Karbon","12,011","14","2","nonlogam"],
+[7,"N","Nitrogen","14,007","15","2","nonlogam"],
+[8,"O","Oksigen","15,999","16","2","nonlogam"],
+[9,"F","Fluorin","18,998","17","2","halogen"],
+[10,"Ne","Neon","20,180","18","2","gas-mulia"],
+
+[11,"Na","Natrium","22,990","1","3","alkali"],
+[12,"Mg","Magnesium","24,305","2","3","alkali-tanah"],
+[13,"Al","Aluminium","26,982","13","3","post-transisi"],
+[14,"Si","Silikon","28,085","14","3","metaloid"],
+[15,"P","Fosfor","30,974","15","3","nonlogam"],
+[16,"S","Sulfur","32,06","16","3","nonlogam"],
+[17,"Cl","Klorin","35,45","17","3","halogen"],
+[18,"Ar","Argon","39,948","18","3","gas-mulia"],
+
+[19,"K","Kalium","39,098","1","4","alkali"],
+[20,"Ca","Kalsium","40,078","2","4","alkali-tanah"],
+[21,"Sc","Skandium","44,956","3","4","transisi"],
+[22,"Ti","Titanium","47,867","4","4","transisi"],
+[23,"V","Vanadium","50,942","5","4","transisi"],
+[24,"Cr","Kromium","51,996","6","4","transisi"],
+[25,"Mn","Mangan","54,938","7","4","transisi"],
+[26,"Fe","Besi","55,845","8","4","transisi"],
+[27,"Co","Kobalt","58,933","9","4","transisi"],
+[28,"Ni","Nikel","58,693","10","4","transisi"],
+[29,"Cu","Tembaga","63,546","11","4","transisi"],
+[30,"Zn","Seng","65,38","12","4","transisi"],
+[31,"Ga","Galium","69,723","13","4","post-transisi"],
+[32,"Ge","Germanium","72,630","14","4","metaloid"],
+[33,"As","Arsen","74,922","15","4","metaloid"],
+[34,"Se","Selenium","78,971","16","4","nonlogam"],
+[35,"Br","Bromin","79,904","17","4","halogen"],
+[36,"Kr","Kripton","83,798","18","4","gas-mulia"],
+
+[37,"Rb","Rubidium","85,468","1","5","alkali"],
+[38,"Sr","Stronsium","87,62","2","5","alkali-tanah"],
+[39,"Y","Itrium","88,906","3","5","transisi"],
+[40,"Zr","Zirkonium","91,224","4","5","transisi"],
+[41,"Nb","Niobium","92,906","5","5","transisi"],
+[42,"Mo","Molibdenum","95,95","6","5","transisi"],
+[43,"Tc","Teknesium","[98]","7","5","transisi"],
+[44,"Ru","Rutenium","101,07","8","5","transisi"],
+[45,"Rh","Rodium","102,91","9","5","transisi"],
+[46,"Pd","Paladium","106,42","10","5","transisi"],
+[47,"Ag","Perak","107,87","11","5","transisi"],
+[48,"Cd","Kadmium","112,41","12","5","transisi"],
+[49,"In","Indium","114,82","13","5","post-transisi"],
+[50,"Sn","Timah","118,71","14","5","post-transisi"],
+[51,"Sb","Antimon","121,76","15","5","metaloid"],
+[52,"Te","Telurium","127,60","16","5","metaloid"],
+[53,"I","Iodin","126,90","17","5","halogen"],
+[54,"Xe","Xenon","131,29","18","5","gas-mulia"],
+
+[55,"Cs","Sesium","132,91","1","6","alkali"],
+[56,"Ba","Barium","137,33","2","6","alkali-tanah"],
+
+[57,"La","Lantanum","138,91","3","6","lantanida"],
+
+[72,"Hf","Hafnium","178,49","4","6","transisi"],
+[73,"Ta","Tantalum","180,95","5","6","transisi"],
+[74,"W","Wolfram","183,84","6","6","transisi"],
+[75,"Re","Renium","186,21","7","6","transisi"],
+[76,"Os","Osmium","190,23","8","6","transisi"],
+[77,"Ir","Iridium","192,22","9","6","transisi"],
+[78,"Pt","Platina","195,08","10","6","transisi"],
+[79,"Au","Emas","196,97","11","6","transisi"],
+[80,"Hg","Raksa","200,59","12","6","transisi"],
+[81,"Tl","Talium","204,38","13","6","post-transisi"],
+[82,"Pb","Timbal","207,2","14","6","post-transisi"],
+[83,"Bi","Bismut","208,98","15","6","post-transisi"],
+[84,"Po","Polonium","[209]","16","6","post-transisi"],
+[85,"At","Astatin","[210]","17","6","halogen"],
+[86,"Rn","Radon","[222]","18","6","gas-mulia"],
+
+[87,"Fr","Fransium","[223]","1","7","alkali"],
+[88,"Ra","Radium","[226]","2","7","alkali-tanah"],
+
+[104,"Rf","Rutherfordium","[267]","4","7","transisi"],
+[105,"Db","Dubnium","[268]","5","7","transisi"],
+[106,"Sg","Seaborgium","[269]","6","7","transisi"],
+[107,"Bh","Bohrium","[270]","7","7","transisi"],
+[108,"Hs","Hassium","[277]","8","7","transisi"],
+[109,"Mt","Meitnerium","[278]","9","7","transisi"],
+[110,"Ds","Darmstadtium","[281]","10","7","transisi"],
+[111,"Rg","Roentgenium","[282]","11","7","transisi"],
+[112,"Cn","Kopernisium","[285]","12","7","transisi"],
+[113,"Nh","Nihonium","[286]","13","7","post-transisi"],
+[114,"Fl","Flerovium","[289]","14","7","post-transisi"],
+[115,"Mc","Moskovium","[290]","15","7","post-transisi"],
+[116,"Lv","Livermorium","[293]","16","7","post-transisi"],
+[117,"Ts","Tenesin","[294]","17","7","halogen"],
+[118,"Og","Oganeson","[294]","18","7","gas-mulia"]
+
+];
+
+
+/* =========================================
+   DATA LANTANIDA
+========================================= */
+
+const lantanida = [
+
+[57,"La","Lantanum","138,91"],
+[58,"Ce","Serium","140,12"],
+[59,"Pr","Praseodimium","140,91"],
+[60,"Nd","Neodimium","144,24"],
+[61,"Pm","Prometium","[145]"],
+[62,"Sm","Samarium","150,36"],
+[63,"Eu","Europium","151,96"],
+[64,"Gadolinium","Gd","157,25"],
+[65,"Tb","Terbium","158,93"],
+[66,"Dy","Disprosium","162,50"],
+[67,"Ho","Holmium","164,93"],
+[68,"Er","Erbium","167,26"],
+[69,"Tm","Tulium","168,93"],
+[70,"Yb","Iterbium","173,05"],
+[71,"Lu","Lutetium","174,97"]
+
+];
+
+
+/* =========================================
+   DATA AKTINIDA
+========================================= */
+
+const aktinida = [
+
+[89,"Ac","Aktinium","[227]"],
+[90,"Th","Torium","232,04"],
+[91,"Pa","Protaktinium","231,04"],
+[92,"U","Uranium","238,03"],
+[93,"Np","Neptunium","[237]"],
+[94,"Pu","Plutonium","[244]"],
+[95,"Am","Amerisium","[243]"],
+[96,"Cm","Kurium","[247]"],
+[97,"Bk","Berkelium","[247]"],
+[98,"Cf","Kalifornium","[251]"],
+[99,"Es","Einsteinium","[252]"],
+[100,"Fm","Fermium","[257]"],
+[101,"Md","Mendelevium","[258]"],
+[102,"No","Nobelium","[259]"],
+[103,"Lr","Lawrensium","[266]"]
+
+];
+
+
+/* =========================================
+   KETERANGAN
+========================================= */
+
+const keterangan = {
+
+"H":"Hidrogen merupakan unsur paling ringan dan merupakan salah satu penyusun air.",
+
+"He":"Helium adalah gas mulia yang sangat ringan dan banyak digunakan dalam balon.",
+
+"O":"Oksigen sangat penting dalam proses pernapasan manusia dan hewan.",
+
+"C":"Karbon merupakan unsur penting penyusun makhluk hidup.",
+
+"N":"Nitrogen merupakan gas yang jumlahnya paling banyak di atmosfer Bumi.",
+
+"Na":"Natrium merupakan logam yang sangat reaktif dan terdapat dalam garam dapur bersama klorin.",
+
+"Cl":"Klorin merupakan unsur halogen yang digunakan antara lain dalam pengolahan air.",
+
+"Fe":"Besi merupakan logam yang banyak digunakan dalam pembuatan berbagai benda dan konstruksi.",
+
+"Cu":"Tembaga merupakan logam penghantar listrik yang baik.",
+
+"Al":"Aluminium merupakan logam ringan yang banyak digunakan dalam kehidupan sehari-hari.",
+
+"Au":"Emas merupakan logam mulia yang bernilai tinggi.",
+
+"Ag":"Perak merupakan logam yang memiliki daya hantar listrik sangat baik."
+
+};
+
+
+/* =========================================
+   MEMBUAT TABEL PERIODIK
+========================================= */
+
+const tabel = document.getElementById("tabelPeriodik");
+
+
+unsur.forEach(data => {
+
+    let nomor = data[0];
+    let simbol = data[1];
+    let nama = data[2];
+    let massa = data[3];
+    let golongan = data[4];
+    let periode = data[5];
+    let kategori = data[6];
+
+    let kotak = document.createElement("div");
+
+    kotak.className = "unsur " + kategori;
+
+    kotak.style.gridColumn = golongan;
+    kotak.style.gridRow = periode;
+
+    kotak.innerHTML = `
+        <div class="nomor">${nomor}</div>
+        <div class="simbol">${simbol}</div>
+        <div class="nama">${nama}</div>
+    `;
+
+    kotak.onclick = function() {
+
+        tampilkanInformasi(
+            nomor,
+            simbol,
+            nama,
+            massa,
+            golongan,
+            periode,
+            kategori
+        );
+
+    };
+
+    tabel.appendChild(kotak);
+
+});
+
+
+/* =========================================
+   INFORMASI UNSUR
+========================================= */
+
+function tampilkanInformasi(
+    nomor,
+    simbol,
+    nama,
+    massa,
+    golongan,
+    periode,
+    kategori
+) {
+
+    let info = document.getElementById("informasi");
+
+    let namaKategori = {
+
+        "alkali":"Logam Alkali",
+        "alkali-tanah":"Logam Alkali Tanah",
+        "transisi":"Logam Transisi",
+        "post-transisi":"Logam Pascatransisi",
+        "metaloid":"Metaloid",
+        "nonlogam":"Nonlogam",
+        "halogen":"Halogen",
+        "gas-mulia":"Gas Mulia",
+        "lantanida":"Lantanida",
+        "aktinida":"Aktinida"
+
+    };
+
+
+    let penjelasan =
+        keterangan[simbol] ||
+        "Informasi singkat tentang unsur ini dapat dipelajari lebih lanjut melalui kegiatan pembelajaran.";
+
+
+    info.innerHTML = `
+
+        <h2>🔬 ${nama}</h2>
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <b>Simbol</b><br>
+                ${simbol}
+            </div>
+
+            <div class="info-item">
+                <b>Nomor Atom</b><br>
+                ${nomor}
+            </div>
+
+            <div class="info-item">
+                <b>Massa Atom</b><br>
+                ${massa}
+            </div>
+
+            <div class="info-item">
+                <b>Golongan</b><br>
+                ${golongan}
+            </div>
+
+            <div class="info-item">
+                <b>Periode</b><br>
+                ${periode}
+            </div>
+
+            <div class="info-item">
+                <b>Kategori</b><br>
+                ${namaKategori[kategori] || kategori}
+            </div>
+
+        </div>
+
+        <div class="keterangan">
+
+            <b>💡 Tentang ${nama}</b>
+
+            <p>
+                ${penjelasan}
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   LANTANIDA
+========================================= */
+
+const areaLantanida =
+document.getElementById("lantanida");
+
+
+lantanida.forEach(data => {
+
+    let kotak = document.createElement("div");
+
+    kotak.className = "unsur lantanida";
+
+    /*
+       Beberapa data menggunakan urutan
+       yang berbeda, jadi kita sesuaikan.
+    */
+
+    let nomor = data[0];
+
+    let simbol;
+    let nama;
+    let massa;
+
+    if (typeof data[1] === "string" &&
+        data[1].length <= 3) {
+
+        simbol = data[1];
+        nama = data[2];
+        massa = data[3];
+
+    } else {
+
+        nama = data[1];
+        simbol = data[2];
+        massa = data[3];
+
+    }
+
+
+    kotak.innerHTML = `
+
+        <div class="nomor">${nomor}</div>
+
+        <div class="simbol">${simbol}</div>
+
+        <div class="nama">${nama}</div>
+
+    `;
+
+
+    kotak.onclick = function() {
+
+        tampilkanInformasi(
+            nomor,
+            simbol,
+            nama,
+            massa,
+            "3–17",
+            "6",
+            "lantanida"
+        );
+
+    };
+
+
+    areaLantanida.appendChild(kotak);
+
+});
+
+
+/* =========================================
+   AKTINIDA
+========================================= */
+
+const areaAktinida =
+document.getElementById("aktinida");
+
+
+aktinida.forEach(data => {
+
+    let nomor = data[0];
+
+    let simbol = data[1];
+
+    let nama = data[2];
+
+    let massa = data[3];
+
+
+    let kotak = document.createElement("div");
+
+    kotak.className = "unsur aktinida";
+
+
+    kotak.innerHTML = `
+
+        <div class="nomor">${nomor}</div>
+
+        <div class="simbol">${simbol}</div>
+
+        <div class="nama">${nama}</div>
+
+    `;
+
+
+    kotak.onclick = function() {
+
+        tampilkanInformasi(
+            nomor,
+            simbol,
+            nama,
+            massa,
+            "3–17",
+            "7",
+            "aktinida"
+        );
+
+    };
+
+
+    areaAktinida.appendChild(kotak);
+
+});
+
+</script>
+
+</body>
+</html>

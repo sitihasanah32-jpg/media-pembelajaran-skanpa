@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorium Virtual Pemisahan Campuran</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#eef6fb;
+    color:#17324d;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    background:
+    linear-gradient(135deg,#082f49,#075985,#0891b2,#06b6d4);
+    color:white;
+    padding:35px 20px;
+    text-align:center;
+}
+
+header .lab-icon{
+    font-size:55px;
+}
+
+header h1{
+    font-size:36px;
+    margin:5px 0;
+}
+
+header p{
+    font-size:17px;
+    opacity:.95;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px;
+}
+
+.card{
+    background:white;
+    border-radius:22px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.section-title{
+    color:#075985;
+    margin-bottom:10px;
+}
+
+.center{
+    text-align:center;
+}
+
+/* ================= METODE ================= */
+
+.method-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:14px;
+    margin-top:20px;
+}
+
+.method-btn{
+    border:2px solid #bae6fd;
+    background:#f0f9ff;
+    color:#075985;
+    padding:18px 12px;
+    border-radius:16px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:15px;
+    transition:.25s;
+}
+
+.method-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 6px 15px rgba(8,145,178,.18);
+}
+
+.method-btn.active{
+    background:#075985;
+    color:white;
+    border-color:#075985;
+}
+
+.method-btn span{
+    display:block;
+    font-size:35px;
+    margin-bottom:6px;
+}
+
+/* ================= LAB ================= */
+
+.lab{
+    display:grid;
+    grid-template-columns:1fr 1.2fr;
+    gap:25px;
+}
+
+@media(max-width:800px){
+    .lab{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ================= PANEL INFORMASI ================= */
+
+.info-panel{
+    background:#f8fafc;
+    border-radius:18px;
+    padding:22px;
+}
+
+.info-panel h2{
+    color:#075985;
+    margin-bottom:8px;
+}
+
+.info-panel h3{
+    color:#0e7490;
+    margin-top:18px;
+    margin-bottom:7px;
+}
+
+.keyword{
+    display:inline-block;
+    background:#cffafe;
+    color:#155e75;
+    padding:8px 14px;
+    border-radius:30px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.stage-box{
+    margin-top:20px;
+    background:white;
+    border-left:6px solid #0891b2;
+    padding:18px;
+    border-radius:12px;
+}
+
+.stage-box .stage-number{
+    color:#0891b2;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.stage-box h3{
+    font-size:21px;
+    margin:3px 0 5px;
+}
+
+.stage-box p{
+    color:#334155;
+}
+
+/* ================= VISUAL LAB ================= */
+
+.visual-panel{
+    background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.9),transparent 30%),
+    linear-gradient(145deg,#dff6ff,#f8fdff);
+    min-height:560px;
+    border-radius:22px;
+    border:2px solid #bae6fd;
+    padding:25px;
+    position:relative;
+    overflow:hidden;
+}
+
+.lab-label{
+    position:absolute;
+    top:15px;
+    left:20px;
+    background:#075985;
+    color:white;
+    padding:7px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.visual-title{
+    text-align:center;
+    margin-top:15px;
+    color:#075985;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.visual{
+    height:390px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+/* ================= TOMBOL ================= */
+
+.controls{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+}
+
+.controls button{
+    border:none;
+    border-radius:12px;
+    padding:12px 17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.controls button:hover{
+    transform:translateY(-2px);
+}
+
+.btn-start{
+    background:#16a34a;
+    color:white;
+}
+
+.btn-next{
+    background:#0284c7;
+    color:white;
+}
+
+.btn-reset{
+    background:#64748b;
+    color:white;
+}
+
+.btn-sound{
+    background:#7c3aed;
+    color:white;
+}
+
+.progress{
+    height:9px;
+    background:#dbeafe;
+    border-radius:20px;
+    margin-top:15px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#06b6d4;
+    transition:.5s;
+}
+
+/* ================= GELAS ================= */
+
+.beaker{
+    width:210px;
+    height:270px;
+    border:6px solid #64748b;
+    border-top:0;
+    border-radius:0 0 35px 35px;
+    position:relative;
+    overflow:hidden;
+    background:rgba(255,255,255,.5);
+}
+
+.water{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:72%;
+    background:#93c5fd;
+    transition:1s;
+}
+
+.muddy-water{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:72%;
+    background:#a8a29e;
+}
+
+.particle{
+    position:absolute;
+    width:9px;
+    height:9px;
+    background:#713f12;
+    border-radius:50%;
+    transition:1.3s;
+}
+
+.sediment-layer{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:20px;
+    background:#78350f;
+}
+
+.beaker-label{
+    position:absolute;
+    top:12px;
+    width:100%;
+    text-align:center;
+    font-weight:bold;
+    color:#334155;
+}
+
+/* ================= DEKANTASI ================= */
+
+.oil-layer{
+    position:absolute;
+    top:0;
+    width:100%;
+    height:38%;
+    background:#facc15;
+}
+
+.water-layer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:62%;
+    background:#60a5fa;
+}
+
+.pour{
+    position:absolute;
+    right:5px;
+    top:100px;
+    font-size:75px;
+    opacity:0;
+    transform:rotate(-35deg);
+    transition:.7s;
+}
+
+.pour.show{
+    opacity:1;
+}
+
+/* ================= FILTRASI ================= */
+
+.funnel{
+    width:0;
+    height:0;
+    border-left:85px solid transparent;
+    border-right:85px solid transparent;
+    border-top:130px solid #cbd5e1;
+    position:relative;
+}
+
+.filter-paper{
+    position:absolute;
+    top:-122px;
+    left:-60px;
+    width:120px;
+    height:80px;
+    background:#fff;
+    border:3px solid #94a3b8;
+    border-radius:0 0 60px 60px;
+}
+
+.coffee{
+    position:absolute;
+    width:65px;
+    height:23px;
+    background:#78350f;
+    border-radius:50%;
+    left:27px;
+    top:32px;
+}
+
+.drip{
+    width:10px;
+    height:45px;
+    background:#60a5fa;
+    border-radius:0 0 10px 10px;
+    margin:auto;
+    opacity:0;
+    transition:.7s;
+}
+
+.drip.show{
+    opacity:1;
+}
+
+.container-glass{
+    width:115px;
+    height:90px;
+    border:5px solid #64748b;
+    border-top:0;
+    border-radius:0 0 20px 20px;
+    overflow:hidden;
+    position:relative;
+}
+
+.filtered-liquid{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:0;
+    background:#60a5fa;
+    transition:1s;
+}
+
+/* ================= EVAPORASI ================= */
+
+.evaporating-dish{
+    width:220px;
+    height:75px;
+    border-radius:50%;
+    background:#60a5fa;
+    border:5px solid #64748b;
+    transition:1s;
+}
+
+.steam{
+    font-size:65px;
+    opacity:0;
+    transform:translateY(20px);
+    transition:1s;
+}
+
+.steam.show{
+    opacity:1;
+    transform:translateY(-10px);
+}
+
+.salt-crystals{
+    width:110px;
+    height:28px;
+    background:white;
+    border:2px solid #cbd5e1;
+    border-radius:50%;
+    opacity:0;
+    transition:1s;
+}
+
+.salt-crystals.show{
+    opacity:1;
+}
+
+/* ================= DISTILASI ================= */
+
+.distillation{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.dist-flask{
+    width:135px;
+    height:135px;
+    border:5px solid #64748b;
+    border-radius:50%;
+    position:relative;
+    overflow:hidden;
+}
+
+.dist-liquid{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:55%;
+    background:#60a5fa;
+}
+
+.dist-tube{
+    width:100px;
+    height:35px;
+    border-top:5px solid #64748b;
+    border-right:5px solid #64748b;
+}
+
+.dist-collector{
+    width:100px;
+    height:115px;
+    border:5px solid #64748b;
+    border-top:0;
+    border-radius:0 0 20px 20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.collected-water{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:0;
+    background:#60a5fa;
+    transition:1.2s;
+}
+
+.heat{
+    font-size:45px;
+    position:absolute;
+    bottom:-65px;
+    left:42px;
+}
+
+/* ================= KROMATOGRAFI ================= */
+
+.chrom-paper{
+    width:95px;
+    height:290px;
+    background:white;
+    border:3px solid #94a3b8;
+    position:relative;
+    overflow:hidden;
+}
+
+.ink-dot{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#1e3a8a;
+    left:37px;
+    bottom:35px;
+    transition:1.5s;
+}
+
+.color-dot{
+    position:absolute;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    left:33px;
+    opacity:0;
+    transition:1.5s;
+}
+
+.red{
+    background:#dc2626;
+}
+
+.green{
+    background:#16a34a;
+}
+
+.purple{
+    background:#9333ea;
+}
+
+/* ================= SUBLIMASI ================= */
+
+.sublimation-box{
+    width:260px;
+    height:190px;
+    border:5px solid #64748b;
+    border-radius:15px;
+    position:relative;
+    background:#f8fafc;
+}
+
+.solid-mixture{
+    position:absolute;
+    bottom:15px;
+    left:75px;
+    width:110px;
+    height:45px;
+    background:#334155;
+    border-radius:10px;
+    transition:1s;
+}
+
+.sublime-vapor{
+    position:absolute;
+    font-size:65px;
+    left:95px;
+    bottom:70px;
+    opacity:0;
+    transition:1s;
+}
+
+.sublime-crystal{
+    position:absolute;
+    top:20px;
+    left:80px;
+    width:100px;
+    height:30px;
+    background:#facc15;
+    border-radius:50%;
+    opacity:0;
+    transition:1s;
+}
+
+/* ================= KESIMPULAN ================= */
+
+.conclusion{
+    background:#ecfeff;
+    border:2px solid #67e8f9;
+    border-radius:16px;
+    padding:18px;
+    margin-top:20px;
+}
+
+.conclusion strong{
+    color:#075985;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz-question{
+    background:#f8fafc;
+    padding:18px;
+    border-radius:14px;
+    margin:15px 0;
+}
+
+.quiz-question label{
+    display:block;
+    background:white;
+    padding:10px;
+    border-radius:8px;
+    margin:7px 0;
+    cursor:pointer;
+}
+
+.quiz-button{
+    border:none;
+    background:#075985;
+    color:white;
+    padding:13px 22px;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#hasilQuiz{
+    margin-top:15px;
+    font-size:19px;
+    font-weight:bold;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#082f49;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+<div class="lab-icon">🧪</div>
+
+<h1>LABORATORIUM VIRTUAL</h1>
+
+<h2>PEMISAHAN CAMPURAN</h2>
+
+<p>IPAS Kelas X • Amati prosesnya tahap demi tahap</p>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ================= PETUNJUK ================= -->
+
+<div class="card center">
+
+<h2 class="section-title">🔬 Selamat Datang di Laboratorium!</h2>
+
+<p>
+Di laboratorium virtual ini kamu akan mengamati
+<b>7 metode pemisahan campuran</b>.
+</p>
+
+<p style="margin-top:8px;">
+Pilih metode → klik <b>Mulai Proses</b> →
+amati setiap tahap → dengarkan penjelasan → tarik kesimpulan.
+</p>
+
+</div>
+
+
+<!-- ================= PILIH METODE ================= -->
+
+<div class="card">
+
+<h2 class="section-title">🧪 Pilih Metode Pemisahan</h2>
+
+<div class="method-grid">
+
+<button class="method-btn" onclick="pilih('sedimentasi',this)">
+<span>🟤</span>
+Sedimentasi
+</button>
+
+<button class="method-btn" onclick="pilih('dekantasi',this)">
+<span>🫗</span>
+Dekantasi
+</button>
+
+<button class="method-btn" onclick="pilih('filtrasi',this)">
+<span>🧺</span>
+Filtrasi
+</button>
+
+<button class="method-btn" onclick="pilih('evaporasi',this)">
+<span>☀️</span>
+Evaporasi
+</button>
+
+<button class="method-btn" onclick="pilih('distilasi',this)">
+<span>💧</span>
+Distilasi
+</button>
+
+<button class="method-btn" onclick="pilih('kromatografi',this)">
+<span>🎨</span>
+Kromatografi
+</button>
+
+<button class="method-btn" onclick="pilih('sublimasi',this)">
+<span>❄️</span>
+Sublimasi
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= LABORATORIUM ================= -->
+
+<div class="card">
+
+<div class="lab">
+
+
+<!-- INFORMASI -->
+
+<div class="info-panel">
+
+<h2 id="methodTitle">
+Pilih metode terlebih dahulu
+</h2>
+
+<p id="methodExample">
+Pilih salah satu metode di atas.
+</p>
+
+
+<h3>🔑 Kata Kunci</h3>
+
+<div id="keyword" class="keyword">
+-
+</div>
+
+
+<div class="stage-box">
+
+<div class="stage-number" id="stageNumber">
+TAHAP 0
+</div>
+
+<h3 id="stageTitle">
+Belum dimulai
+</h3>
+
+<p id="stageDescription">
+Klik tombol <b>Mulai Proses</b> untuk memulai simulasi.
+</p>
+
+</div>
+
+
+<div class="conclusion">
+
+<strong>🧠 Yang Harus Diingat:</strong>
+
+<p id="remember">
+Pilih metode untuk melihat kesimpulannya.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- VISUAL -->
+
+<div class="visual-panel">
+
+<div class="lab-label">
+🔬 LABORATORIUM VIRTUAL
+</div>
+
+<div class="visual-title" id="visualTitle">
+Pilih metode
+</div>
+
+<div class="visual" id="visual">
+
+<div style="font-size:110px;">
+🧪
+</div>
+
+</div>
+
+
+<div class="controls">
+
+<button class="btn-start" onclick="mulai()">
+▶ Mulai Proses
+</button>
+
+<button class="btn-next" onclick="nextStage()">
+⏭ Tahap Berikutnya
+</button>
+
+<button class="btn-reset" onclick="resetLab()">
+🔄 Ulangi
+</button>
+
+<button class="btn-sound" onclick="bacakan()">
+🔊 Dengarkan
+</button>
+
+</div>
+
+
+<div class="progress">
+
+<div class="progress-bar" id="progressBar"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= PERBEDAAN 3 METODE ================= -->
+
+<div class="card">
+
+<h2 class="section-title">⭐ Jangan Sampai Tertukar!</h2>
+
+<div class="method-grid">
+
+<div class="conclusion">
+
+<h3>🟤 SEDIMENTASI</h3>
+
+<p style="font-size:25px;font-weight:bold;">
+DIAMKAN
+</p>
+
+<p>
+Campuran didiamkan sampai partikel yang lebih berat turun dan membentuk endapan.
+</p>
+
+</div>
+
+
+<div class="conclusion">
+
+<h3>🫗 DEKANTASI</h3>
+
+<p style="font-size:25px;font-weight:bold;">
+TUANG
+</p>
+
+<p>
+Cairan yang sudah terpisah dituangkan secara perlahan tanpa membawa bagian yang ingin dipisahkan.
+</p>
+
+</div>
+
+
+<div class="conclusion">
+
+<h3>🧺 FILTRASI</h3>
+
+<p style="font-size:25px;font-weight:bold;">
+SARING
+</p>
+
+<p>
+Campuran dilewatkan melalui penyaring. Padatan tertahan, cairan melewati penyaring.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= URUTAN ================= -->
+
+<div class="card center">
+
+<h2 class="section-title">
+🧠 Cara Cepat Mengingat
+</h2>
+
+<p style="font-size:20px;">
+
+<b>SEDIMENTASI</b>
+→ DIAMKAN
+
+<br>
+
+⬇
+
+<br>
+
+<b>DEKANTASI</b>
+→ TUANG
+
+<br>
+
+⬇
+
+<br>
+
+<b>FILTRASI</b>
+→ SARING
+
+</p>
+
+</div>
+
+
+<!-- ================= QUIZ ================= -->
+
+<div class="card">
+
+<h2 class="section-title">
+🎯 Tantangan Laboratorium
+</h2>
+
+<p>
+Uji pemahamanmu setelah mengamati simulasi.
+</p>
+
+
+<div class="quiz-question">
+
+<b>1. Air keruh didiamkan sampai tanah mengendap. Metode tersebut adalah...</b>
+
+<label>
+<input type="radio" name="q1" value="a">
+A. Filtrasi
+</label>
+
+<label>
+<input type="radio" name="q1" value="b">
+B. Sedimentasi
+</label>
+
+<label>
+<input type="radio" name="q1" value="c">
+C. Evaporasi
+</label>
+
+</div>
+
+
+<div class="quiz-question">
+
+<b>2. Minyak dan air dipisahkan dengan menuangkan salah satu lapisan. Metodenya adalah...</b>
+
+<label>
+<input type="radio" name="q2" value="a">
+A. Dekantasi
+</label>
+
+<label>
+<input type="radio" name="q2" value="b">
+B. Kromatografi
+</label>
+
+<label>
+<input type="radio" name="q2" value="c">
+C. Sublimasi
+</label>
+
+</div>
+
+
+<div class="quiz-question">
+
+<b>3. Ampas kopi dipisahkan menggunakan saringan. Metodenya adalah...</b>
+
+<label>
+<input type="radio" name="q3" value="a">
+A. Filtrasi
+</label>
+
+<label>
+<input type="radio" name="q3" value="b">
+B. Distilasi
+</label>
+
+<label>
+<input type="radio" name="q3" value="c">
+C. Evaporasi
+</label>
+
+</div>
+
+
+<div class="quiz-question">
+
+<b>4. Garam diperoleh dari air laut dengan penguapan. Metodenya adalah...</b>
+
+<label>
+<input type="radio" name="q4" value="a">
+A. Filtrasi
+</label>
+
+<label>
+<input type="radio" name="q4" value="b">
+B. Evaporasi
+</label>
+
+<label>
+<input type="radio" name="q4" value="c">
+C. Dekantasi
+</label>
+
+</div>
+
+
+<div class="quiz-question">
+
+<b>5. Warna-warna dalam tinta dipisahkan menggunakan...</b>
+
+<label>
+<input type="radio" name="q5" value="a">
+A. Kromatografi
+</label>
+
+<label>
+<input type="radio" name="q5" value="b">
+B. Sedimentasi
+</label>
+
+<label>
+<input type="radio" name="q5" value="c">
+C. Distilasi
+</label>
+
+</div>
+
+
+<button class="quiz-button" onclick="cekQuiz()">
+📋 Periksa Jawaban
+</button>
+
+<div id="hasilQuiz"></div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<b>LABORATORIUM VIRTUAL PEMISAHAN CAMPURAN</b>
+<br>
+IPAS Kelas X • Media Pembelajaran Interaktif
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const data = {
+
+sedimentasi:{
+title:"🟤 SEDIMENTASI",
+example:"Contoh: air keruh yang mengandung tanah atau lumpur.",
+keyword:"DIAMKAN → ENDAP",
+remember:"Sedimentasi terjadi ketika campuran didiamkan sehingga partikel yang lebih berat turun dan mengendap.",
+stages:[
+["TAHAP 1","Campuran Air + Tanah","Air masih keruh karena partikel tanah tersebar di dalam air."],
+["TAHAP 2","Campuran Didiamkan","Campuran tidak diaduk. Gravitasi membuat partikel tanah bergerak ke bawah."],
+["TAHAP 3","Endapan Terbentuk","Tanah telah terkumpul di dasar dan bagian atas menjadi lebih jernih."]
+]
+},
+
+dekantasi:{
+title:"🫗 DEKANTASI",
+example:"Contoh: memisahkan minyak dan air dengan menuangkan salah satu lapisan.",
+keyword:"TUANG → PISAHKAN",
+remember:"Dekantasi dilakukan dengan menuangkan cairan secara perlahan setelah komponen campuran telah terpisah menjadi lapisan atau setelah padatan mengendap.",
+stages:[
+["TAHAP 1","Minyak + Air","Minyak dan air tidak menyatu sehingga membentuk dua lapisan."],
+["TAHAP 2","Lapisan Terpisah","Campuran dibiarkan hingga batas antara minyak dan air terlihat jelas."],
+["TAHAP 3","Cairan Dituangkan","Salah satu lapisan dituangkan secara perlahan agar tidak tercampur kembali."]
+]
+},
+
+filtrasi:{
+title:"🧺 FILTRASI",
+example:"Contoh: memisahkan ampas kopi dari air menggunakan saringan.",
+keyword:"SARING → TERTAHAN",
+remember:"Filtrasi menggunakan penyaring. Padatan yang ukurannya lebih besar dari pori-pori saringan tertahan, sedangkan cairan melewati saringan.",
+stages:[
+["TAHAP 1","Campuran + Saringan","Ampas kopi dan air disiapkan bersama sebuah penyaring."],
+["TAHAP 2","Campuran Dituangkan","Campuran dituangkan ke dalam saringan."],
+["TAHAP 3","Padatan Tertahan","Ampas kopi tertahan pada kertas saring."],
+["TAHAP 4","Filtrat Diperoleh","Air melewati penyaring dan terkumpul di bawah sebagai filtrat."]
+]
+},
+
+evaporasi:{
+title:"☀️ EVAPORASI",
+example:"Contoh: memperoleh garam dari air laut.",
+keyword:"PANASKAN → UAPKAN",
+remember:"Evaporasi memanfaatkan penguapan pelarut sehingga zat terlarut yang tidak menguap tetap tertinggal.",
+stages:[
+["TAHAP 1","Larutan Garam","Air garam mengandung air dan garam yang terlarut."],
+["TAHAP 2","Pemanasan","Campuran dipanaskan sehingga air berubah menjadi uap."],
+["TAHAP 3","Garam Tertinggal","Air menguap dan garam tertinggal sebagai zat padat."]
+]
+},
+
+distilasi:{
+title:"💧 DISTILASI",
+example:"Contoh: memperoleh kembali air dari larutan garam.",
+keyword:"PANASKAN → UAP → DINGINKAN",
+remember:"Distilasi memanfaatkan perbedaan titik didih. Uap kemudian didinginkan sehingga kembali menjadi cairan.",
+stages:[
+["TAHAP 1","Larutan Garam Dipanaskan","Larutan dimasukkan ke dalam labu kemudian dipanaskan."],
+["TAHAP 2","Air Menjadi Uap","Air memiliki titik didih lebih rendah daripada garam sehingga air menguap."],
+["TAHAP 3","Uap Bergerak ke Kondensor","Uap air bergerak melalui saluran menuju bagian pendingin."],
+["TAHAP 4","Air Dikumpulkan","Uap didinginkan dan berubah kembali menjadi air cair."]
+]
+},
+
+kromatografi:{
+title:"🎨 KROMATOGRAFI",
+example:"Contoh: memisahkan komponen warna dalam tinta.",
+keyword:"NAIK → TERPISAH",
+remember:"Kromatografi memisahkan komponen campuran berdasarkan perbedaan kecepatan bergerak melalui suatu medium.",
+stages:[
+["TAHAP 1","Tinta Ditotolkan","Sampel tinta ditotolkan pada bagian bawah kertas."],
+["TAHAP 2","Pelarut Naik","Pelarut bergerak naik melalui kertas."],
+["TAHAP 3","Warna Mulai Terpisah","Komponen warna bergerak dengan kecepatan yang berbeda."],
+["TAHAP 4","Warna Terpisah","Komponen warna tampak berada pada posisi yang berbeda."]
+]
+},
+
+sublimasi:{
+title:"❄️ SUBLIMASI",
+example:"Contoh: memisahkan zat padat yang dapat menyublim dari campurannya.",
+keyword:"PADAT → GAS → PADAT",
+remember:"Sublimasi memanfaatkan kemampuan suatu zat untuk berubah langsung dari padat menjadi gas kemudian dapat kembali menjadi padat.",
+stages:[
+["TAHAP 1","Campuran Zat Padat","Campuran mengandung salah satu zat yang dapat menyublim."],
+["TAHAP 2","Zat Menyublim","Ketika dipanaskan, zat tersebut berubah langsung dari padat menjadi gas."],
+["TAHAP 3","Kristal Terbentuk","Uap mengenai permukaan yang lebih dingin dan membentuk kristal kembali."]
+]
+}
+
+};
+
+
+/* =========================================================
+   VARIABEL
+========================================================= */
+
+let metode="";
+let tahap=0;
+
+
+/* =========================================================
+   PILIH METODE
+========================================================= */
+
+function pilih(nama,button){
+
+metode=nama;
+tahap=0;
+
+document.querySelectorAll(".method-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+button.classList.add("active");
+
+document.getElementById("methodTitle").innerHTML=data[nama].title;
+
+document.getElementById("methodExample").innerHTML=data[nama].example;
+
+document.getElementById("keyword").innerHTML=data[nama].keyword;
+
+document.getElementById("stageNumber").innerHTML="TAHAP 0";
+
+document.getElementById("stageTitle").innerHTML="Belum dimulai";
+
+document.getElementById("stageDescription").innerHTML=
+"Klik <b>Mulai Proses</b> untuk memulai simulasi.";
+
+document.getElementById("remember").innerHTML=data[nama].remember;
+
+document.getElementById("progressBar").style.width="0%";
+
+document.getElementById("visualTitle").innerHTML=data[nama].title;
+
+document.getElementById("visual").innerHTML=
+"<div style='font-size:110px;'>🧪</div>";
+
+}
+
+
+/* =========================================================
+   MULAI
+========================================================= */
+
+function mulai(){
+
+if(!metode){
+
+alert("Silakan pilih metode terlebih dahulu.");
+
+return;
+
+}
+
+tahap=1;
+
+tampilkan();
+
+}
+
+
+/* =========================================================
+   TAHAP BERIKUTNYA
+========================================================= */
+
+function nextStage(){
+
+if(!metode){
+
+alert("Silakan pilih metode terlebih dahulu.");
+
+return;
+
+}
+
+if(tahap===0){
+
+tahap=1;
+
+}else if(tahap<data[metode].stages.length){
+
+tahap++;
+
+}else{
+
+bacakanSelesai();
+
+return;
+
+}
+
+tampilkan();
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetLab(){
+
+if(!metode)return;
+
+tahap=0;
+
+document.getElementById("stageNumber").innerHTML="TAHAP 0";
+
+document.getElementById("stageTitle").innerHTML="Belum dimulai";
+
+document.getElementById("stageDescription").innerHTML=
+"Simulasi diulang. Klik <b>Mulai Proses</b>.";
+
+document.getElementById("progressBar").style.width="0%";
+
+document.getElementById("visual").innerHTML=
+"<div style='font-size:110px;'>🧪</div>";
+
+}
+
+
+/* =========================================================
+   TAMPILKAN
+========================================================= */
+
+function tampilkan(){
+
+let item=data[metode].stages[tahap-1];
+
+document.getElementById("stageNumber").innerHTML=item[0];
+
+document.getElementById("stageTitle").innerHTML=item[1];
+
+document.getElementById("stageDescription").innerHTML=item[2];
+
+let persen=(tahap/data[metode].stages.length)*100;
+
+document.getElementById("progressBar").style.width=persen+"%";
+
+buatVisual();
+
+}
+
+
+/* =========================================================
+   VISUAL
+========================================================= */
+
+function buatVisual(){
+
+if(metode==="sedimentasi")visualSedimentasi();
+
+if(metode==="dekantasi")visualDekantasi();
+
+if(metode==="filtrasi")visualFiltrasi();
+
+if(metode==="evaporasi")visualEvaporasi();
+
+if(metode==="distilasi")visualDistilasi();
+
+if(metode==="kromatografi")visualKromatografi();
+
+if(metode==="sublimasi")visualSublimasi();
+
+}
+
+
+/* =========================================================
+   SEDIMENTASI
+========================================================= */
+
+function visualSedimentasi(){
+
+let particles="";
+
+if(tahap<3){
+
+let posisi=[
+[30,30],[70,50],[120,80],[155,40],
+[45,110],[90,130],[140,115],
+[170,90],[60,70],[110,40]
+];
+
+posisi.forEach(p=>{
+
+particles+=`
+<div class="particle"
+style="left:${p[0]}px;bottom:${p[1]}px;">
+</div>`;
+
+});
+
+}
+
+document.getElementById("visual").innerHTML=`
+
+<div class="beaker">
+
+<div class="muddy-water"></div>
+
+${particles}
+
+${tahap>=3?
+"<div class='sediment-layer'></div>":""}
+
+<div class="beaker-label">
+
+${tahap===1?"AIR KERUH":
+tahap===2?"PARTIKEL TURUN":
+"AIR LEBIH JERNIH"}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   DEKANTASI
+========================================================= */
+
+function visualDekantasi(){
+
+document.getElementById("visual").innerHTML=`
+
+<div style="position:relative;">
+
+<div class="beaker">
+
+<div class="oil-layer"></div>
+
+<div class="water-layer"></div>
+
+<div class="beaker-label">
+MINYAK + AIR
+</div>
+
+</div>
+
+<div class="pour ${tahap>=3?"show":""}">
+🫗
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   FILTRASI
+========================================================= */
+
+function visualFiltrasi(){
+
+let cairan=tahap>=4?70:tahap>=2?25:0;
+
+document.getElementById("visual").innerHTML=`
+
+<div style="
+display:flex;
+flex-direction:column;
+align-items:center;
+">
+
+<div style="font-size:45px;">
+☕
+</div>
+
+<div class="funnel">
+
+<div class="filter-paper">
+
+${tahap>=3?
+"<div class='coffee'></div>":""}
+
+</div>
+
+</div>
+
+<div class="drip ${tahap>=2?"show":""}">
+</div>
+
+<div class="container-glass">
+
+<div class="filtered-liquid"
+style="height:${cairan}%;">
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   EVAPORASI
+========================================================= */
+
+function visualEvaporasi(){
+
+document.getElementById("visual").innerHTML=`
+
+<div style="
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
+">
+
+<div class="steam ${tahap>=2?"show":""}">
+♨️
+</div>
+
+<div class="evaporating-dish"
+style="
+height:${tahap>=3?25:75}px;
+">
+</div>
+
+<div class="salt-crystals ${tahap>=3?"show":""}">
+</div>
+
+<div style="font-size:45px;">
+🔥
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   DISTILASI
+========================================================= */
+
+function visualDistilasi(){
+
+let hasil=tahap>=4?65:0;
+
+document.getElementById("visual").innerHTML=`
+
+<div class="distillation">
+
+<div class="dist-flask">
+
+<div class="dist-liquid"></div>
+
+</div>
+
+<div class="dist-tube"></div>
+
+<div class="dist-collector">
+
+<div class="collected-water"
+style="height:${hasil}%;">
+</div>
+
+</div>
+
+</div>
+
+<div style="
+font-size:45px;
+margin-left:-380px;
+margin-top:170px;
+">
+🔥
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   KROMATOGRAFI
+========================================================= */
+
+function visualKromatografi(){
+
+let warna=tahap>=3;
+
+document.getElementById("visual").innerHTML=`
+
+<div class="chrom-paper">
+
+<div class="ink-dot"
+style="
+bottom:${tahap===1?35:tahap===2?130:35}px;
+opacity:${warna?0:1};
+">
+</div>
+
+<div class="color-dot red"
+style="
+bottom:${tahap>=3?145:35}px;
+opacity:${tahap>=3?1:0};
+">
+</div>
+
+<div class="color-dot green"
+style="
+bottom:${tahap>=4?215:35}px;
+opacity:${tahap>=4?1:0};
+">
+</div>
+
+<div class="color-dot purple"
+style="
+bottom:${tahap>=4?105:35}px;
+opacity:${tahap>=4?1:0};
+">
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   SUBLIMASI
+========================================================= */
+
+function visualSublimasi(){
+
+document.getElementById("visual").innerHTML=`
+
+<div class="sublimation-box">
+
+<div class="solid-mixture"
+style="
+opacity:${tahap>=3?0:1};
+">
+</div>
+
+<div class="sublime-vapor"
+style="
+opacity:${tahap===2?1:0};
+">
+♨️
+</div>
+
+<div class="sublime-crystal"
+style="
+opacity:${tahap>=3?1:0};
+">
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   SUARA
+========================================================= */
+
+function bacakan(){
+
+if(!metode){
+
+alert("Pilih metode terlebih dahulu.");
+
+return;
+
+}
+
+let teks="";
+
+if(tahap===0){
+
+teks=data[metode].title+". "+data[metode].example;
+
+}else{
+
+let item=data[metode].stages[tahap-1];
+
+teks=item[0]+". "+item[1]+". "+item[2];
+
+}
+
+if("speechSynthesis" in window){
+
+speechSynthesis.cancel();
+
+let suara=new SpeechSynthesisUtterance(teks);
+
+suara.lang="id-ID";
+
+suara.rate=.9;
+
+speechSynthesis.speak(suara);
+
+}else{
+
+alert("Fitur suara tidak didukung oleh browser ini.");
+
+}
+
+}
+
+
+function bacakanSelesai(){
+
+let teks=
+"Proses "+data[metode].title+
+" telah selesai. "+
+data[metode].remember;
+
+if("speechSynthesis" in window){
+
+speechSynthesis.cancel();
+
+let suara=new SpeechSynthesisUtterance(teks);
+
+suara.lang="id-ID";
+
+suara.rate=.9;
+
+speechSynthesis.speak(suara);
+
+}
+
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+function cekQuiz(){
+
+let benar=0;
+
+if(document.querySelector('input[name="q1"]:checked')?.value==="b")
+benar++;
+
+if(document.querySelector('input[name="q2"]:checked')?.value==="a")
+benar++;
+
+if(document.querySelector('input[name="q3"]:checked')?.value==="a")
+benar++;
+
+if(document.querySelector('input[name="q4"]:checked')?.value==="b")
+benar++;
+
+if(document.querySelector('input[name="q5"]:checked')?.value==="a")
+benar++;
+
+let nilai=benar*20;
+
+let pesan="";
+
+if(nilai===100){
+
+pesan="🎉 SEMPURNA! Kamu sudah menguasai pemisahan campuran.";
+
+}else if(nilai>=80){
+
+pesan="👏 BAGUS! Tinggal sedikit lagi menuju sempurna.";
+
+}else if(nilai>=60){
+
+pesan="👍 CUKUP BAIK. Amati kembali proses pada laboratorium virtual.";
+
+}else{
+
+pesan="💡 Yuk, ulangi simulasi dan perhatikan kata kuncinya.";
+
+}
+
+document.getElementById("hasilQuiz").innerHTML=
+"Nilai kamu: <b>"+nilai+"</b><br>"+pesan;
+
+}
+
+</script>
+
+</body>
+</html>
